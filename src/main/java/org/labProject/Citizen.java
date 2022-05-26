@@ -1,5 +1,6 @@
 package org.labProject;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,6 +12,7 @@ public abstract class Citizen extends Renderable implements SimAgent {
     public float carryCapacity;
     public Building currentLocation;
     public Citizen(){
+        super(0,0, Color.WHITE);
         this.inventory = new ArrayList<>();
         this.age = (int)Math.floor(Math.random()*80);
         this.budget = (float)Math.random()*100;

@@ -2,7 +2,7 @@ package org.labProject;
 
 
 import java.util.Scanner;
-
+import javax.swing.*;
 public class Simulation{
     private static Map map;
     private static Citizen[] units;
@@ -13,10 +13,15 @@ public class Simulation{
         map = new Map(4);
 
     }
+    private static void tick(){};
     public static void main(String[] args){
         init();
+        map.init();
+        map.dumpInfo();
         while(true){
-            map.render();
+            map.update();
+           // map.render();
         }
+
     }
 }

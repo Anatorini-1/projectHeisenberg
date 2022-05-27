@@ -11,5 +11,13 @@ public class Kingpin extends Citizen{
     this.profitCut = p;
   }
   @Override
-  public void action(){};
+  public void action(){}
+
+  @Override
+  public void create() {}
+
+  @Override
+  public void delete() {}
+
+  ;
 }

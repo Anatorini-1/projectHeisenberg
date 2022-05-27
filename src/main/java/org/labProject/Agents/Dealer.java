@@ -11,5 +11,13 @@ public class Dealer extends Citizen{
         this.morale = m;
     }
     @Override
-    public void action(){};
+    public void action(){}
+
+    @Override
+    public void create() {}
+
+    @Override
+    public void delete() {}
+
+    ;
 }

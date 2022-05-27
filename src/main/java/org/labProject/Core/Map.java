@@ -12,7 +12,9 @@ import java.util.List;
 import java.util.Stack;
 
 public class Map {
-    private int gridSize;
+
+    //grid size made public for test reasons
+    public int gridSize;
 
     public List<List<Renderable>> toRender;
 

@@ -20,5 +20,6 @@ public abstract class Citizen extends Renderable implements SimAgent {
         this.age = (int)Math.floor(Math.random()*80);
         this.budget = (float)Math.random()*100;
         this.carryCapacity = (int)Math.floor(Math.random()*100);
+
     }
 }

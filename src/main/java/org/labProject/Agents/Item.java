@@ -1,4 +1,4 @@
-package org.labProject;
+package org.labProject.Agents;
 
 public class Item {
     private float weight;

@@ -1,4 +1,6 @@
-package org.labProject;
+package org.labProject.Agents;
+
+import org.labProject.Buildings.PoliceStation;
 
 public class Police extends Citizen{
     private int perception;

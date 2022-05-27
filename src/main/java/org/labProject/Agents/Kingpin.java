@@ -1,4 +1,4 @@
-package org.labProject;
+package org.labProject.Agents;
 
 public class Kingpin extends Citizen{
   private float sellPrice;

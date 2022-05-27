@@ -1,4 +1,4 @@
-package org.labProject;
+package org.labProject.Agents;
 
 public interface SimAgent {
     public void action();

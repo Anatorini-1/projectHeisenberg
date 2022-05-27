@@ -1,4 +1,4 @@
-package org.labProject;
+package org.labProject.Buildings;
 
 import java.awt.*;
 

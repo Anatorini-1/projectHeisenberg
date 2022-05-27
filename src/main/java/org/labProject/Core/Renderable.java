@@ -1,4 +1,4 @@
-package org.labProject;
+package org.labProject.Core;
 
 import java.awt.*;
 

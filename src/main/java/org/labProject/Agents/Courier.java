@@ -1,4 +1,4 @@
-package org.labProject;
+package org.labProject.Agents;
 
 public class Courier extends Citizen{
     private int speed;

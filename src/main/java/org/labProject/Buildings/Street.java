@@ -1,4 +1,6 @@
-package org.labProject;
+package org.labProject.Buildings;
+
+import org.labProject.Agents.Citizen;
 
 import java.awt.*;
 

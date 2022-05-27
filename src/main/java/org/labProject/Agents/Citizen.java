@@ -1,4 +1,7 @@
-package org.labProject;
+package org.labProject.Agents;
+
+import org.labProject.Buildings.Building;
+import org.labProject.Core.Renderable;
 
 import java.awt.*;
 import java.util.ArrayList;

@@ -1,4 +1,6 @@
-package org.labProject;
+package org.labProject.Agents;
+
+import org.labProject.Buildings.ApartmentBuilding;
 
 public class RegularCitizen extends Citizen{
     private float addictionLevel,recklessness,lawfullLevel;

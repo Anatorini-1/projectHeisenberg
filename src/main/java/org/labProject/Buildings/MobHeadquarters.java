@@ -1,4 +1,7 @@
-package org.labProject;
+package org.labProject.Buildings;
+
+import org.labProject.Agents.Courier;
+import org.labProject.Agents.Kingpin;
 
 import java.awt.*;
 import java.util.ArrayList;

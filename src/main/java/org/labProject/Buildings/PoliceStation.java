@@ -1,4 +1,6 @@
-package org.labProject;
+package org.labProject.Buildings;
+
+import org.labProject.Agents.Police;
 
 import java.awt.*;
 import java.util.ArrayList;

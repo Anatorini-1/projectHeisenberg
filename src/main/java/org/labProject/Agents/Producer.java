@@ -1,4 +1,4 @@
-package org.labProject;
+package org.labProject.Agents;
 
 public class Producer extends Citizen{
     private float experience;

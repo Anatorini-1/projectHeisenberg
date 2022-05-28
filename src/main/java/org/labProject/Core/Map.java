@@ -78,7 +78,7 @@ public class Map {
                 else{
                     ApartmentBuilding apartmentBuilding = new ApartmentBuilding(i,j, Color.MAGENTA);
                     toRender.get(i).add(apartmentBuilding);
-                    int random = (int)Math.floor(Math.random()*100)+1;
+                    int random = (int)Math.floor(Math.random()*15)+1;
                     if(random==2) {
                         RegularCitizen newCitizen = new RegularCitizen();
                         newCitizen.home = apartmentBuilding;

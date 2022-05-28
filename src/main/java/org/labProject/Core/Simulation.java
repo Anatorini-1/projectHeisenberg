@@ -1,11 +1,8 @@
 package org.labProject.Core;
 
 
-import org.labProject.Agents.Citizen;
-import org.labProject.Agents.Item;
+import org.labProject.Agents.*;
 import org.labProject.GUI.SimMainFrame;
-import org.labProject.Agents.RegularCitizen;
-import org.labProject.Agents.SimAgent;
 import org.labProject.Buildings.Building;
 import org.labProject.GUI.SimMapFrame;
 
@@ -48,6 +45,7 @@ public class Simulation{
     public static void main(String[] args) throws InterruptedException {
         init();
         while(true){
+
             Thread.sleep(100);
             tick();
             if(showGUI){
@@ -70,8 +68,6 @@ public class Simulation{
                 System.out.println("\n");
                 System.out.println(units.get(6).currentLocation.x);
             }
-
-
         }
     }
 }

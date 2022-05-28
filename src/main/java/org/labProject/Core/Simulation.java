@@ -45,7 +45,6 @@ public class Simulation{
     public static void main(String[] args) throws InterruptedException {
         init();
         while(true){
-
             Thread.sleep(100);
             tick();
             if(showGUI){

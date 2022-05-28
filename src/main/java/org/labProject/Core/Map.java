@@ -64,12 +64,22 @@ public class Map {
                     if(BuildingsRandomCoords.get(x)[0].equals(coords[0]) && BuildingsRandomCoords.get(x)[1].equals(coords[1])) checkCoords = true;
                 }
                 if(i%3 == 0 || j%3 == 0){
-                    toRender.get(i).add(new Street(i,j,Color.DARK_GRAY));
+                    toRender.get(i).add(new Street(i,j,Color.GRAY));
                 }
                 else if(checkCoords){
                     switch(whichBuilding){
                         case 1: toRender.get(i).add(new MobHeadquarters(i,j, Color.GREEN)); break;
-                        case 2: toRender.get(i).add(new PoliceStation((int) (Math.random() * (10-1)+1), (int) (Math.random() * (10-1)+1), i,j, Color.BLACK)); break;
+                        case 2:
+                            PoliceStation policeStation = new PoliceStation((int) (Math.random() * (10-1)+1), (int) (Math.random() * (10-1)+1), i,j, Color.BLACK);
+                            toRender.get(i).add(policeStation);
+                            for(int p=0;p<2;p++){
+                                Police newPolice = new Police((int) (Math.random() * (10-1)+1),(int) (Math.random() * (10-1)+1),(int) (Math.random() * (10-1)+1), policeStation);
+                                newPolice.home = policeStation;
+                                newPolice.currentLocation = policeStation;
+                                policeStation.guests.add(newPolice);
+                                units.add(newPolice);
+                            }
+                        break;
                         case 3: toRender.get(i).add(new Plantation(i,j, Color.ORANGE)); break;
                     }
                     whichBuilding++;
@@ -78,7 +88,7 @@ public class Map {
                 else{
                     ApartmentBuilding apartmentBuilding = new ApartmentBuilding(i,j, Color.MAGENTA);
                     toRender.get(i).add(apartmentBuilding);
-                    int random = (int)Math.floor(Math.random()*15)+1;
+                    int random = (int)Math.floor(Math.random()*50)+1;
                     if(random==2) {
                         RegularCitizen newCitizen = new RegularCitizen();
                         newCitizen.home = apartmentBuilding;
@@ -91,16 +101,15 @@ public class Map {
         }
     }
 
-    /*public static void main(String[] args) {
-        Map map = new Map(10);
-        for(int x = 0;x<10;x++){
-            for(int y = 0;y<10;y++){
-                System.out.println(map.toRender.get(x).get(y).getClass());
-            }
-        }
-        System.out.println(map.units.get(0).home.x);
-        System.out.println(map.units.get(0).home.y);
-        }*/
+//    public static void main(String[] args) {
+//        Map map = new Map(10);
+//        for(int x = 0;x<10;x++){
+//            for(int y = 0;y<10;y++){
+//                System.out.println(map.toRender.get(x).get(y).getClass());
+//            }
+//        }
+//        System.out.println(map.units.get(0));
+//        }
 
     }
 

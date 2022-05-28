@@ -5,7 +5,7 @@ import org.labProject.Buildings.Building;
 import org.labProject.Buildings.Street;
 import org.labProject.Core.Map;
 
-public class RegularCitizen<create> extends Citizen{
+public class RegularCitizen extends Citizen{
     private float addictionLevel,recklessness,lawfullLevel;
     private ApartmentBuilding home;
     @Override

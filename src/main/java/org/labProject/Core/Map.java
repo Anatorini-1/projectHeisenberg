@@ -17,7 +17,7 @@ public class Map {
     public int gridSize;
 
     public List<List<Renderable>> toRender;
-
+    //Method for printing the current map state to the console window
     public void dumpInfo(){
         toRender.forEach(row -> {
             row.forEach(cell -> {

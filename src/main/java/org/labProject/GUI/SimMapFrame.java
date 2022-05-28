@@ -1,17 +1,21 @@
 package org.labProject.GUI;
 
+import org.labProject.Agents.Citizen;
 import org.labProject.Buildings.Street;
 import org.labProject.Core.Map;
 
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
+import java.util.List;
 
 public class SimMapFrame extends JPanel {
     Map mapAnchor;
+    List<Citizen> unitsAnchor;
     int cellSize;
-    public SimMapFrame(Map map){
+    public SimMapFrame(Map map, List<Citizen> units){
         this.mapAnchor = map;
+        this.unitsAnchor = units;
         this.cellSize = (int)(400 / map.toRender.size());
         setPreferredSize(new Dimension(400,400));
     }
@@ -47,6 +51,10 @@ public class SimMapFrame extends JPanel {
 
 
             });
+        });
+        unitsAnchor.forEach(unit -> {
+            g2d.setColor(unit.c);
+            g2d.fillRect(cellSize*unit.currentLocation.x+ cellSize/2, cellSize*unit.currentLocation.y+cellSize/2,cellSize/2,cellSize/2);
         });
     }
 }

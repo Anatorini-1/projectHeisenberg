@@ -1,5 +1,7 @@
 package org.labProject.Agents;
 
+import org.labProject.Core.Map;
+
 public class Dealer extends Citizen{
     private float profficiency;
     private int perception;
@@ -11,7 +13,9 @@ public class Dealer extends Citizen{
         this.morale = m;
     }
     @Override
-    public void action(){}
+    public void action(Citizen citizen, Map map) {
+
+    }
 
     @Override
     public void create() {}

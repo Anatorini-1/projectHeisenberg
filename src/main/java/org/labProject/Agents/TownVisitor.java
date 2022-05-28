@@ -1,9 +1,11 @@
 package org.labProject.Agents;
 
+import org.labProject.Core.Map;
+
 public class TownVisitor extends Citizen{
     private float lawfulLevel;
     @Override
-    public void action(){}
+    public void action(Citizen citizen, Map map) {}
 
     @Override
     public void create() {}

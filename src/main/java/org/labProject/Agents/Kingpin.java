@@ -1,5 +1,7 @@
 package org.labProject.Agents;
 
+import org.labProject.Core.Map;
+
 public class Kingpin extends Citizen{
   private float sellPrice;
   private int operationRange;
@@ -11,7 +13,9 @@ public class Kingpin extends Citizen{
     this.profitCut = p;
   }
   @Override
-  public void action(){}
+  public void action(Citizen citizen, Map map) {
+
+  }
 
   @Override
   public void create() {}

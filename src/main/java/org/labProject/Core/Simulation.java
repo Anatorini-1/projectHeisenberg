@@ -56,16 +56,16 @@ public class Simulation{
         }
 
         //actual code needed
-        RegularCitizen.actionn(units.get(0), map);
-        RegularCitizen.actionn(units.get(1), map);
-        RegularCitizen.actionn(units.get(2), map);
+        for(int i = 0; i < units.size(); i++){
+            units.get(i).action(units.get(i), map);
+        }
+
     };
     public static void main(String[] args) throws InterruptedException {
         init();
         while(true){
             Thread.sleep(100);
             tick();
-            units.forEach(Citizen::action);
             if(showGUI){
                 gui.refresh();
             }

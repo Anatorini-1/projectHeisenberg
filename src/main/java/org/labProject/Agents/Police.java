@@ -1,6 +1,7 @@
 package org.labProject.Agents;
 
 import org.labProject.Buildings.PoliceStation;
+import org.labProject.Core.Map;
 
 public class Police extends Citizen{
     private int perception;
@@ -8,7 +9,9 @@ public class Police extends Citizen{
     private int morale;
     private PoliceStation parentStation;
     @Override
-    public void action(){}
+    public void action(Citizen citizen, Map map) {
+
+    }
 
     @Override
     public void create() {}

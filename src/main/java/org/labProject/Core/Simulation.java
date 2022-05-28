@@ -24,7 +24,7 @@ public class Simulation{
         /*var sc = new Scanner(System.in);
         System.out.println("Map size: ");*/
         //Static values for presentation purposes
-        map = new Map(8);
+        map = new Map(19);
         units = new ArrayList<>();
         RegularCitizen Citizen1 = new RegularCitizen();
         RegularCitizen Citizen2 = new RegularCitizen();

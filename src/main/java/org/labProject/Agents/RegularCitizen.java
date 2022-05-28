@@ -7,7 +7,6 @@ import org.labProject.Core.Map;
 
 public class RegularCitizen extends Citizen{
     private float addictionLevel,recklessness,lawfullLevel;
-    private ApartmentBuilding home;
     @Override
     public void action(Citizen citizen, Map map){
         int x = citizen.currentLocation.x;
@@ -160,6 +159,5 @@ public class RegularCitizen extends Citizen{
         this.addictionLevel = (int)Math.floor(Math.random()*100);
         this.recklessness = (int)Math.floor(Math.random()*100);
         this.lawfullLevel = (int)Math.floor(Math.random()*100);
-        this.home = home;
     }
 }

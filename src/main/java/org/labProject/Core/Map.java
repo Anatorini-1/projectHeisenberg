@@ -1,5 +1,6 @@
 package org.labProject.Core;
 
+import org.labProject.Agents.*;
 import org.labProject.Buildings.*;
 
 
@@ -12,6 +13,7 @@ public class Map {
 
     //grid size made public for test reasons
     public int gridSize;
+    public List<Citizen> units;
 
     public List<List<Renderable>> toRender;
     //Method for printing the current map state to the console window
@@ -44,9 +46,11 @@ public class Map {
             return coordsList;
     }
 
+
     public Map(int size){
         this.gridSize = size;
         this.toRender = new ArrayList<>();
+        this.units = new ArrayList<>();
         int quantintyOfBuildings = (int) (3 + Math.floor(size/21));
         ArrayList<Integer[]>  BuildingsRandomCoords = BuildingsRandomCoords(size, quantintyOfBuildings);
         Integer[] coords = new Integer[2];
@@ -71,7 +75,18 @@ public class Map {
                     whichBuilding++;
                     if(whichBuilding>3) whichBuilding=whichBuilding-2;
                 }
-                else toRender.get(i).add(new ApartmentBuilding(i,j, Color.MAGENTA));
+                else{
+                    ApartmentBuilding apartmentBuilding = new ApartmentBuilding(i,j, Color.MAGENTA);
+                    toRender.get(i).add(apartmentBuilding);
+                    int random = (int)Math.floor(Math.random()*100)+1;
+                    if(random==2) {
+                        RegularCitizen newCitizen = new RegularCitizen();
+                        newCitizen.home = apartmentBuilding;
+                        newCitizen.currentLocation = apartmentBuilding;
+                        newCitizen.home.guests.add(newCitizen);
+                        units.add(newCitizen);
+                    }
+                }
             }
         }
     }
@@ -83,8 +98,10 @@ public class Map {
                 System.out.println(map.toRender.get(x).get(y).getClass());
             }
         }
-        }
-     */
+        System.out.println(map.units.get(0).home.x);
+        System.out.println(map.units.get(0).home.y);
+        }*/
+
     }
 
 

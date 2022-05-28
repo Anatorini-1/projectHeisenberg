@@ -25,8 +25,9 @@ public class Simulation{
         System.out.println("Map size: ");*/
         //Static values for presentation purposes
         map = new Map(19);
-        units = new ArrayList<>();
-        RegularCitizen Citizen1 = new RegularCitizen();
+
+        units = map.units;
+        /*RegularCitizen Citizen1 = new RegularCitizen();
         RegularCitizen Citizen2 = new RegularCitizen();
         RegularCitizen Citizen3 = new RegularCitizen();
         Citizen1.currentLocation = (Building) map.toRender.get(1).get(1);
@@ -34,33 +35,16 @@ public class Simulation{
         Citizen3.currentLocation = (Building) map.toRender.get(1).get(1);
         units.add(Citizen1);
         units.add(Citizen2);
-        units.add(Citizen3);
+        units.add(Citizen3);*/
         if(showGUI) gui = new SimMainFrame(map,units);
     }
 
     private static void tick(){
-        //only to show results
-        int c1[] = new int[2];
-        int c2[]= new int[2];
-        int c3[]= new int[2];
-        c1[0] = units.get(0).currentLocation.x;
-        c1[1] = units.get(0).currentLocation.y;
-        c2[0] = units.get(1).currentLocation.x;
-        c2[1] = units.get(1).currentLocation.y;
-        c3[0] = units.get(2).currentLocation.x;
-        c3[1] = units.get(2).currentLocation.y;
-        if(showConsole){
-            System.out.println("Citizen1: " + Arrays.toString(c1));
-            System.out.println("Citizen2: " + Arrays.toString(c2));
-            System.out.println("Citizen3: " + Arrays.toString(c3));
-        }
-
         //actual code needed
         for(int i = 0; i < units.size(); i++){
             units.get(i).action(units.get(i), map);
         }
-
-    };
+    }
     public static void main(String[] args) throws InterruptedException {
         init();
         while(true){
@@ -84,6 +68,7 @@ public class Simulation{
                     System.out.println(Arrays.toString(line));
                 }
                 System.out.println("\n");
+                System.out.println(units.get(6).currentLocation.x);
             }
 
 

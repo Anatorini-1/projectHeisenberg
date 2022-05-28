@@ -14,12 +14,13 @@ public abstract class Citizen extends Renderable implements SimAgent {
     public float budget;
     public float carryCapacity;
     public Building currentLocation;
+    public Building home;
     public Citizen(){
         super(0,0, Color.WHITE);
         this.inventory = new ArrayList<>();
         this.age = (int)Math.floor(Math.random()*80);
         this.budget = (float)Math.random()*100;
         this.carryCapacity = (int)Math.floor(Math.random()*100);
-
+        this.home = null;
     }
 }

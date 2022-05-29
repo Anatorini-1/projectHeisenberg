@@ -21,35 +21,38 @@ public class SimMapFrame extends JPanel {
     }
     @Override public void paintComponent(Graphics g)
     {
+        unitsAnchor.forEach(unit -> {
+
+        });
         var g2d = (Graphics2D)g;
         g2d.setColor(Color.BLACK);
         g2d.fillRect(0,0,this.getWidth()-1,this.getHeight()-1);
         mapAnchor.toRender.forEach(row -> {
             row.forEach(cell -> {
-                switch (cell.getClass().getSimpleName()){
-                    case "ApartmentBuilding":
-                        g2d.setColor(cell.c);
-                        g2d.fillRect(cell.x*cellSize,cell.y*cellSize,cellSize,cellSize);
-                        g2d.setColor(Color.black);
-                        g2d.drawRect(cell.x*cellSize,cell.y*cellSize,cellSize,cellSize);
-                        g2d.drawString("AB",cell.x*cellSize + cellSize/2,cell.y*cellSize + cellSize/2);
-                        break;
-                    case "Street":
-                        g2d.setColor(cell.c);
-                        g2d.fillRect(cell.x*cellSize,cell.y*cellSize,cellSize,cellSize);
-                        for(int i=0;i<2;i++){
-                            for(int j=0;j<3;j++){
-                                g2d.setColor(Color.black);
-                                g2d.drawRect(cell.x*cellSize+cellSize/2*i,cell.y*cellSize+cellSize/3*j,cellSize/2,cellSize/3);
-                            }
+                g2d.setColor(cell.c);
+                if(cell.getClass().getSimpleName().equals("Street")){
+                    g2d.fillRect(cell.x*cellSize,cell.y*cellSize,cellSize,cellSize);
+                    for(int i=0;i<2;i++){
+                        for(int j=0;j<3;j++){
+                            g2d.setColor(Color.white);
+                            //g2d.drawRect(cell.x*cellSize+cellSize/2*i,cell.y*cellSize+cellSize/3*j,cellSize/2,cellSize/3);
                         }
-                        break;
-
-                    default:
-                        break;
+                    }
                 }
-
-
+                else{
+                    g2d.fillRect(cell.x*cellSize,cell.y*cellSize,cellSize,cellSize);
+                    g2d.setColor(Color.black);
+                    g2d.drawRect(cell.x*cellSize,cell.y*cellSize,cellSize,cellSize);
+                    String label;
+                    switch (cell.getClass().getSimpleName()){
+                        case "ApartmentBuilding": label = "AB"; break;
+                        case "PoliceStation": label = "PS"; break;
+                        case "Plantation" : label = "PL"; break;
+                        case "MobHeadquarters": label = "MH"; break;
+                        default: label = "???";break;
+                    }
+                    g2d.drawString(label,cell.x*cellSize,cell.y*cellSize+cellSize/2);
+                }
             });
         });
         unitsAnchor.forEach(unit -> {

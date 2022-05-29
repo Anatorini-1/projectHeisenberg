@@ -65,7 +65,7 @@ public class Map {
                     if(BuildingsRandomCoords.get(x)[0].equals(coords[0]) && BuildingsRandomCoords.get(x)[1].equals(coords[1])) checkCoords = true;
                 }
                 if(i%3 == 0 || j%3 == 0){
-                    toRender.get(i).add(new Street(i,j,Color.GRAY));
+                    toRender.get(i).add(new Street(i,j,Color.BLACK));
                 }
                 else if(checkCoords){
                     switch(whichBuilding){
@@ -74,7 +74,7 @@ public class Map {
                             mob.add(mobHeadquarters);
                             toRender.get(i).add(mobHeadquarters);  break;
                         case 2:
-                            PoliceStation policeStation = new PoliceStation((int) (Math.random() * (10-1)+1), (int) (Math.random() * (10-1)+1), i,j, Color.BLACK);
+                            PoliceStation policeStation = new PoliceStation((int) (Math.random() * (10-1)+1), (int) (Math.random() * (10-1)+1), i,j, new Color(100,100,255));
                             toRender.get(i).add(policeStation);
                             for(int p=0;p<2;p++){
                                 Police newPolice = new Police((int) (Math.random() * (10-1)+1),(int) (Math.random() * (10-1)+1),(int) (Math.random() * (10-1)+1), policeStation);

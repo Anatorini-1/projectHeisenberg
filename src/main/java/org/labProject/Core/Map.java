@@ -14,7 +14,7 @@ public class Map {
     //grid size made public for test reasons
     public int gridSize;
     public List<Citizen> units;
-
+    public List<MobHeadquarters> mob;
     public List<List<Renderable>> toRender;
     //Method for printing the current map state to the console window
     public void dumpInfo(){
@@ -51,6 +51,7 @@ public class Map {
         this.gridSize = size;
         this.toRender = new ArrayList<>();
         this.units = new ArrayList<>();
+        this.mob = new ArrayList<>();
         int quantintyOfBuildings = (int) (3 + Math.floor(size/21));
         ArrayList<Integer[]>  BuildingsRandomCoords = BuildingsRandomCoords(size, quantintyOfBuildings);
         Integer[] coords = new Integer[2];
@@ -68,7 +69,10 @@ public class Map {
                 }
                 else if(checkCoords){
                     switch(whichBuilding){
-                        case 1: toRender.get(i).add(new MobHeadquarters(i,j, Color.GREEN)); break;
+                        case 1:
+                            MobHeadquarters mobHeadquarters = new MobHeadquarters(i,j, Color.GREEN);
+                            mob.add(mobHeadquarters);
+                            toRender.get(i).add(mobHeadquarters);  break;
                         case 2:
                             PoliceStation policeStation = new PoliceStation((int) (Math.random() * (10-1)+1), (int) (Math.random() * (10-1)+1), i,j, Color.BLACK);
                             toRender.get(i).add(policeStation);
@@ -80,7 +84,15 @@ public class Map {
                                 units.add(newPolice);
                             }
                         break;
-                        case 3: toRender.get(i).add(new Plantation(i,j, Color.ORANGE)); break;
+                        case 3:
+                            Plantation plantation = new Plantation(i,j, Color.ORANGE);
+                            toRender.get(i).add(plantation);
+                                Courier newCourier = new Courier(2, 2, mob.get(0));
+                                newCourier.home = plantation;
+                                newCourier.currentLocation = plantation;
+                                plantation.guests.add(newCourier);
+                                units.add(newCourier);
+                            break;
                     }
                     whichBuilding++;
                     if(whichBuilding>3) whichBuilding=whichBuilding-2;
@@ -95,21 +107,22 @@ public class Map {
                         newCitizen.currentLocation = apartmentBuilding;
                         newCitizen.home.guests.add(newCitizen);
                         units.add(newCitizen);
+
                     }
                 }
             }
         }
     }
 
-    public static void main(String[] args) {
-        Map map = new Map(10);
-        for(int x = 0;x<10;x++){
-            for(int y = 0;y<10;y++){
-                System.out.println(map.toRender.get(x).get(y).getClass());
-            }
-        }
-        System.out.println(map.units.get(0).home.x);
-        }
+//    public static void main(String[] args) {
+//        Map map = new Map(10);
+//        for(int x = 0;x<10;x++){
+//            for(int y = 0;y<10;y++){
+//                System.out.println(map.toRender.get(x).get(y).getClass());
+//            }
+//        }
+//        System.out.println(map.units.get(0).home.x);
+//        }
 
     }
 

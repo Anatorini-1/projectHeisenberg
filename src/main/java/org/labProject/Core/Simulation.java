@@ -25,32 +25,18 @@ public class Simulation{
         map = new Map(19);
 
         units = map.units;
-        /*RegularCitizen Citizen1 = new RegularCitizen();
-        RegularCitizen Citizen2 = new RegularCitizen();
-        RegularCitizen Citizen3 = new RegularCitizen();
-        Citizen1.currentLocation = (Building) map.toRender.get(1).get(1);
-        Citizen2.currentLocation = (Building) map.toRender.get(1).get(1);
-        Citizen3.currentLocation = (Building) map.toRender.get(1).get(1);
-        units.add(Citizen1);
-        units.add(Citizen2);
-        units.add(Citizen3);*/
         if(showGUI) gui = new SimMainFrame(map,units);
     }
 
     private static void tick(){
-        //actual code needed
             for (int i = 0; i < units.size(); i++) {
                 units.get(i).action(units.get(i), map);
-                //System.out.print(units.get(1).currentLocation.x);
-               // System.out.println(units.get(1).currentLocation.y);
+
             }
     }
     private static void goBackTick(){
-        //actual code needed
         for (int i = 0; i < units.size(); i++) {
-            units.get(i).goHome(units.get(i), map);
-           //System.out.print(units.get(1).home.x);
-           // System.out.println(units.get(1).home.y);
+            units.get(i).goLocation(units.get(i), map, units.get(i).home);
         }
     }
     public static void main(String[] args) throws InterruptedException {
@@ -62,6 +48,7 @@ public class Simulation{
                 tick();
             }else{
                 goBackTick();
+                if(t == 150){t = 0;};
             }
             t++;
             if(showGUI){

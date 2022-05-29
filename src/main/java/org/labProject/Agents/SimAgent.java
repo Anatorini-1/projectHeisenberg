@@ -6,4 +6,5 @@ public interface SimAgent {
     public void action(Citizen citizen , Map map);
     public void create();
     public void delete();
+    public void goHome(Citizen citizen, Map map);
 }

@@ -88,7 +88,7 @@ public class Map {
                 else{
                     ApartmentBuilding apartmentBuilding = new ApartmentBuilding(i,j, Color.MAGENTA);
                     toRender.get(i).add(apartmentBuilding);
-                    int random = (int)Math.floor(Math.random()*50)+1;
+                    int random = (int)Math.floor(Math.random()*20)+1;
                     if(random==2) {
                         RegularCitizen newCitizen = new RegularCitizen();
                         newCitizen.home = apartmentBuilding;
@@ -101,15 +101,15 @@ public class Map {
         }
     }
 
-//    public static void main(String[] args) {
-//        Map map = new Map(10);
-//        for(int x = 0;x<10;x++){
-//            for(int y = 0;y<10;y++){
-//                System.out.println(map.toRender.get(x).get(y).getClass());
-//            }
-//        }
-//        System.out.println(map.units.get(0));
-//        }
+    public static void main(String[] args) {
+        Map map = new Map(10);
+        for(int x = 0;x<10;x++){
+            for(int y = 0;y<10;y++){
+                System.out.println(map.toRender.get(x).get(y).getClass());
+            }
+        }
+        System.out.println(map.units.get(0).home.x);
+        }
 
     }
 

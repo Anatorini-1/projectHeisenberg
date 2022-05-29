@@ -7,6 +7,7 @@ import org.labProject.Buildings.Building;
 import org.labProject.GUI.SimMapFrame;
 
 import javax.swing.*;
+import java.security.spec.RSAOtherPrimeInfo;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -38,15 +39,31 @@ public class Simulation{
 
     private static void tick(){
         //actual code needed
-        for(int i = 0; i < units.size(); i++){
-            units.get(i).action(units.get(i), map);
+            for (int i = 0; i < units.size(); i++) {
+                units.get(i).action(units.get(i), map);
+                //System.out.print(units.get(1).currentLocation.x);
+               // System.out.println(units.get(1).currentLocation.y);
+            }
+    }
+    private static void goBackTick(){
+        //actual code needed
+        for (int i = 0; i < units.size(); i++) {
+            units.get(i).goHome(units.get(i), map);
+           //System.out.print(units.get(1).home.x);
+           // System.out.println(units.get(1).home.y);
         }
     }
     public static void main(String[] args) throws InterruptedException {
         init();
+        int t = 0;
         while(true){
             Thread.sleep(100);
-            tick();
+            if(t<100) {
+                tick();
+            }else{
+                goBackTick();
+            }
+            t++;
             if(showGUI){
                 gui.refresh();
             }

@@ -45,7 +45,33 @@ public abstract class Citizen extends Renderable implements SimAgent {
         ((Building) map.toRender.get(x).get(y)).leave(citizen);
         ((Building) map.toRender.get(x).get(y+1)).enter(citizen);
     }
-
+    @Override
+    public void goHome(Citizen citizen, Map map) {
+        int y = (citizen.home.y % 3 == 1) ? citizen.home.y - 1 : citizen.home.y + 1;
+        if(citizen.currentLocation.x == citizen.home.x && citizen.currentLocation.y == y) {
+            ((Building) map.toRender.get(citizen.currentLocation.x).get(citizen.currentLocation.y)).leave(citizen);
+            citizen.currentLocation = (Building) map.toRender.get(citizen.home.x).get(citizen.home.y);
+            ((Building) map.toRender.get(citizen.home.x).get(citizen.home.y)).enter(citizen);
+        }else if (citizen.currentLocation.x % 3 == 0 && citizen.currentLocation.y != y) {
+            if (citizen.currentLocation.y > y) {
+                goUp(citizen, map, citizen.currentLocation.x, citizen.currentLocation.y);
+            } else if (citizen.currentLocation.y < y) {
+                goDown(citizen, map, citizen.currentLocation.x, citizen.currentLocation.y);
+            }
+        }else if(citizen.currentLocation.y % 3 == 0 && citizen.currentLocation.x != citizen.home.x) {
+            if (citizen.currentLocation.x < citizen.home.x) {
+                goRight(citizen, map, citizen.currentLocation.x, citizen.currentLocation.y);
+            } else if (citizen.currentLocation.x > citizen.home.x) {
+                goLeft(citizen, map, citizen.currentLocation.x, citizen.currentLocation.y);
+            }
+        }else if(citizen.currentLocation.y % 3 == 0 && citizen.currentLocation.x == citizen.home.x){
+            if(citizen.currentLocation.x%3==1){
+                goLeft(citizen, map, citizen.currentLocation.x, citizen.currentLocation.y);
+            }else{
+                goRight(citizen, map, citizen.currentLocation.x, citizen.currentLocation.y);
+            }
+        }
+    }
     @Override
     public void action(Citizen citizen, Map map) {
         int x = citizen.currentLocation.x;

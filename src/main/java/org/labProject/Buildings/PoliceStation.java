@@ -11,8 +11,8 @@ public class PoliceStation extends Building{
     private int patrolsPerDay;
     private int corruptionLevel;
 
-    public PoliceStation(int p,int c,int x, int y, Color color){
-        super(x,y,color);
+    public PoliceStation(int p,int c,int x, int y){
+        super(x,y,Color.blue);
         this.patrolsPerDay = p;
         this.corruptionLevel = c;
         this.staff = new ArrayList<>();

@@ -13,10 +13,7 @@ public abstract class Building extends Renderable {
         guests.add(c);
     };
     public void leave(Citizen c){
-        if(guests.contains(c)){
-            int index = guests.indexOf(c);
-            guests.remove(index);
-        }
+        guests.remove(c);
     };
     public Building(int x, int y, Color c){
         super(x,y,c);

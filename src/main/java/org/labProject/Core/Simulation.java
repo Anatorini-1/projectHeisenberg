@@ -19,11 +19,8 @@ public class Simulation{
     private static boolean showGUI = true;
     private static boolean showConsole = false;
     private static void init(){
-        /*var sc = new Scanner(System.in);
-        System.out.println("Map size: ");*/
         //Static values for presentation purposes
         map = new Map(19);
-
         units = map.units;
         if(showGUI) gui = new SimMainFrame(map,units);
     }
@@ -43,14 +40,17 @@ public class Simulation{
         init();
         int t = 0;
         while(true){
-            Thread.sleep(100);
-            if(t<100) {
-                tick();
-            }else{
-                goBackTick();
-                if(t == 150){t = 0;};
+            if(!Parameters.isPaused){
+                if(t<100) {
+                    tick();
+                }else{
+                    goBackTick();
+                    if(t == 150){t = 0;};
+                }
+                t++;
             }
-            t++;
+            Thread.sleep(1000 / Parameters.tickSpeed);
+
             if(showGUI){
                 gui.refresh();
             }

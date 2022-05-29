@@ -12,8 +12,8 @@ public class MobHeadquarters extends Building{
     private float storageCapacity;
     private Kingpin boss;
     private List<Courier> logistics;
-    public MobHeadquarters(int x, int y, Color c){
-        super(x,y,c);
+    public MobHeadquarters(int x, int y){
+        super(x,y, Color.GREEN);
         this.stock = 0;
         this.storageCapacity = (float)(Math.random()*1000+100);
         this.boss = new Kingpin(10,10,0.5f);

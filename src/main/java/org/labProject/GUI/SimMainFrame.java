@@ -2,6 +2,7 @@ package org.labProject.GUI;
 
 import org.labProject.Agents.Citizen;
 import org.labProject.Core.Map;
+import org.labProject.Core.Parameters;
 
 import javax.swing.*;
 import java.awt.*;
@@ -17,11 +18,11 @@ public class SimMainFrame extends JFrame {
         setTitle("Project Heisenberg");
         setLayout(new GridBagLayout());
         var layout = new GridBagConstraints();
-        JPanel params = new SimParamsFrame();
+        JPanel paramsFrame = new SimParamsFrame();
         layout.gridx = 0;
         layout.gridy = 0;
         layout.anchor = GridBagConstraints.FIRST_LINE_START;
-        add(params,layout);
+        add(paramsFrame,layout);
 
         JPanel map = new SimMapFrame(mainMap,units);
         layout.gridx = 1;
@@ -30,10 +31,10 @@ public class SimMainFrame extends JFrame {
         layout.gridwidth=2;
         add(map,layout);
 
-        JPanel statisctics = new SimStatisticsFrame();
+        JPanel statistics = new SimStatisticsFrame();
         layout.gridx = 0;
         layout.gridy = 1;
-        add(statisctics,layout);
+        add(statistics,layout);
 
         pack();
         setVisible(true);

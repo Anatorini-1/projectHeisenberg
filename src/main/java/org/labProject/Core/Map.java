@@ -65,16 +65,16 @@ public class Map {
                     if(BuildingsRandomCoords.get(x)[0].equals(coords[0]) && BuildingsRandomCoords.get(x)[1].equals(coords[1])) checkCoords = true;
                 }
                 if(i%3 == 0 || j%3 == 0){
-                    toRender.get(i).add(new Street(i,j,Color.BLACK));
+                    toRender.get(i).add(new Street(i,j));
                 }
                 else if(checkCoords){
                     switch(whichBuilding){
                         case 1:
-                            MobHeadquarters mobHeadquarters = new MobHeadquarters(i,j, Color.GREEN);
+                            MobHeadquarters mobHeadquarters = new MobHeadquarters(i,j);
                             mob.add(mobHeadquarters);
                             toRender.get(i).add(mobHeadquarters);  break;
                         case 2:
-                            PoliceStation policeStation = new PoliceStation((int) (Math.random() * (10-1)+1), (int) (Math.random() * (10-1)+1), i,j, new Color(100,100,255));
+                            PoliceStation policeStation = new PoliceStation((int) (Math.random() * (10-1)+1), (int) (Math.random() * (10-1)+1), i,j);
                             toRender.get(i).add(policeStation);
                             for(int p=0;p<2;p++){
                                 Police newPolice = new Police((int) (Math.random() * (10-1)+1),(int) (Math.random() * (10-1)+1),(int) (Math.random() * (10-1)+1), policeStation);
@@ -85,7 +85,7 @@ public class Map {
                             }
                         break;
                         case 3:
-                            Plantation plantation = new Plantation(i,j, Color.ORANGE);
+                            Plantation plantation = new Plantation(i,j);
                             toRender.get(i).add(plantation);
                                 Courier newCourier = new Courier(2, 2, mob.get(0));
                                 newCourier.home = plantation;
@@ -98,7 +98,7 @@ public class Map {
                     if(whichBuilding>3) whichBuilding=whichBuilding-2;
                 }
                 else{
-                    ApartmentBuilding apartmentBuilding = new ApartmentBuilding(i,j, Color.MAGENTA);
+                    ApartmentBuilding apartmentBuilding = new ApartmentBuilding(i,j);
                     toRender.get(i).add(apartmentBuilding);
                     int random = (int)Math.floor(Math.random()*20)+1;
                     if(random==2) {

@@ -11,6 +11,7 @@ public abstract class Building extends Renderable {
     public List<Citizen> guests;
     public void enter(Citizen c){
         guests.add(c);
+        c.currentLocation = this;
     };
     public void leave(Citizen c){
         guests.remove(c);

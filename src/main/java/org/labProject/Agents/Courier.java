@@ -21,7 +21,7 @@ public class Courier extends Citizen{
     public void action(Map map) {
         if(this.currentLocation.equals(mob)){}
         else{
-            goLocation(this, map, mob);
+            goLocation(map, mob);
         }
     }
 

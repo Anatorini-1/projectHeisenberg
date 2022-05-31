@@ -33,7 +33,7 @@ public class Simulation{
     }
     private static void goBackTick(){
         for (int i = 0; i < units.size(); i++) {
-            units.get(i).goLocation(units.get(i), map, units.get(i).home);
+            units.get(i).goLocation(map, units.get(i).home);
         }
     }
     public static void main(String[] args) throws InterruptedException {

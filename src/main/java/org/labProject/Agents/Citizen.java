@@ -24,76 +24,62 @@ public abstract class Citizen extends Renderable implements SimAgent {
         this.home = null;
     }
 
-    public static void goLeft(Citizen citizen, Map  map, int x, int y){
-        citizen.currentLocation = (Building) map.toRender.get(x-1).get(y);
-        ((Building) map.toRender.get(x).get(y)).leave(citizen);
-        ((Building) map.toRender.get(x-1).get(y)).enter(citizen);
-    }
-    public static void goRight(Citizen citizen, Map  map, int x, int y){
-        citizen.currentLocation = (Building) map.toRender.get(x+1).get(y);
-        ((Building) map.toRender.get(x).get(y)).leave(citizen);
-        ((Building) map.toRender.get(x+1).get(y)).enter(citizen);
-    }
-    public static void goUp(Citizen citizen, Map  map, int x, int y){
-        citizen.currentLocation = (Building) map.toRender.get(x).get(y-1);
-        ((Building) map.toRender.get(x).get(y)).leave(citizen);
-        ((Building) map.toRender.get(x).get(y-1)).enter(citizen);
-    }
-    public static void goDown(Citizen citizen, Map  map, int x, int y){
-        citizen.currentLocation = (Building) map.toRender.get(x).get(y+1);
-        ((Building) map.toRender.get(x).get(y)).leave(citizen);
-        ((Building) map.toRender.get(x).get(y+1)).enter(citizen);
-    }
+//    public static void goLeft(Citizen citizen, Map  map, int x, int y){
+//        ((Building) map.toRender.get(x).get(y)).leave(citizen);
+//        ((Building) map.toRender.get(x-1).get(y)).enter(citizen);
+//    }
+//    public static void goRight(Citizen citizen, Map  map, int x, int y){
+//        ((Building) map.toRender.get(x).get(y)).leave(citizen);
+//        ((Building) map.toRender.get(x+1).get(y)).enter(citizen);
+//    }
+//    public static void goUp(Citizen citizen, Map  map, int x, int y){
+//        ((Building) map.toRender.get(x).get(y)).leave(citizen);
+//        ((Building) map.toRender.get(x).get(y-1)).enter(citizen);
+//    }
+//    public static void goDown(Citizen citizen, Map  map, int x, int y){
+//        ((Building) map.toRender.get(x).get(y)).leave(citizen);
+//        ((Building) map.toRender.get(x).get(y+1)).enter(citizen);
+//    }
 
     @Override
-    public void goLocation(Citizen citizen, Map map, Building building){
-        int xx = citizen.currentLocation.x;
-        int yy = citizen.currentLocation.y;
-        String buildingNow = String.valueOf(map.toRender.get(xx).get(yy));
-        Building buildingFinish = (Building) map.toRender.get(xx).get(yy);
-        if(buildingNow.contains("Street")) {
+    public void goLocation(Map map, Building building){
             int y = (building.y % 3 == 1) ? building.y - 1 : building.y + 1;
-            if(citizen.currentLocation.x == building.x && citizen.currentLocation.y == y) {
-                ((Building) map.toRender.get(citizen.currentLocation.x).get(citizen.currentLocation.y)).leave(citizen);
-                citizen.currentLocation = (Building) map.toRender.get(building.x).get(building.y);
-                ((Building) map.toRender.get(building.x).get(building.y)).enter(citizen);
-            }else if (citizen.currentLocation.x % 3 == 0 && citizen.currentLocation.y != y) {
-                if (citizen.currentLocation.y > y) {
-                    goUp(citizen, map, citizen.currentLocation.x, citizen.currentLocation.y);
-                } else if (citizen.currentLocation.y < y) {
-                    goDown(citizen, map, citizen.currentLocation.x, citizen.currentLocation.y);
+            if(this.currentLocation.x == building.x && this.currentLocation.y == y) {
+                ((Building) map.toRender.get(this.currentLocation.x).get(this.currentLocation.y)).leave(this);
+                ((Building) map.toRender.get(building.x).get(building.y)).enter(this);
+            }else if (this.currentLocation.x % 3 == 0 && this.currentLocation.y != y) {
+                if (this.currentLocation.y > y) {
+                    ((Building) map.toRender.get(this.currentLocation.x).get(this.currentLocation.y)).leave(this);
+                    ((Building) map.toRender.get(this.currentLocation.x).get(this.currentLocation.y - 1)).enter(this);
+                } else if (this.currentLocation.y < y) {
+                    ((Building) map.toRender.get(this.currentLocation.x).get(this.currentLocation.y)).leave(this);
+                    ((Building) map.toRender.get(this.currentLocation.x).get(this.currentLocation.y + 1)).enter(this);
                 }
-            }else if(citizen.currentLocation.y % 3 == 0 && citizen.currentLocation.x != building.x) {
-                if (citizen.currentLocation.x < building.x) {
-                    goRight(citizen, map, citizen.currentLocation.x, citizen.currentLocation.y);
-                } else if (citizen.currentLocation.x > building.x) {
-                    goLeft(citizen, map, citizen.currentLocation.x, citizen.currentLocation.y);
+            }else if(this.currentLocation.y % 3 == 0 && this.currentLocation.x != building.x) {
+                if (this.currentLocation.x < building.x) {
+                    ((Building) map.toRender.get(this.currentLocation.x).get(this.currentLocation.y)).leave(this);
+                    ((Building) map.toRender.get(this.currentLocation.x + 1).get(this.currentLocation.y)).enter(this);
+                } else if (this.currentLocation.x > building.x) {
+                    ((Building) map.toRender.get(this.currentLocation.x).get(this.currentLocation.y)).leave(this);
+                    ((Building) map.toRender.get(this.currentLocation.x - 1).get(this.currentLocation.y)).enter(this);
                 }
-            }else if(citizen.currentLocation.y % 3 == 0 && citizen.currentLocation.x == building.x){
-                if(citizen.currentLocation.x%3==1){
-                    goLeft(citizen, map, citizen.currentLocation.x, citizen.currentLocation.y);
+            }else if(this.currentLocation.y % 3 == 0 && this.currentLocation.x == building.x){
+                if(this.currentLocation.x%3==1){
+                    ((Building) map.toRender.get(this.currentLocation.x).get(this.currentLocation.y)).leave(this);
+                    ((Building) map.toRender.get(this.currentLocation.x - 1).get(this.currentLocation.y)).enter(this);
                 }else{
-                    goRight(citizen, map, citizen.currentLocation.x, citizen.currentLocation.y);
+                    ((Building) map.toRender.get(this.currentLocation.x).get(this.currentLocation.y)).leave(this);
+                    ((Building) map.toRender.get(this.currentLocation.x + 1).get(this.currentLocation.y)).enter(this);
+                }
+            }else if(this.currentLocation != building && String.valueOf(this.currentLocation)!="Street"){
+                if (this.currentLocation.x%3==1) {
+                    ((Building) map.toRender.get(this.currentLocation.x).get(this.currentLocation.y)).leave(this);
+                    ((Building) map.toRender.get(this.currentLocation.x).get(this.currentLocation.y - 1)).enter(this);
+                }else{
+                    ((Building) map.toRender.get(this.currentLocation.x).get(this.currentLocation.y)).leave(this);
+                    ((Building) map.toRender.get(this.currentLocation.x).get(this.currentLocation.y + 1)).enter(this);
                 }
             }
-        }
-        else if(buildingFinish.equals(building)){}
-        else{
-            String buildingLeft = String.valueOf(map.toRender.get(xx - 1).get(yy));
-            String buildingDown = String.valueOf(map.toRender.get(xx).get(yy + 1));
-            String buildingRight = String.valueOf(map.toRender.get(xx + 1).get(yy));
-            String buildingUp = String.valueOf(map.toRender.get(xx).get(yy - 1));
-
-            if (buildingLeft.contains("Street")) {
-                goLeft(citizen, map, xx, yy);
-            } else if (buildingDown.contains("Street")) {
-                goDown(citizen, map, xx, yy);
-            } else if (buildingRight.contains("Street")) {
-                goRight(citizen, map, xx, yy);
-            } else if (buildingUp.contains("Street")) {
-                goUp(citizen, map, xx, yy);
-            }
-        }
     }
 
     protected void randomMovement(Map map){

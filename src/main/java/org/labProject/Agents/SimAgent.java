@@ -7,5 +7,5 @@ public interface SimAgent {
     public void action(Map map);
     public void create();
     public void delete();
-    public void goLocation(Citizen citizen, Map map, Building building);
+    public void goLocation(Map map, Building building);
 }

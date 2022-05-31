@@ -3,6 +3,7 @@ package org.labProject.Agents;
 import org.labProject.Buildings.Building;
 import org.labProject.Buildings.MobHeadquarters;
 import org.labProject.Core.Map;
+import org.labProject.Core.Parameters;
 
 import java.awt.*;
 
@@ -19,8 +20,10 @@ public class Courier extends Citizen{
     }
     @Override
     public void action(Map map) {
-        if(this.currentLocation.equals(mob)){}
-        else{
+        int time = Parameters.currentTime%1440; //Current time during day
+        if(time%144<60){
+            goLocation(map, home);
+        }else{
             goLocation(map, mob);
         }
     }

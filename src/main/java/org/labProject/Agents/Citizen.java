@@ -71,14 +71,8 @@ public abstract class Citizen extends Renderable implements SimAgent {
                     ((Building) map.toRender.get(this.currentLocation.x).get(this.currentLocation.y)).leave(this);
                     ((Building) map.toRender.get(this.currentLocation.x + 1).get(this.currentLocation.y)).enter(this);
                 }
-            }else if(this.currentLocation != building && String.valueOf(this.currentLocation)!="Street"){
-                if (this.currentLocation.x%3==1) {
-                    ((Building) map.toRender.get(this.currentLocation.x).get(this.currentLocation.y)).leave(this);
-                    ((Building) map.toRender.get(this.currentLocation.x).get(this.currentLocation.y - 1)).enter(this);
-                }else{
-                    ((Building) map.toRender.get(this.currentLocation.x).get(this.currentLocation.y)).leave(this);
-                    ((Building) map.toRender.get(this.currentLocation.x).get(this.currentLocation.y + 1)).enter(this);
-                }
+            }else if(this.currentLocation != building && !this.currentLocation.getClass().getSimpleName().equals("Street")){
+                this.randomMovement(map);
             }
     }
 

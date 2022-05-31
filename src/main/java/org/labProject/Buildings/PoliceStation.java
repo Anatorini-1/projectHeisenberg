@@ -8,7 +8,7 @@ import java.util.List;
 
 public class PoliceStation extends Building{
     private List<Police> staff;
-    private int patrolsPerDay;
+    public int patrolsPerDay;
     private int corruptionLevel;
 
     public PoliceStation(int p,int c,int x, int y){

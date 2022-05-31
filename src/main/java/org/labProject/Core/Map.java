@@ -45,7 +45,7 @@ public class Map {
             }
             return coordsList;
     }
-
+    //To fix
 
     public Map(int size){
         this.gridSize = size;
@@ -74,10 +74,10 @@ public class Map {
                             mob.add(mobHeadquarters);
                             toRender.get(i).add(mobHeadquarters);  break;
                         case 2:
-                            PoliceStation policeStation = new PoliceStation((int) (Math.random() * (10-1)+1), (int) (Math.random() * (10-1)+1), i,j);
+                            PoliceStation policeStation = new PoliceStation(10, (int) (Math.random() * (10-1)+1), i,j);
                             toRender.get(i).add(policeStation);
                             for(int p=0;p<2;p++){
-                                Police newPolice = new Police((int) (Math.random() * (10-1)+1),(int) (Math.random() * (10-1)+1),(int) (Math.random() * (10-1)+1), policeStation);
+                                Police newPolice = new Police(10,(int) (Math.random() * (10-1)+1),(int) (Math.random() * (10-1)+1), policeStation);
                                 newPolice.home = policeStation;
                                 newPolice.currentLocation = policeStation;
                                 policeStation.guests.add(newPolice);
@@ -100,14 +100,13 @@ public class Map {
                 else{
                     ApartmentBuilding apartmentBuilding = new ApartmentBuilding(i,j);
                     toRender.get(i).add(apartmentBuilding);
-                    int random = (int)Math.floor(Math.random()*20)+1;
+                    int random = (int)Math.floor(Math.random()*15)+1;
                     if(random==2) {
                         RegularCitizen newCitizen = new RegularCitizen();
                         newCitizen.home = apartmentBuilding;
                         newCitizen.currentLocation = apartmentBuilding;
                         newCitizen.home.guests.add(newCitizen);
                         units.add(newCitizen);
-
                     }
                 }
             }

@@ -3,12 +3,7 @@ package org.labProject.Core;
 
 import org.labProject.Agents.*;
 import org.labProject.GUI.SimMainFrame;
-import org.labProject.Buildings.Building;
-import org.labProject.GUI.SimMapFrame;
 
-import javax.swing.*;
-import java.security.spec.RSAOtherPrimeInfo;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -26,10 +21,9 @@ public class Simulation{
     }
 
     private static void tick(){
-            for (int i = 0; i < units.size(); i++) {
-                units.get(i).action(map);
-
-            }
+        for (int i = 0; i < units.size(); i++) {
+            units.get(i).action(map);
+        }
     }
     private static void goBackTick(){
         for (int i = 0; i < units.size(); i++) {
@@ -38,17 +32,10 @@ public class Simulation{
     }
     public static void main(String[] args) throws InterruptedException {
         init();
-        int t = 0;
         while(true){
             if(!Parameters.isPaused){
-                if(t<100) {
-                    tick();
-                }else{
-                    goBackTick();
-                    if(t == 150){t = 0;};
-                }
-                t++;
-
+                tick();
+                Parameters.currentTime++;
             }
             Thread.sleep(1000 / Parameters.tickSpeed);
 

@@ -18,10 +18,10 @@ public class Courier extends Citizen{
         this.mob = mob;
     }
     @Override
-    public void action(Citizen citizen, Map map) {
-        if(citizen.currentLocation.equals(mob)){}
+    public void action(Map map) {
+        if(this.currentLocation.equals(mob)){}
         else{
-            goLocation(citizen, map, mob);
+            goLocation(this, map, mob);
         }
     }
 

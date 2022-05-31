@@ -13,7 +13,7 @@ public class Dealer extends Citizen{
         this.morale = m;
     }
     @Override
-    public void action(Citizen citizen, Map map) {
+    public void action( Map map) {
 
     }
 

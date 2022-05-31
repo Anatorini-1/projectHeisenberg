@@ -6,7 +6,7 @@ public class Producer extends Citizen{
     private float experience;
     private int level;
     @Override
-    public void action(Citizen citizen, Map map) {
+    public void action( Map map) {
 
     }
 

@@ -27,7 +27,7 @@ public class Simulation{
 
     private static void tick(){
             for (int i = 0; i < units.size(); i++) {
-                units.get(i).action(units.get(i), map);
+                units.get(i).action(map);
 
             }
     }
@@ -48,6 +48,7 @@ public class Simulation{
                     if(t == 150){t = 0;};
                 }
                 t++;
+
             }
             Thread.sleep(1000 / Parameters.tickSpeed);
 

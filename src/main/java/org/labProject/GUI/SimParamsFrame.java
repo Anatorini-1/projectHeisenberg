@@ -23,7 +23,7 @@ public class SimParamsFrame extends JPanel {
         resumeButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         setLayout(new BoxLayout(this,BoxLayout.PAGE_AXIS));
 
-        var tickSpeedSlider = new JSlider(JSlider.HORIZONTAL,1,20,10);
+        var tickSpeedSlider = new JSlider(JSlider.HORIZONTAL,1,20,Parameters.tickSpeed);
         tickSpeedSlider.setMinorTickSpacing(1);
         tickSpeedSlider.addChangeListener(e -> {
             Parameters.tickSpeed = tickSpeedSlider.getValue();

@@ -1,7 +1,6 @@
 package org.labProject.Agents;
 
 import org.labProject.Buildings.Building;
-import org.labProject.Buildings.Street;
 import org.labProject.Core.Map;
 import org.labProject.Core.Renderable;
 
@@ -11,7 +10,6 @@ import java.util.List;
 
 public abstract class Citizen extends Renderable implements SimAgent {
     public List<Item> inventory;
-    public String name;
     public int age;
     public float budget;
     public float carryCapacity;
@@ -97,9 +95,42 @@ public abstract class Citizen extends Renderable implements SimAgent {
             }
         }
     }
+
+    protected void randomMovement(Map map){
+        ArrayList<Building> moveOptions = new ArrayList<>();
+
+        //Can we go right?
+        if(this.currentLocation.x < map.gridSize-1)
+                if(map.toRender.get(this.currentLocation.x+1).get(this.currentLocation.y).getClass().getSimpleName().equals("Street"))
+                    moveOptions.add((Building) map.toRender.get(this.currentLocation.x+1).get(this.currentLocation.y));
+        //Can we go left?
+        if(this.currentLocation.x > 0)
+            if(map.toRender.get(this.currentLocation.x-1).get(this.currentLocation.y).getClass().getSimpleName().equals("Street"))
+                moveOptions.add((Building) map.toRender.get(this.currentLocation.x-1).get(this.currentLocation.y));
+        //Can we go up?
+        if(this.currentLocation.y > 0)
+            if(map.toRender.get(this.currentLocation.x).get(this.currentLocation.y-1).getClass().getSimpleName().equals("Street"))
+                moveOptions.add((Building) map.toRender.get(this.currentLocation.x).get(this.currentLocation.y-1));
+        //Can we go down?
+        if(this.currentLocation.y < map.gridSize-1)
+            if(map.toRender.get(this.currentLocation.x).get(this.currentLocation.y+1).getClass().getSimpleName().equals("Street"))
+                moveOptions.add((Building) map.toRender.get(this.currentLocation.x).get(this.currentLocation.y+1));
+
+        //Pick random direction
+        if(moveOptions.size()>0){
+            Building targetBuilding = moveOptions.get((int)Math.floor(Math.random()*moveOptions.size()));
+            targetBuilding.enter(this);
+            this.currentLocation = targetBuilding;
+            this.x = currentLocation.x;
+            this.y = currentLocation.y;
+        }
+
+    }
+
     @Override
-    public void action(Citizen citizen, Map map) {
-        int x = citizen.currentLocation.x;
+    public void action(Map map) {
+        this.randomMovement(map);
+        /*int x = citizen.currentLocation.x;
         int y = citizen.currentLocation.y;
         int toMove = (int)Math.floor(Math.random()*4)+1;
         if(x > 0 && y > 0 && x < map.gridSize-1 && y < map.gridSize-1){
@@ -216,6 +247,6 @@ public abstract class Citizen extends Renderable implements SimAgent {
             else if(buildingRight.contains("Street") && toMove == 3){
                 goRight(citizen, map, x, y);
             }
-        }
+        }*/
     }
 }

@@ -13,7 +13,7 @@ public class Kingpin extends Citizen{
     this.profitCut = p;
   }
   @Override
-  public void action(Citizen citizen, Map map) {
+  public void action( Map map) {
 
   }
 

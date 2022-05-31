@@ -12,7 +12,7 @@ public class PoliceStation extends Building{
     private int corruptionLevel;
 
     public PoliceStation(int p,int c,int x, int y){
-        super(x,y,Color.blue);
+        super(x,y,new Color(150,150,255));
         this.patrolsPerDay = p;
         this.corruptionLevel = c;
         this.staff = new ArrayList<>();

@@ -10,13 +10,14 @@ import java.util.List;
 public class Simulation{
     private static Map map;
     private static List<Citizen> units;
-    private static SimMainFrame gui;
+    private static SimMainFrame gui = null;
     private static boolean showGUI = true;
     private static boolean showConsole = false;
     public static void init(){
         //Static values for presentation purposes
         map = new Map(19);
         units = map.units;
+        if(gui != null) gui.dispose();
         if(showGUI) gui = new SimMainFrame(map,units);
     }
 

@@ -9,6 +9,7 @@ public class Parameters {
     public static int numberOfPoliceStations = 1;
     public static int patrolsPerDayPerStations = 1;
     public static int policeCorruptionLevel = 1;
+    public static int policemanPerStation= 2;
     //Gang Related Params
     public static int numberOfPlantations = 1;
     public static int drugSellPrice = 1;
@@ -16,7 +17,9 @@ public class Parameters {
     public static int bossProfitCut = 1;
     //Town related params
     public static int visitorsPerDay = 1;
-    public static int townPopulation = 1;
+    public static int townPopulation = 10;
+
+
 
 
     public static void init(){

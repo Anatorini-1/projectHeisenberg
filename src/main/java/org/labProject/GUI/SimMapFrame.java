@@ -19,13 +19,14 @@ public class SimMapFrame extends JPanel {
         this.unitsAnchor = units;
         this.cellSize = (int)(Parameters.mapWindowSize / map.toRender.size());
         setPreferredSize(new Dimension(Parameters.mapWindowSize,Parameters.mapWindowSize));
+        setAlignmentX(JPanel.LEFT_ALIGNMENT);
+        setAlignmentY(JPanel.TOP_ALIGNMENT);
     }
     @Override public void paintComponent(Graphics g)
     {
-        unitsAnchor.forEach(unit -> {
-
-        });
+        super.paintComponent(g);
         var g2d = (Graphics2D)g;
+        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,RenderingHints.VALUE_ANTIALIAS_ON);
         g2d.setColor(Color.BLACK);
         g2d.fillRect(0,0,this.getWidth()-1,this.getHeight()-1);
         mapAnchor.toRender.forEach(row -> {

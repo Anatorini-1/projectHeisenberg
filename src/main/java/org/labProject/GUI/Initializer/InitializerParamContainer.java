@@ -1,6 +1,8 @@
-package org.labProject.GUI;
+package org.labProject.GUI.Initializer;
 
 import javax.swing.*;
+import javax.swing.plaf.SliderUI;
+import javax.swing.plaf.metal.MetalSliderUI;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -15,11 +17,13 @@ public class InitializerParamContainer extends JPanel {
     private String label;
 
     private void prepare(){
+        setBackground(Color.WHITE);
         setPreferredSize(dimensions);
         setLayout(new GridBagLayout());
         this.fieldLabel = new JLabel(label);
         this.field = new JTextField();
-        this.slider = new JSlider(0, 10, 1);
+        this.slider = new JSlider(0, 10, pg.get());
+        this.slider.setBackground(Color.white);
         slider.setPaintTicks(true);
         slider.addChangeListener(e -> {
             ps.set(slider.getValue());
@@ -28,7 +32,16 @@ public class InitializerParamContainer extends JPanel {
         });
         slider.setPaintLabels(false);
         slider.setLabelTable(slider.createStandardLabels(1));
-
+        slider.setUI(new MetalSliderUI(){
+            @Override
+            public void paintThumb(Graphics g) {
+                Rectangle r = thumbRect;
+                var g2d = (Graphics2D)g;
+                g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,RenderingHints.VALUE_ANTIALIAS_ON);
+                g2d.setColor(new Color(20,100,20));
+                g.fillOval(r.x,r.y,r.width,r.height);
+            }
+        });
 
         field.setText(String.valueOf(pg.get()));
         field.addKeyListener(new KeyListener() {
@@ -77,6 +90,8 @@ public class InitializerParamContainer extends JPanel {
         constraints.gridy = 0;
         constraints.anchor = GridBagConstraints.FIRST_LINE_END;
         add(field, constraints);
+
+
     }
     public  InitializerParamContainer(String label, Dimension dimensions, ParamGetter g, ParamSetter s) {
         this.label = label;
@@ -97,4 +112,6 @@ public class InitializerParamContainer extends JPanel {
         this.slider.setMaximum(max);
         pack();
     }
+
+
 }

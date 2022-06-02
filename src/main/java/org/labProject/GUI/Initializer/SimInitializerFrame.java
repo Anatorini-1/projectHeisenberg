@@ -1,7 +1,8 @@
-package org.labProject.GUI;
+package org.labProject.GUI.Initializer;
 
 import org.labProject.Core.Parameters;
 import org.labProject.Core.Simulation;
+import org.labProject.GUI.Initializer.InitializerParamContainer;
 
 import javax.swing.*;
 import java.awt.*;
@@ -22,7 +23,7 @@ public class SimInitializerFrame extends JPanel {
                 public static int visitorsPerDay = 1;
                 public static int townPopulation = 1;
                 * */
-        setPreferredSize(new Dimension(250, Parameters.mapWindowSize));
+        setPreferredSize(new Dimension(250, Parameters.mapWindowSize+60));
         var numberOfPoliceStations = new InitializerParamContainer(
                 "Number of Police Stations: ",
                 new Dimension(200,50),
@@ -34,6 +35,12 @@ public class SimInitializerFrame extends JPanel {
                 new Dimension(200,50),
                 () -> {return Parameters.patrolsPerDayPerStations;},
                 (e) -> {Parameters.patrolsPerDayPerStations = e;}
+        );
+        var policemanPerStation = new InitializerParamContainer(
+                "Policeman per station: ",
+                new Dimension(200,50),
+                () -> {return Parameters.policemanPerStation;},
+                (e) -> {Parameters.policemanPerStation = e;}
         );
         var policeCorruptionLevel = new InitializerParamContainer(
                 "Police Corruption[%]: ",
@@ -86,6 +93,7 @@ public class SimInitializerFrame extends JPanel {
             Parameters.init();
             Simulation.init();
         });
+        initButton.setAlignmentX(JButton.CENTER_ALIGNMENT);
                 /*
         *   //Police Related Params
                 public static int numberOfPoliceStations = 1;
@@ -100,7 +108,9 @@ public class SimInitializerFrame extends JPanel {
                 public static int visitorsPerDay = 1;
                 public static int townPopulation = 1;
                 * */
+        setLayout(new BoxLayout(this,BoxLayout.Y_AXIS));
         add(numberOfPoliceStations);
+        add(policemanPerStation);
         add(patrolsPerDayPerStation);
         add(policeCorruptionLevel);
         add(numberOfPlantations);
@@ -110,6 +120,6 @@ public class SimInitializerFrame extends JPanel {
         add(visitorsPerDay);
         add(townPopulation);
         add(initButton);
-        setBackground(new Color(100,100,100));
+        setBackground(Color.WHITE);
     }
 }

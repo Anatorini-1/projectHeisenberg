@@ -7,7 +7,7 @@ import java.awt.*;
 
 public class SimParamsFrame extends JPanel {
     public SimParamsFrame(){
-        setPreferredSize(new Dimension(400,200));
+        setPreferredSize(new Dimension(Parameters.mapWindowSize,Parameters.mapWindowSize/3));
         setBackground(Color.GRAY);
         var pauseButton = new JButton();
         pauseButton.setText("Pause");
@@ -42,6 +42,7 @@ public class SimParamsFrame extends JPanel {
         add(sliderLabel);
         add(tickSpeedSlider);
         add(new Label());
+
     }
 
 }

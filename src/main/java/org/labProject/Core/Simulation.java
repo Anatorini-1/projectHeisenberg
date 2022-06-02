@@ -13,7 +13,7 @@ public class Simulation{
     private static SimMainFrame gui;
     private static boolean showGUI = true;
     private static boolean showConsole = false;
-    private static void init(){
+    public static void init(){
         //Static values for presentation purposes
         map = new Map(19);
         units = map.units;

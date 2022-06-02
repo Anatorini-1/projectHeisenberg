@@ -3,6 +3,7 @@ package org.labProject.GUI;
 import org.labProject.Agents.Citizen;
 import org.labProject.Buildings.Street;
 import org.labProject.Core.Map;
+import org.labProject.Core.Parameters;
 
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -16,8 +17,8 @@ public class SimMapFrame extends JPanel {
     public SimMapFrame(Map map, List<Citizen> units){
         this.mapAnchor = map;
         this.unitsAnchor = units;
-        this.cellSize = (int)(400 / map.toRender.size());
-        setPreferredSize(new Dimension(400,400));
+        this.cellSize = (int)(Parameters.mapWindowSize / map.toRender.size());
+        setPreferredSize(new Dimension(Parameters.mapWindowSize,Parameters.mapWindowSize));
     }
     @Override public void paintComponent(Graphics g)
     {

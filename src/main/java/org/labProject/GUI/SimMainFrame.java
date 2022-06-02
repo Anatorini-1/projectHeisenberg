@@ -36,6 +36,12 @@ public class SimMainFrame extends JFrame {
         layout.gridy = 1;
         add(statistics,layout);
 
+        JPanel initializer = new SimInitializerFrame();
+        layout.gridx = 3;
+        layout.gridy = 0;
+        layout.gridheight=2;
+        layout.gridwidth=1;
+        add(initializer,layout);
         pack();
         setVisible(true);
     }

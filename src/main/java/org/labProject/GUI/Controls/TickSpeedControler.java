@@ -15,6 +15,7 @@ public class TickSpeedControler extends JPanel {
 
         var box = new JTextField();
         box.setColumns(3);
+        box.setText(String.valueOf(Parameters.tickSpeed));
         box.setBackground(isValid ? Color.WHITE : Color.red);
         box.addKeyListener(new KeyListener() {
             @Override
@@ -32,6 +33,7 @@ public class TickSpeedControler extends JPanel {
                 try {
                     Parameters.tickSpeed = Integer.parseInt(box.getText());
                     isValid = true;
+                    Parameters.tickSpeed = Parameters.tickSpeed > 0 ? Parameters.tickSpeed : 1;
                     refresh();
                 }
                 catch(NumberFormatException e){

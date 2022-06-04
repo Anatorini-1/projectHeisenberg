@@ -34,7 +34,7 @@ public class Simulation{
     public static void main(String[] args) throws InterruptedException {
         init();
         while(true){
-            if(!Parameters.isPaused){
+            if(!Parameters.isPaused && Parameters.isInitialized){
                 tick();
                 Parameters.currentTime++;
             }

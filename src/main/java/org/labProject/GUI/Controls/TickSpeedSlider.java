@@ -8,7 +8,7 @@ import java.awt.*;
 
 public class TickSpeedSlider extends JSlider {
     public TickSpeedSlider(){
-        setMinimum(0);
+        setMinimum(1);
         setMaximum(20);
         setValue(Parameters.tickSpeed);
         setPaintLabels(true);
@@ -16,7 +16,8 @@ public class TickSpeedSlider extends JSlider {
         setBackground(Color.white);
         setPreferredSize(new Dimension(300,50));
         addChangeListener(e -> {
-            Parameters.tickSpeed = getValue();
+            Parameters.tickSpeed = getValue() > 0 ? getValue() : 1;
+
         });
         setUI(new MetalSliderUI(){
             @Override

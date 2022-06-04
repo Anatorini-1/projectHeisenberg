@@ -19,13 +19,14 @@ public class Parameters {
     public static int visitorsPerDay = 1;
     public static int townPopulation = 10;
 
-
+    public static boolean isInitialized = false;
 
 
     public static void init(){
         isPaused = false;
         tickSpeed =10;
         currentTime = 1;
+        isInitialized = true;
     };
     /*
     * more to be added as needed

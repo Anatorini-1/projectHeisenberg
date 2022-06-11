@@ -24,7 +24,7 @@ public class MobHeadquarters extends Building{
         this.boss = new Kingpin();
         this.operationRange = Parameters.drugOperationRange;
     }
-
+    //Checking demand
     public int delivery(Courier courier){
         if(this.productQuantity<=this.storageCapacity){
             return Math.min(this.storageCapacity - this.productQuantity, courier.carryCapacity);
@@ -33,7 +33,6 @@ public class MobHeadquarters extends Building{
     }
     public boolean handingProduct(Courier courier){
         this.productQuantity += courier.inventory.get(0).quantity;
-        System.out.println(this.productQuantity);
         courier.inventory.get(0).quantity = 0;
         return true;
     }

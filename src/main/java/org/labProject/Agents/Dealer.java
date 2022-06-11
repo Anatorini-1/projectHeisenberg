@@ -1,5 +1,6 @@
 package org.labProject.Agents;
 
+import org.labProject.Buildings.Building;
 import org.labProject.Core.Map;
 import org.labProject.Core.Parameters;
 
@@ -10,6 +11,7 @@ public class Dealer extends Citizen{
     private int perception;
     private int morale;
     private int randomMovement;
+    private int[] location = new int[2];
     public Dealer(float p,int pe, int m){
         super();
         this.c = Color.ORANGE;
@@ -17,49 +19,83 @@ public class Dealer extends Citizen{
         this.profficiency = p;
         this.morale = m;
     }
+
+    private int[] streetLocation(Map map){
+        int[] coords = new int[2];
+        if(this.home.x%3==1){
+            if((int) (Math.random() * (2) + 1)>1) {
+                coords[0] = Math.max((this.home.x - 1 - (((int) (Math.random() * (Parameters.drugOperationRange) + 1) - 1) * 3)), 0);
+            }else {
+                coords[0] = Math.min(this.home.x + 2 + (((int) (Math.random() * (Parameters.drugOperationRange) + 1) - 1) * 3), map.toRender.size() - 1);
+            }
+        }else{
+            if((int) (Math.random() * (2) + 1)>1) {
+                coords[0] = Math.max((this.home.x - 2 - (((int) (Math.random() * (Parameters.drugOperationRange) + 1) - 1) * 3)), 0);
+            }else {
+                coords[0] = Math.min(this.home.x + 1 + (((int) (Math.random() * (Parameters.drugOperationRange) + 1) - 1) * 3), map.toRender.size() - 1);
+            }
+        }
+        if(this.home.y%3==1){
+            if((int) (Math.random() * (2) + 1)>1) {
+                coords[1] = Math.max((this.home.y - 1 - (((int) (Math.random() * (Parameters.drugOperationRange) + 1) - 1) * 3)), 0);
+            }else {
+                coords[1] = Math.min(this.home.y + 2 + (((int) (Math.random() * (Parameters.drugOperationRange) + 1) - 1) * 3), map.toRender.size() - 1);
+            }
+        }else{
+            if((int) (Math.random() * (2) + 1)>1) {
+                coords[1] = Math.max((this.home.y - 2 - (((int) (Math.random() * (Parameters.drugOperationRange) + 1) - 1) * 3)), 0);
+            }else {
+                coords[1] = Math.min(this.home.y + 1 + (((int) (Math.random() * (Parameters.drugOperationRange) + 1) - 1) * 3), map.toRender.size() - 1);
+            }
+        }
+        return coords;
+    }
+    private void goSell(Map map){
+        if(this.currentLocation.x % 3 == 0 && this.currentLocation.y != this.location[1]) {
+            if (this.currentLocation.y > this.location[1]) {
+                ((Building) map.toRender.get(this.currentLocation.x).get(this.currentLocation.y)).leave(this);
+                ((Building) map.toRender.get(this.currentLocation.x).get(this.currentLocation.y - 1)).enter(this);
+            } else{
+                ((Building) map.toRender.get(this.currentLocation.x).get(this.currentLocation.y)).leave(this);
+                ((Building) map.toRender.get(this.currentLocation.x).get(this.currentLocation.y + 1)).enter(this);
+            }
+        }else if(this.currentLocation.y % 3 == 0 && this.currentLocation.x != this.location[0]) {
+            if (this.currentLocation.x < this.location[0]) {
+                ((Building) map.toRender.get(this.currentLocation.x).get(this.currentLocation.y)).leave(this);
+                ((Building) map.toRender.get(this.currentLocation.x + 1).get(this.currentLocation.y)).enter(this);
+            } else{
+                ((Building) map.toRender.get(this.currentLocation.x).get(this.currentLocation.y)).leave(this);
+                ((Building) map.toRender.get(this.currentLocation.x - 1).get(this.currentLocation.y)).enter(this);
+            }
+        }else if(!this.currentLocation.getClass().getSimpleName().equals("Street")){
+            this.randomMovement(map);
+        }
+    }
     @Override
     public void action( Map map) {
         int time = Parameters.currentTime%1440; //Current time during day
-        int decision;
         if(time<960) {
-            if (time % 60 == 0) {
-                decision = (int) Math.floor(Math.random() * 3) + 1;
-                System.out.println(decision);
-                switch (decision) {
-                    case 1:
-                        this.randomMovement = 1;
-                        break;
-                    case 2:
-                        this.randomMovement = 2;
-                        break;
-                    default:
-                        this.randomMovement = 3;
-                        break;
+            if(time%60==0){
+                if((int) (Math.random() * 100) + 1 <= 50) {
+                    this.location = streetLocation(map);
+                }else{
+                    this.location[0] = -1;
                 }
             }
         }else{
-            if (time % 30 == 0) {
-                decision = (int) Math.floor(Math.random() * 3) + 1;
-                System.out.println(decision);
-                switch (decision) {
-                    case 1:
-                        this.randomMovement = 1;
-                        break;
-                    case 2:
-                        this.randomMovement = 2;
-                        break;
-                    case 3:
-                        this.randomMovement = 3;
-                        break;
+            if(time%60==0){
+                if((int) (Math.random() * 100) + 1 <= 75) {
+                    this.location = streetLocation(map);
+                }else{
+                    this.location[0] = -1;
                 }
             }
         }
-        if(this.randomMovement == 1){
-            randomMovement(map);
-        }else if(this.randomMovement == 2){
-            goLocation(map,this.home);
+        if(this.location[0] == -1){
+            this.goLocation(map, home);
+        }else{
+            goSell(map);
         }
-
     }
 
     @Override

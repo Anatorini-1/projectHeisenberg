@@ -57,8 +57,6 @@ public class Simulation{
                     }
                     System.out.println(Arrays.toString(line));
                 }
-                System.out.println("\n");
-                System.out.println(units.get(6).currentLocation.x);
             }
         }
     }

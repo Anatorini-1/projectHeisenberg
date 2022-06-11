@@ -1,14 +1,11 @@
 package org.labProject.Agents;
 
-import org.labProject.Buildings.Building;
 import org.labProject.Buildings.PoliceStation;
 import org.labProject.Core.Map;
 import org.labProject.Core.Parameters;
 
 
 import java.awt.*;
-
-import static java.lang.Math.floor;
 
 public class Police extends Citizen{
     private int perception;
@@ -29,6 +26,17 @@ public class Police extends Citizen{
             int whenPatrol = (int) Math.floor(1440 / parentStation.patrolsPerDay);
             if (time % whenPatrol < whenPatrol - 60) {
                 this.randomMovement(map);
+                //Catching the weed addicted
+                int toSearch = (int) (Math.random() * 100);
+                if(this.currentLocation.guests.size() > 1 && toSearch < 11){
+                    for (Citizen citizen : this.currentLocation.guests) {
+                        int toBribe = (int) (Math.random() * 100);
+                        if(citizen.inventory.size() > 0 && toBribe < morale && citizen.inventory.get(0).quantity > 0){
+                            map.units.remove(citizen);
+                        }
+                        else if(citizen.inventory.size() > 0 && toBribe > morale && citizen.inventory.get(0).quantity > 0){citizen.budget = citizen.budget - 10;}
+                    }
+                }
             } else{
                 this.goLocation(map, this.parentStation);
             }

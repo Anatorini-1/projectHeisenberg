@@ -1,6 +1,5 @@
 package org.labProject.Agents;
 
-import org.labProject.Buildings.Building;
 import org.labProject.Buildings.MobHeadquarters;
 import org.labProject.Buildings.Plantation;
 import org.labProject.Core.Map;

@@ -78,7 +78,7 @@ public class Map {
                         if(whichBuilding==0){ //There is just one Headquarter
                             MobHeadquarters mobHeadquarters = new MobHeadquarters(i, j);
                             this.mob = mobHeadquarters;
-                            Dealer dealer = new Dealer(2, (int) (Math.random() * (100 - 1) + 1), (int) (Math.random() * (100 - 1) + 1));
+                            Dealer dealer = new Dealer(2, (int) (Math.random() * (100 - 1) + 1), (int) (Math.random() * (100 - 1) + 1), this.mob);
                             mobHeadquarters.guests.add(dealer);
                             dealer.home = mobHeadquarters;
                             dealer.currentLocation = mobHeadquarters;

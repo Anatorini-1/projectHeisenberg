@@ -100,6 +100,7 @@ public abstract class Citizen extends Renderable implements SimAgent {
         //Pick random direction
         if(moveOptions.size()>0){
             Building targetBuilding = moveOptions.get((int)Math.floor(Math.random()*moveOptions.size()));
+            this.currentLocation.leave(this);
             targetBuilding.enter(this);
             this.currentLocation = targetBuilding;
             this.x = currentLocation.x;

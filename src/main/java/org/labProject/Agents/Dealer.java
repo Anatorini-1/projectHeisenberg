@@ -1,6 +1,7 @@
 package org.labProject.Agents;
 
 import org.labProject.Buildings.Building;
+import org.labProject.Buildings.MobHeadquarters;
 import org.labProject.Core.Map;
 import org.labProject.Core.Parameters;
 
@@ -12,12 +13,15 @@ public class Dealer extends Citizen{
     private int morale;
     private int randomMovement;
     private int[] location = new int[2];
-    public Dealer(float p,int pe, int m){
+    private MobHeadquarters mob;
+    public Dealer(float p,int pe, int m, MobHeadquarters mob){
         super();
         this.c = Color.ORANGE;
         this.perception = pe;
         this.profficiency = p;
         this.morale = m;
+        this.mob = mob;
+        this.inventory.add(new Item(0,50,"Weed"));
     }
 
     private int[] streetLocation(Map map){
@@ -95,9 +99,35 @@ public class Dealer extends Citizen{
             this.goLocation(map, home);
         }else{
             goSell(map);
+            if(this.currentLocation.guests.size() > 1 && this.inventory.get(0).quantity > 0){
+                for (Citizen citizen : this.currentLocation.guests) {
+                   if(citizen.age < 21 && this.morale < 20){sellWeed(citizen);}
+                   else if(citizen.age > 20){sellWeed(citizen);}
+                }
+            }
+            if(this.inventory.get(0).quantity == 0){
+                this.location[0] = -1;
+            }
+        }
+        if(this.currentLocation == home){
+            this.mob.handingToDealer(this);
         }
     }
 
+    //function to sell weed to citizens
+    private void sellWeed(Citizen citizen){
+        if(citizen.getClass().getSimpleName().equals("RegularCitizen") && citizen.budget > 5){
+            citizen.budget -= 5;
+            this.budget += 5;
+            this.inventory.get(0).quantity -= 5;
+            if(citizen.inventory.size() > 0){
+                citizen.inventory.get(0).quantity += 5;
+            }
+            else{
+                citizen.inventory.add(new Item(0,5,"Weed"));
+            }
+        }
+    }
     @Override
     public void create() {}
 

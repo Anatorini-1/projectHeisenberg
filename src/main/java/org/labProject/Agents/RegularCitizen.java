@@ -1,8 +1,5 @@
 package org.labProject.Agents;
 
-import org.labProject.Buildings.ApartmentBuilding;
-import org.labProject.Buildings.Building;
-import org.labProject.Buildings.Street;
 import org.labProject.Core.Map;
 import org.labProject.Core.Parameters;
 
@@ -30,6 +27,11 @@ public class RegularCitizen extends Citizen{
             randomMovement(map);
         }else{
             goLocation(map,this.home);
+        }
+        if(time % 1440 == 0){
+            if(age < 21){this.budget += (int)Math.floor(Math.random()*20)+10;}
+            else if(age >= 21 && age < 50){this.budget += (int)Math.floor(Math.random()*50)+20;}
+            else{this.budget += (int)Math.floor(Math.random()*70)+50;}
         }
     }
     public RegularCitizen(){

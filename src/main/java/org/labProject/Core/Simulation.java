@@ -34,6 +34,16 @@ public class Simulation{
     public static void main(String[] args) throws InterruptedException {
         init();
         while(true){
+            //Checking if dealer exists or ending simulation
+            int dealerExists = 0;
+            for (Citizen unit : units) {
+                if(unit.getClass().getSimpleName().equals("Dealer")){dealerExists += 1;}
+            }
+            if(dealerExists == 0){
+                System.out.println("Dealer został złapany, koniec symulacji");
+                break;
+            }
+
             if(!Parameters.isPaused && Parameters.isInitialized){
                 tick();
                 Parameters.currentTime++;

@@ -1,6 +1,7 @@
 package org.labProject.Buildings;
 
 import org.labProject.Agents.Courier;
+import org.labProject.Agents.Dealer;
 import org.labProject.Agents.Kingpin;
 import org.labProject.Core.Parameters;
 
@@ -35,5 +36,11 @@ public class MobHeadquarters extends Building{
         this.productQuantity += courier.inventory.get(0).quantity;
         courier.inventory.get(0).quantity = 0;
         return true;
+    }
+    public void handingToDealer(Dealer dealer){
+        if(dealer.inventory.get(0).quantity == 0 && this.productQuantity >= 50){
+            this.productQuantity -= 50;
+            dealer.inventory.get(0).quantity = 50;
+        }
     }
 }

@@ -6,6 +6,7 @@ import org.labProject.Buildings.*;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -14,7 +15,7 @@ public class Map {
     //grid size made public for test reasons
     public int gridSize;
     public List<Citizen> units;
-    public List<MobHeadquarters> mob;
+    public MobHeadquarters mob;
     public List<List<Renderable>> toRender;
     //Method for printing the current map state to the console window
     public void dumpInfo(){
@@ -37,81 +38,90 @@ public class Map {
     private ArrayList<Integer[]> BuildingsRandomCoords(int size, int quantity){
         ArrayList<Integer[]> coordsList = new ArrayList<>(new ArrayList<>());
             while(quantity>0){
-                Integer[] coordsH = GetCoords(size);
-                if(!coordsList.contains(coordsH)){
-                    coordsList.add(coordsH);
+                Integer[] coordsR = GetCoords(size);
+                boolean isInArray = false;
+                for(Integer[] coordsCheck : coordsList){
+                if(Arrays.equals(coordsCheck, coordsR)) {
+                    isInArray = true;
+                }
+                }
+                if(!isInArray){
+                    coordsList.add(coordsR);
                     quantity--;
                 }
             }
             return coordsList;
     }
-    //To fix
+
 
     public Map(int size){
         this.gridSize = size;
         this.toRender = new ArrayList<>();
         this.units = new ArrayList<>();
-        this.mob = new ArrayList<>();
-        int quantintyOfBuildings = (int) (3 + Math.floor(size/21));
-        ArrayList<Integer[]>  BuildingsRandomCoords = BuildingsRandomCoords(size, quantintyOfBuildings);
-        Integer[] coords = new Integer[2];
-        int whichBuilding = 1;
+        int quantityOfBuildings = Parameters.numberOfPlantations+Parameters.numberOfPoliceStations+1; //number of special buildings
+        ArrayList<Integer[]>  specialBuildingsCoords = BuildingsRandomCoords(size, quantityOfBuildings); //Getting coords for special buildings
+        ArrayList<Integer[]>  citizenApartmentCoords = BuildingsRandomCoords(size, Parameters.townPopulation); // Getting coords for citizens home
+        int whichBuilding = 0;
         for(var i=0;i<gridSize;i++){
             toRender.add(new ArrayList<>());
             for(var j=0;j<gridSize;j++){
-                coords[0] = i; coords[1] = j;
+                //checking if current coords are on list of specialBuildingCoords
                 boolean checkCoords = false;
-                for(int x = 0;x<quantintyOfBuildings;++x){
-                    if(BuildingsRandomCoords.get(x)[0].equals(coords[0]) && BuildingsRandomCoords.get(x)[1].equals(coords[1])) checkCoords = true;
+                for(int x = 0;x<quantityOfBuildings;++x){
+                    if(specialBuildingsCoords.get(x)[0].equals(i) && specialBuildingsCoords.get(x)[1].equals(j)) checkCoords = true;
                 }
                 if(i%3 == 0 || j%3 == 0){
                     toRender.get(i).add(new Street(i,j));
                 }
                 else if(checkCoords){
-                    switch(whichBuilding){
-                        case 1:
-                            MobHeadquarters mobHeadquarters = new MobHeadquarters(i,j);
-                            mob.add(mobHeadquarters);
-                            toRender.get(i).add(mobHeadquarters);  break;
-                        case 2:
-                            PoliceStation policeStation = new PoliceStation(10, (int) (Math.random() * (10-1)+1), i,j);
+
+                        if(whichBuilding==0){ //There is just one Headquarter
+                            MobHeadquarters mobHeadquarters = new MobHeadquarters(i, j);
+                            this.mob = mobHeadquarters;
+                            Dealer dealer = new Dealer(2, (int) (Math.random() * (100 - 1) + 1), (int) (Math.random() * (100 - 1) + 1));
+                            mobHeadquarters.guests.add(dealer);
+                            dealer.home = mobHeadquarters;
+                            dealer.currentLocation = mobHeadquarters;
+                            units.add(dealer);
+                            toRender.get(i).add(mobHeadquarters);
+                        }else if(whichBuilding < Parameters.numberOfPoliceStations+1){
+                            PoliceStation policeStation = new PoliceStation(Parameters.patrolsPerDayPerStations, (int) (Math.random() * (100 - 1) + 1), i, j);
                             toRender.get(i).add(policeStation);
-                            for(int p=0;p<2;p++){
-                                Police newPolice = new Police(10,(int) (Math.random() * (10-1)+1),(int) (Math.random() * (10-1)+1), policeStation);
+                            for (int p = 0; p < 2; p++) { // number of policemen
+                                Police newPolice = new Police(2, (int) (Math.random() * (100 - 1) + 1), (int) (Math.random() * (100 - 1) + 1), policeStation);
                                 newPolice.home = policeStation;
                                 newPolice.currentLocation = policeStation;
                                 policeStation.guests.add(newPolice);
                                 units.add(newPolice);
                             }
-                        break;
-                        case 3:
+                        }else if(whichBuilding<quantityOfBuildings) {
                             Plantation plantation = new Plantation(i,j);
                             toRender.get(i).add(plantation);
-                                Courier newCourier = new Courier(2, 2, mob.get(0));
-                                newCourier.home = plantation;
-                                newCourier.currentLocation = plantation;
-                                plantation.guests.add(newCourier);
-                                units.add(newCourier);
-                            break;
-                    }
+                            Courier newCourier = new Courier(2, 2, this.mob);
+                            newCourier.home = plantation;
+                            newCourier.currentLocation = plantation;
+                            plantation.guests.add(newCourier);
+                            units.add(newCourier);
+                        }
                     whichBuilding++;
-                    if(whichBuilding>3) whichBuilding=whichBuilding-2;
                 }
                 else{
                     ApartmentBuilding apartmentBuilding = new ApartmentBuilding(i,j);
                     toRender.get(i).add(apartmentBuilding);
-                    int random = (int)Math.floor(Math.random()*15)+1;
-                    if(random==2) {
-                        RegularCitizen newCitizen = new RegularCitizen();
-                        newCitizen.home = apartmentBuilding;
-                        newCitizen.currentLocation = apartmentBuilding;
-                        newCitizen.home.guests.add(newCitizen);
-                        units.add(newCitizen);
+                    for(int x = 0;x<Parameters.townPopulation;++x) {
+                        if (citizenApartmentCoords.get(x)[0].equals(i) && citizenApartmentCoords.get(x)[1].equals(j)) {
+                            RegularCitizen newCitizen = new RegularCitizen();
+                            newCitizen.home = apartmentBuilding;
+                            newCitizen.currentLocation = apartmentBuilding;
+                            newCitizen.home.guests.add(newCitizen);
+                            units.add(newCitizen);
+                        }
                     }
                 }
             }
         }
     }
+}
 
 //    public static void main(String[] args) {
 //        Map map = new Map(10);
@@ -123,6 +133,6 @@ public class Map {
 //        System.out.println(map.units.get(0).home.x);
 //        }
 
-    }
+
 
 

@@ -11,15 +11,16 @@ import java.util.List;
 public abstract class Citizen extends Renderable implements SimAgent {
     public List<Item> inventory;
     public int age;
-    public float budget;
-    public float carryCapacity;
+    public int budget;
+    public int carryCapacity;
     public Building currentLocation;
     public Building home;
+    public boolean randomMovement = true;
     public Citizen(){
         super(0,0, Color.WHITE);
         this.inventory = new ArrayList<>();
-        this.age = (int)Math.floor(Math.random()*80);
-        this.budget = (float)Math.random()*100;
+        this.age = (int) (Math.random() * (90-15)+15);
+        this.budget = (int) (Math.random() * (500-50)+50);
         this.carryCapacity = (int)Math.floor(Math.random()*100);
         this.home = null;
     }
@@ -47,11 +48,11 @@ public abstract class Citizen extends Renderable implements SimAgent {
             if(this.currentLocation.x == building.x && this.currentLocation.y == y) {
                 ((Building) map.toRender.get(this.currentLocation.x).get(this.currentLocation.y)).leave(this);
                 ((Building) map.toRender.get(building.x).get(building.y)).enter(this);
-            }else if (this.currentLocation.x % 3 == 0 && this.currentLocation.y != y) {
+            }else if(this.currentLocation.x % 3 == 0 && this.currentLocation.y != y) {
                 if (this.currentLocation.y > y) {
                     ((Building) map.toRender.get(this.currentLocation.x).get(this.currentLocation.y)).leave(this);
                     ((Building) map.toRender.get(this.currentLocation.x).get(this.currentLocation.y - 1)).enter(this);
-                } else if (this.currentLocation.y < y) {
+                } else{
                     ((Building) map.toRender.get(this.currentLocation.x).get(this.currentLocation.y)).leave(this);
                     ((Building) map.toRender.get(this.currentLocation.x).get(this.currentLocation.y + 1)).enter(this);
                 }
@@ -59,11 +60,11 @@ public abstract class Citizen extends Renderable implements SimAgent {
                 if (this.currentLocation.x < building.x) {
                     ((Building) map.toRender.get(this.currentLocation.x).get(this.currentLocation.y)).leave(this);
                     ((Building) map.toRender.get(this.currentLocation.x + 1).get(this.currentLocation.y)).enter(this);
-                } else if (this.currentLocation.x > building.x) {
+                } else{
                     ((Building) map.toRender.get(this.currentLocation.x).get(this.currentLocation.y)).leave(this);
                     ((Building) map.toRender.get(this.currentLocation.x - 1).get(this.currentLocation.y)).enter(this);
                 }
-            }else if(this.currentLocation.y % 3 == 0 && this.currentLocation.x == building.x){
+            }else if(this.currentLocation.y % 3 == 0){
                 if(this.currentLocation.x%3==1){
                     ((Building) map.toRender.get(this.currentLocation.x).get(this.currentLocation.y)).leave(this);
                     ((Building) map.toRender.get(this.currentLocation.x - 1).get(this.currentLocation.y)).enter(this);

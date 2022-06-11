@@ -4,13 +4,11 @@ import org.labProject.Core.Map;
 
 public class Kingpin extends Citizen{
   private float sellPrice;
-  private int operationRange;
   private float profitCut;
-  public Kingpin(float s,int o, float p){
+  public Kingpin(){
     super();
-    this.sellPrice = s;
-    this.operationRange = o;
-    this.profitCut = p;
+    this.sellPrice = (int) (Math.random() * (100 - 10) + 10);
+    this.profitCut = (int) (Math.random() * (80 - 60) + 60);
   }
   @Override
   public void action( Map map) {

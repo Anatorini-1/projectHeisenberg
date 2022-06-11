@@ -16,10 +16,20 @@ public class RegularCitizen extends Citizen{
     @Override
     public void action(Map map){
         int time = Parameters.currentTime%1440; //Current time during day
-        if(time<960 && time%96 > this.age){
-            this.randomMovement(map);
+
+        if(time<960){
+            if(time%120 == 0){
+                this.randomMovement = (int) Math.floor(Math.random() * 100) + 1 >= this.age;
+            }
         }else{
-            this.goLocation(map, this.home);
+            if(time%(this.age+(int)Math.floor((float)this.age/2))==0) {
+                this.randomMovement = (int) Math.floor(Math.random() * 100) + 1 < (int) Math.floor(this.addictionLevel / ((time - 960) / 60));
+            }
+        }
+        if(this.randomMovement){
+            randomMovement(map);
+        }else{
+            goLocation(map,this.home);
         }
     }
     public RegularCitizen(){

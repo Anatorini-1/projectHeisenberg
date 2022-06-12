@@ -10,9 +10,12 @@ public class Parameters {
     public static int patrolsPerDayPerStations = 1;
     public static int policeCorruptionLevel = 1;
     public static int policemanPerStation= 2;
-    public static int dealerCount = 3;
+
     //Gang Related Params
     public static int numberOfPlantations = 1;
+
+    public static int plantsPerPlantation = 25;
+    public static int dealerCount = 3;
     public static int drugSellPrice = 1;
     public static int drugOperationRange = 2;
     public static int bossProfitCut = 1;

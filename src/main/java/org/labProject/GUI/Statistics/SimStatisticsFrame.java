@@ -16,9 +16,7 @@ public class SimStatisticsFrame extends JPanel {
         setLayout(new BoxLayout(this,BoxLayout.Y_AXIS));
         add(new SimClock());
         simStatChart = new SimProfitChart("dummyData1","time","value",600,300);
-
-        var btn = new JButton("123");
-       add(simStatChart);
+        add(simStatChart);
     }
     @Override
     public void paintComponent(Graphics g){

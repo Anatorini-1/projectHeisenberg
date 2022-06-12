@@ -61,6 +61,12 @@ public class SimInitializerFrame extends JPanel {
                 (int)(Parameters.mapSize / 4),
                 e -> {return e <= Parameters.mapSize/4;}
         );
+        var plantsPerPlantation = new InitializerParamContainer(
+                "Plants per plantations: ",
+                new Dimension(200,50),
+                () -> {return Parameters.plantsPerPlantation;},
+                (e) -> {Parameters.plantsPerPlantation = e;}
+        );
         var drugSellPrice = new InitializerParamContainer(
                 "Drug selling price: ",
                 new Dimension(200,50),
@@ -131,6 +137,7 @@ public class SimInitializerFrame extends JPanel {
         setLayout(new BoxLayout(this,BoxLayout.Y_AXIS));
         add(mapSize);
         add(numberOfPoliceStations);
+        add(plantsPerPlantation);
         add(policemanPerStation);
         add(patrolsPerDayPerStation);
         add(policeCorruptionLevel);

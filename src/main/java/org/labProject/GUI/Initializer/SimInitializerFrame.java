@@ -110,20 +110,7 @@ public class SimInitializerFrame extends JPanel {
             StatisticsAggregator.init();
         });
         initButton.setAlignmentX(JButton.CENTER_ALIGNMENT);
-                /*
-        *   //Police Related Params
-                public static int numberOfPoliceStations = 1;
-                public static int patrolsPerDayPerStations = 1;
-                public static int policeCorruptionLevel = 1;
-            //Gang Related Params
-                public static int numberOfPlantations = 1;
-                public static int drugSellPrice = 1;
-                public static int drugOperationRange = 1;
-                public static int bossProfitCut = 1;
-            //Town related params
-                public static int visitorsPerDay = 1;
-                public static int townPopulation = 1;
-                * */
+
         setLayout(new BoxLayout(this,BoxLayout.Y_AXIS));
         add(mapSize);
         add(numberOfPoliceStations);

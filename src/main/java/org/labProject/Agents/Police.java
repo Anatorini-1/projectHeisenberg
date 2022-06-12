@@ -82,14 +82,14 @@ public class Police extends Citizen{
             case "Dealer":
                 StatisticsAggregator.arrestedDealers += 1;
                 StatisticsAggregator.caughtDealers += 1;
-                StatisticsAggregator.log("losses", citizen.inventory.get(0).quantity, Parameters.currentTime );
+                StatisticsAggregator.log("losses", citizen.budget, Parameters.currentTime );
                 citizen.inventory.get(0).quantity = 0;
                 citizen.budget = 0;
                 break;
             case "Courier":
                 StatisticsAggregator.arrestedCouriers += 1;
                 StatisticsAggregator.caughtCouriers += 1;
-                StatisticsAggregator.log("losses", citizen.inventory.get(0).quantity, Parameters.currentTime );
+                StatisticsAggregator.log("losses", citizen.budget, Parameters.currentTime );
                 citizen.inventory.get(0).quantity = 0;
                 citizen.budget = 0;
                 break;
@@ -106,10 +106,12 @@ public class Police extends Citizen{
                 StatisticsAggregator.arrestedCitizens += 1;
                 map.units.remove(citizen);
             case "Dealer":
+                StatisticsAggregator.log("losses", citizen.budget, Parameters.currentTime );
                 StatisticsAggregator.caughtDealers += 1;
                 StatisticsAggregator.arrestedDealers += 1;
                 map.units.remove(citizen);
             case "Courier":
+                StatisticsAggregator.log("losses", citizen.budget, Parameters.currentTime );
                 StatisticsAggregator.caughtCouriers += 1;
                 StatisticsAggregator.arrestedCouriers += 1;
                 map.units.remove(citizen);
@@ -125,9 +127,11 @@ public class Police extends Citizen{
                 StatisticsAggregator.caughtCitizens += 1;
                 citizen.budget = citizen.budget - 100;
             case "Dealer":
+                StatisticsAggregator.log("losses", 100, Parameters.currentTime );
                 StatisticsAggregator.caughtDealers += 1;
                 citizen.budget = citizen.budget - 100;
             case "Courier":
+                StatisticsAggregator.log("losses", 100, Parameters.currentTime );
                 StatisticsAggregator.caughtCouriers += 1;
                 citizen.budget = citizen.budget - 100;
         }

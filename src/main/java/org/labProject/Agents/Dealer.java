@@ -55,27 +55,6 @@ public class Dealer extends Citizen{
         }
         return coords;
     }
-    private void goSell(Map map){
-        if(this.currentLocation.x % 3 == 0 && this.currentLocation.y != this.location[1]) {
-            if (this.currentLocation.y > this.location[1]) {
-                ((Building) map.toRender.get(this.currentLocation.x).get(this.currentLocation.y)).leave(this);
-                ((Building) map.toRender.get(this.currentLocation.x).get(this.currentLocation.y - 1)).enter(this);
-            } else{
-                ((Building) map.toRender.get(this.currentLocation.x).get(this.currentLocation.y)).leave(this);
-                ((Building) map.toRender.get(this.currentLocation.x).get(this.currentLocation.y + 1)).enter(this);
-            }
-        }else if(this.currentLocation.y % 3 == 0 && this.currentLocation.x != this.location[0]) {
-            if (this.currentLocation.x < this.location[0]) {
-                ((Building) map.toRender.get(this.currentLocation.x).get(this.currentLocation.y)).leave(this);
-                ((Building) map.toRender.get(this.currentLocation.x + 1).get(this.currentLocation.y)).enter(this);
-            } else{
-                ((Building) map.toRender.get(this.currentLocation.x).get(this.currentLocation.y)).leave(this);
-                ((Building) map.toRender.get(this.currentLocation.x - 1).get(this.currentLocation.y)).enter(this);
-            }
-        }else if(!this.currentLocation.getClass().getSimpleName().equals("Street")){
-            this.randomMovement(map);
-        }
-    }
     @Override
     public void action( Map map) {
         int time = Parameters.currentTime%1440; //Current time during day

@@ -2,6 +2,7 @@ package org.labProject.Buildings;
 
 import org.labProject.Agents.Courier;
 import org.labProject.Agents.Producer;
+import org.labProject.Core.Parameters;
 
 import java.awt.*;
 
@@ -25,6 +26,6 @@ public class Plantation extends Building{
         return quantity;
     }
     public void harvest(Producer producer){
-        this.readyProduct += this.plantCount + Math.floor(this.plantCount*producer.experience);
+        this.readyProduct += this.plantCount * Parameters.dealerCount + Math.floor(this.plantCount*producer.experience);
     }
 }

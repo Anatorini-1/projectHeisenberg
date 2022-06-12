@@ -29,7 +29,9 @@ public class MobHeadquarters extends Building{
     }
     //Checking demand
     public int delivery(Courier courier){
-        if(this.productQuantity<=this.storageCapacity){
+        if(this.productQuantity<=this.storageCapacity && this.productQuantity < 200){
+            return Math.min(this.storageCapacity - this.productQuantity, courier.carryCapacity);
+        }else if(this.productQuantity<=this.storageCapacity){
             return Math.min(this.storageCapacity - this.productQuantity, courier.carryCapacity);
         }
         return 0;
@@ -37,12 +39,10 @@ public class MobHeadquarters extends Building{
     public void handingProduct(Courier courier){
         this.productQuantity += courier.inventory.get(0).quantity;
         courier.inventory.get(0).quantity = 0;
-        System.out.println(this.productQuantity);
     }
     public void handingToDealer(Dealer dealer){
         totalMoney += dealer.budget;
         dealer.budget = 0;
-        System.out.println(totalMoney);
         if(dealer.inventory.get(0).quantity == 0 && this.productQuantity >= 50){
             this.productQuantity -= 50;
             dealer.inventory.get(0).quantity = 50;

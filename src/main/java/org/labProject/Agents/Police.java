@@ -34,23 +34,23 @@ public class Police extends Citizen{
                     for (Citizen citizen : this.currentLocation.guests) {
                         if(Parameters.permaDeath == true){
                             if(citizen.inventory.size() > 0 && Parameters.policeCorruptionLevel < morale && citizen.inventory.get(0).quantity > 0)
-                                map.units.remove(citizen);
+                               PunishmentRemove(map, citizen);
                             else if(citizen.inventory.size() > 0 && Parameters.policeCorruptionLevel > morale && citizen.inventory.get(0).quantity > 0){
                                 if(citizen.budget >= 100)
-                                    citizen.budget = citizen.budget - 100;
+                                    getBribed(citizen);
                                 else
-                                    map.units.remove(citizen);
+                                    PunishmentRemove(map, citizen);
                             }
                         }
                         else{
                             if(citizen.inventory.size() > 0 && Parameters.policeCorruptionLevel < morale && citizen.inventory.get(0).quantity > 0){
-                                citizen.goJail += Parameters.currentTime + 1440;
+                                Punishment(map, citizen);
                             }
                             else if(citizen.inventory.size() > 0 && Parameters.policeCorruptionLevel > morale && citizen.inventory.get(0).quantity > 0){
                                 if(citizen.budget >= 100)
-                                    citizen.budget = citizen.budget - 100;
+                                    getBribed(citizen);
                                 else {
-                                    citizen.goJail += Parameters.currentTime + 1440;
+                                    Punishment(map, citizen);
                                 }
                             }
                         }
@@ -62,6 +62,72 @@ public class Police extends Citizen{
             }
         }else{
             this.randomMovement(map);
+        }
+    }
+
+    private void Punishment(Map map, Citizen citizen){
+        switch (citizen.getClass().getSimpleName()){
+            case "RegularCitizen":
+                StatisticsAggregator.arrestedCitizens += 1;
+                StatisticsAggregator.caughtCitizens += 1;
+                citizen.goJail += Parameters.currentTime + (1440*citizen.inventory.get(0).quantity);
+                citizen.inventory.get(0).quantity = 0;
+                citizen.budget = 0;
+                break;
+            case "TownVisitor":
+                map.units.remove(citizen);
+                break;
+            case "Dealer":
+                StatisticsAggregator.arrestedDealers += 1;
+                StatisticsAggregator.caughtDealers += 1;
+                StatisticsAggregator.log("losses", citizen.inventory.get(0).quantity, Parameters.currentTime );
+                citizen.inventory.get(0).quantity = 0;
+                citizen.budget = 0;
+                break;
+            case "Courier":
+                StatisticsAggregator.arrestedCouriers += 1;
+                StatisticsAggregator.caughtCouriers += 1;
+                StatisticsAggregator.log("losses", citizen.inventory.get(0).quantity, Parameters.currentTime );
+                citizen.inventory.get(0).quantity = 0;
+                citizen.budget = 0;
+                break;
+        };
+    }
+    private void PunishmentRemove(Map map, Citizen citizen){
+        switch (citizen.getClass().getSimpleName()){
+            case "RegularCitizen":
+                StatisticsAggregator.caughtCitizens += 1;
+                StatisticsAggregator.arrestedCitizens += 1;
+                map.units.remove(citizen);
+            case "TownVisitor":
+                StatisticsAggregator.caughtCitizens += 1;
+                StatisticsAggregator.arrestedCitizens += 1;
+                map.units.remove(citizen);
+            case "Dealer":
+                StatisticsAggregator.caughtDealers += 1;
+                StatisticsAggregator.arrestedDealers += 1;
+                map.units.remove(citizen);
+            case "Courier":
+                StatisticsAggregator.caughtCouriers += 1;
+                StatisticsAggregator.arrestedCouriers += 1;
+                map.units.remove(citizen);
+        }
+    }
+
+    private void getBribed(Citizen citizen){
+        switch (citizen.getClass().getSimpleName()){
+            case "RegularCitizen":
+                StatisticsAggregator.caughtCitizens += 1;
+                citizen.budget = citizen.budget - 100;
+            case "TownVisitor":
+                StatisticsAggregator.caughtCitizens += 1;
+                citizen.budget = citizen.budget - 100;
+            case "Dealer":
+                StatisticsAggregator.caughtDealers += 1;
+                citizen.budget = citizen.budget - 100;
+            case "Courier":
+                StatisticsAggregator.caughtCouriers += 1;
+                citizen.budget = citizen.budget - 100;
         }
     }
 

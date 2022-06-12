@@ -18,31 +18,37 @@ public class RegularCitizen extends Citizen{
             this.goJail = 0;
         }
         if(this.goJail != 0){
-            goLocation(map, this.home);
+            goLocation(map, map.jail);
         }
-        if(time<960){
-            if(time%120 == 0){
-                this.randomMovement = (int) Math.floor(Math.random() * 100) + 1 >= this.age;
-            }
-        }else{
-            if(time%(this.age+(int)Math.floor((float)this.age/2))==0) {
-                this.randomMovement = (int) Math.floor(Math.random() * 100) + 1 < (int) Math.floor(this.addictionLevel / ((time - 960) / 60));
-            }
-        }
-        if(this.randomMovement){
-            randomMovement(map);
-        }else{
-            goLocation(map,this.home);
-            if(currentLocation.equals(home)){
-                if(this.inventory.size() > 0 && this.inventory.get(0).quantity > 0){
-                    this.inventory.get(0).quantity = 0;
+        else {
+            if (time < 960) {
+                if (time % 120 == 0) {
+                    this.randomMovement = (int) Math.floor(Math.random() * 100) + 1 >= this.age;
+                }
+            } else {
+                if (time % (this.age + (int) Math.floor((float) this.age / 2)) == 0) {
+                    this.randomMovement = (int) Math.floor(Math.random() * 100) + 1 < (int) Math.floor(this.addictionLevel / ((time - 960) / 60));
                 }
             }
-        }
-        if(time % 1440 == 0){
-            if(age < 21){this.budget += (int)Math.floor(Math.random()*20)+10;}
-            else if(age >= 21 && age < 50){this.budget += (int)Math.floor(Math.random()*50)+20;}
-            else{this.budget += (int)Math.floor(Math.random()*70)+50;}
+            if (this.randomMovement) {
+                randomMovement(map);
+            } else {
+                goLocation(map, this.home);
+                if (currentLocation.equals(home)) {
+                    if (this.inventory.size() > 0 && this.inventory.get(0).quantity > 0) {
+                        this.inventory.get(0).quantity = 0;
+                    }
+                }
+            }
+            if (time % 1440 == 0) {
+                if (age < 21) {
+                    this.budget += (int) Math.floor(Math.random() * 20) + 10;
+                } else if (age >= 21 && age < 50) {
+                    this.budget += (int) Math.floor(Math.random() * 50) + 20;
+                } else {
+                    this.budget += (int) Math.floor(Math.random() * 70) + 50;
+                }
+            }
         }
     }
     public RegularCitizen(){

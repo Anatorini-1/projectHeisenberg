@@ -52,8 +52,6 @@ public class StatisticsAggregator {
                 StatisticsAggregator.loss.add(timeStamp,(double)StatisticsAggregator.loss.getY(StatisticsAggregator.loss.getItemCount()-1) + value);
             break;
         }
-        System.out.println(stat+" "+String.valueOf(value));
-
     }
     public static void init(){
         mainCollection = new XYSeriesCollection();

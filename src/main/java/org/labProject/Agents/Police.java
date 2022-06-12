@@ -75,6 +75,8 @@ public class Police extends Citizen{
                 citizen.budget = 0;
                 break;
             case "TownVisitor":
+                StatisticsAggregator.arrestedCitizens += 1;
+                StatisticsAggregator.caughtCitizens += 1;
                 map.units.remove(citizen);
                 break;
             case "Dealer":

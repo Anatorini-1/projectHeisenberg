@@ -14,6 +14,7 @@ public class SimMainFrame extends JFrame {
     public SimMainFrame(Map mainMap, List<Citizen> units){
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setSize(Toolkit.getDefaultToolkit().getScreenSize());
+
         setResizable(false);
         getRootPane().setBorder(BorderFactory.createLineBorder(new Color(20,100,20),10,true));
         //setExtendedState(getExtendedState() | JFrame.MAXIMIZED_BOTH);

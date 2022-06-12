@@ -2,6 +2,7 @@ package org.labProject.GUI.Initializer;
 
 import org.labProject.Core.Parameters;
 import org.labProject.Core.Simulation;
+import org.labProject.Core.StatisticsAggregator;
 import org.labProject.GUI.Initializer.InitializerParamContainer;
 
 import javax.swing.*;
@@ -28,13 +29,16 @@ public class SimInitializerFrame extends JPanel {
                 "Number of Police Stations: ",
                 new Dimension(200,50),
                 () -> {return Parameters.numberOfPoliceStations;},
-                (e) -> {Parameters.numberOfPoliceStations = e;}
+                (e) -> {Parameters.numberOfPoliceStations = e;},
+                (int)(Parameters.mapSize / 6),
+                e -> {return e <= Parameters.mapSize/6;}
         );
         var patrolsPerDayPerStation = new InitializerParamContainer(
                 "Patrols per day per station: ",
                 new Dimension(200,50),
                 () -> {return Parameters.patrolsPerDayPerStations;},
-                (e) -> {Parameters.patrolsPerDayPerStations = e;}
+                (e) -> {Parameters.patrolsPerDayPerStations = e;},
+                20, e-> {return e <=20;}
         );
         var policemanPerStation = new InitializerParamContainer(
                 "Policeman per station: ",
@@ -47,13 +51,15 @@ public class SimInitializerFrame extends JPanel {
                 new Dimension(200,50),
                 () -> {return Parameters.policeCorruptionLevel;},
                 (e) -> {Parameters.policeCorruptionLevel = e;},
-                100
+                100, (e) -> {return e<=100;}
         );
         var numberOfPlantations = new InitializerParamContainer(
                 "Number of plantations: ",
                 new Dimension(200,50),
                 () -> {return Parameters.numberOfPlantations;},
-                (e) -> {Parameters.numberOfPlantations = e;}
+                (e) -> {Parameters.numberOfPlantations = e;},
+                (int)(Parameters.mapSize / 4),
+                e -> {return e <= Parameters.mapSize/4;}
         );
         var drugSellPrice = new InitializerParamContainer(
                 "Drug selling price: ",
@@ -72,7 +78,7 @@ public class SimInitializerFrame extends JPanel {
                 new Dimension(200,50),
                 () -> {return Parameters.bossProfitCut;},
                 (e) -> {Parameters.bossProfitCut = e;},
-                100
+                100, (e) -> {return e<=100;}
         );
         var visitorsPerDay = new InitializerParamContainer(
                 "Town visitors per day: ",
@@ -84,14 +90,24 @@ public class SimInitializerFrame extends JPanel {
                 "Initial town population: ",
                 new Dimension(200,50),
                 () -> {return Parameters.townPopulation;},
-                (e) -> {Parameters.townPopulation = e;}
+                (e) -> {Parameters.townPopulation = e;},
+                (Parameters.mapSize*4) - Parameters.numberOfPlantations - Parameters.numberOfPoliceStations - 2,
+                e -> {return e <=  (Parameters.mapSize*4) - Parameters.numberOfPlantations - Parameters.numberOfPoliceStations - 2;}
         );
 
+        var mapSize = new InitializerParamContainer(
+                "Map size (in square blocks): ",
+                new Dimension(200,50),
+                () -> {return Parameters.mapSize;},
+                (e) -> {Parameters.mapSize = e;},
+                50, e -> {return e<=50 && e >= 4; }
+        );
         var initButton = new JButton();
         initButton.setText("Initialize");
         initButton.addActionListener(e -> {
             Parameters.init();
             Simulation.init();
+            StatisticsAggregator.init();
         });
         initButton.setAlignmentX(JButton.CENTER_ALIGNMENT);
                 /*
@@ -109,6 +125,7 @@ public class SimInitializerFrame extends JPanel {
                 public static int townPopulation = 1;
                 * */
         setLayout(new BoxLayout(this,BoxLayout.Y_AXIS));
+        add(mapSize);
         add(numberOfPoliceStations);
         add(policemanPerStation);
         add(patrolsPerDayPerStation);

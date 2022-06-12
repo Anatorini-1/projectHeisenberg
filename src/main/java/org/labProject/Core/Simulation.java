@@ -15,7 +15,7 @@ public class Simulation{
     private static boolean showConsole = false;
     public static void init(){
         //Static values for presentation purposes
-        map = new Map(19);
+        map = new Map();
         units = map.units;
         if(gui != null) gui.dispose();
         if(showGUI) gui = new SimMainFrame(map,units);
@@ -24,6 +24,8 @@ public class Simulation{
     private static void tick(){
         for (int i = 0; i < units.size(); i++) {
             units.get(i).action(map);
+            StatisticsAggregator.series1.add(StatisticsAggregator.x,(double)StatisticsAggregator.series1.getX(StatisticsAggregator.x) + (int)(Math.random()*10 - 5));
+            StatisticsAggregator.x++;
         }
     }
     private static void goBackTick(){

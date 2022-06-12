@@ -17,7 +17,6 @@ public class MapWrapper extends JPanel {
     public MapWrapper(Map map, List<Citizen> units) {
         setPreferredSize(new Dimension(Parameters.mapWindowSize, Parameters.mapWindowSize));
         setBorder(BorderFactory.createLineBorder(new Color(255, 255, 255), 3, false));
-
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         if (Parameters.isInitialized) {
             add(new SimMapFrame(map, units));

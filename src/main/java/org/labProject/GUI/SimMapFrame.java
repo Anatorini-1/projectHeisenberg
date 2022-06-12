@@ -17,7 +17,7 @@ public class SimMapFrame extends JPanel {
     public SimMapFrame(Map map, List<Citizen> units){
         this.mapAnchor = map;
         this.unitsAnchor = units;
-        this.cellSize = (int)(Parameters.mapWindowSize / map.toRender.size());
+        this.cellSize = (int)(Parameters.mapWindowSize / map.gridSize);
         setPreferredSize(new Dimension(Parameters.mapWindowSize,Parameters.mapWindowSize));
         setAlignmentX(JPanel.LEFT_ALIGNMENT);
         setAlignmentY(JPanel.TOP_ALIGNMENT);
@@ -29,6 +29,8 @@ public class SimMapFrame extends JPanel {
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,RenderingHints.VALUE_ANTIALIAS_ON);
         g2d.setColor(Color.BLACK);
         g2d.fillRect(0,0,this.getWidth()-1,this.getHeight()-1);
+        g2d.translate( (Parameters.mapWindowSize - mapAnchor.gridSize*cellSize)/2, (Parameters.mapWindowSize - mapAnchor.gridSize*cellSize)/2);
+       // cellSize += (Parameters.mapWindowSize - mapAnchor.gridSize*cellSize)/mapAnchor.toRender.size();
         mapAnchor.toRender.forEach(row -> {
             row.forEach(cell -> {
                 g2d.setColor(cell.c);

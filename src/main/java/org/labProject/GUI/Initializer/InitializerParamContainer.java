@@ -15,6 +15,9 @@ public class InitializerParamContainer extends JPanel {
     private ParamGetter pg;
     private Dimension dimensions;
     private String label;
+    private boolean isLimited = false;
+
+    private Constraint constraint = (e) -> {return true;};
 
     private void prepare(){
         setBackground(Color.WHITE);
@@ -22,13 +25,13 @@ public class InitializerParamContainer extends JPanel {
         setLayout(new GridBagLayout());
         this.fieldLabel = new JLabel(label);
         this.field = new JTextField();
-        this.slider = new JSlider(0, 10, pg.get());
+        this.slider = new JSlider(0, pg.get()+10,pg.get());
         this.slider.setBackground(Color.white);
         slider.setPaintTicks(true);
         slider.addChangeListener(e -> {
+            if(isLimited && !constraint.check(slider.getValue())) return;
             ps.set(slider.getValue());
             field.setText(String.valueOf(slider.getValue()));
-
         });
         slider.setPaintLabels(false);
         slider.setLabelTable(slider.createStandardLabels(1));
@@ -58,13 +61,17 @@ public class InitializerParamContainer extends JPanel {
                 int newValue;
                 try {
                     newValue = Integer.parseInt(field.getText());
+                    if(newValue < 1) throw new NumberFormatException();
+                    if(isLimited && !constraint.check(newValue)) throw new NumberFormatException();
                     ps.set(newValue);
                     field.setBackground(Color.white);
+                    if(slider.getMaximum() < newValue)
+                        slider.setMaximum(newValue*2);
                     slider.setValue(newValue);
 
 
                 } catch (NumberFormatException e) {
-                    field.setBackground(new Color(255, 96, 96));
+                    field.setBackground(new Color(250, 75, 75));
                 }
             }
         });
@@ -103,13 +110,15 @@ public class InitializerParamContainer extends JPanel {
 
     }
 
-    public InitializerParamContainer(String label, Dimension dimensions, ParamGetter g, ParamSetter s,int max) {
+    public InitializerParamContainer(String label, Dimension dimensions, ParamGetter g, ParamSetter s,int max, Constraint constraint) {
         this.label = label;
         this.dimensions = dimensions;
         this.pg = g;
         this.ps = s;
         prepare();
         this.slider.setMaximum(max);
+        this.constraint = constraint;
+        this.isLimited = true;
         pack();
     }
 

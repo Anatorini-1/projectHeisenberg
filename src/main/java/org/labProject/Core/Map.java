@@ -54,13 +54,13 @@ public class Map {
     }
 
 
-    public Map(int size){
-        this.gridSize = size;
+    public Map(){
+        this.gridSize = Parameters.mapSize*3 + 1;
         this.toRender = new ArrayList<>();
         this.units = new ArrayList<>();
         int quantityOfBuildings = Parameters.numberOfPlantations+Parameters.numberOfPoliceStations+1; //number of special buildings
-        ArrayList<Integer[]>  specialBuildingsCoords = BuildingsRandomCoords(size, quantityOfBuildings); //Getting coords for special buildings
-        ArrayList<Integer[]>  citizenApartmentCoords = BuildingsRandomCoords(size, Parameters.townPopulation); // Getting coords for citizens home
+        ArrayList<Integer[]>  specialBuildingsCoords = BuildingsRandomCoords(gridSize, quantityOfBuildings); //Getting coords for special buildings
+        ArrayList<Integer[]>  citizenApartmentCoords = BuildingsRandomCoords(gridSize, Parameters.townPopulation); // Getting coords for citizens home
         int whichBuilding = 0;
         for(var i=0;i<gridSize;i++){
             toRender.add(new ArrayList<>());

@@ -26,11 +26,13 @@ public class SimClock extends JPanel {
         g2d.fillRect(10,73,20,5);
         g2d.fillRect(120,73,20,5);
         g2d.fillOval(72,72,6,6);
-        g2d.drawLine(75,75,(int)(72 - (60*(Math.cos(Math.PI/2+Math.PI/180*(360 * ((float)(Parameters.currentTime%60)/60)))))),(int)(72 - (60*(Math.sin(Math.PI/2+Math.PI/180*(360 * ((float)(Parameters.currentTime%60)/60)))))));
-        g2d.drawLine(75,75,(int)(72 - (20*(Math.cos(Math.PI/2+Math.PI/180*(360 * ((float)(Parameters.currentTime%720)/720)))))),(int)(72 - (20*(Math.sin(Math.PI/2+Math.PI/180*(360 * ((float)(Parameters.currentTime%720)/720)))))));
+        //g2d.drawLine(75,75,(int)(72 - (60*(Math.cos(Math.PI/2+Math.PI/180*(360 * ((float)(Parameters.currentTime%60)/60)))))),(int)(72 - (60*(Math.sin(Math.PI/2+Math.PI/180*(360 * ((float)(Parameters.currentTime%60)/60)))))));
+        g2d.drawLine(75,75,(int)(75 + (int)(70*Math.cos((float)Parameters.currentTime%60/60*Math.PI*2-Math.PI/2-0.1))),(int)(75 + (int)(70*Math.sin((float)Parameters.currentTime%60/60*Math.PI*2-Math.PI/2))));
+        g2d.drawLine(75,75,(int)(75 + (int)(50*Math.cos((float)(Parameters.currentTime+360)%720/720*Math.PI*2-Math.PI/2))),(int)(75 + (int)(50*(-1)* Math.sin((float)Parameters.currentTime%720/720*Math.PI*2-Math.PI/2))));
+        //g2d.drawLine(75,75,(int)(72 - (20*(Math.cos(Math.PI/2+Math.PI/180*(360 * ((float)(Parameters.currentTime%720)/720)))))),(int)(72 - (20*(Math.sin(Math.PI/2+Math.PI/180*(360 * ((float)(Parameters.currentTime%720)/720)))))));
         int time = Parameters.currentTime;
         StringBuilder dateTimeString = new StringBuilder();
-        dateTimeString.append((time/60)%24);
+        dateTimeString.append((time/60+6)%24);
         dateTimeString.append(":");
         dateTimeString.append(time%60);
         dateTimeString.append(" Day ");

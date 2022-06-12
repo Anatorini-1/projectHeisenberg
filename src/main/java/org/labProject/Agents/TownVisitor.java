@@ -31,7 +31,6 @@ public class TownVisitor extends Citizen{
             for(int i = 0; Parameters.visitorsPerDay > i; ++i){
                 listOfTownVisitors.add(new TownVisitor());
                 map.units.add(listOfTownVisitors.get(i));
-                System.out.println("Dziala");
             }
         }
     }
@@ -64,8 +63,6 @@ public class TownVisitor extends Citizen{
         this.c = Color.red;
         this.lawfulLevel =  (float)Math.floor(Math.random()*100);
         this.spawnTime = (int) (Math.random() * (1200-1)+1);
-        System.out.println(this.spawnTime);
         this.lifeTime = (int) (Math.random() * ((1440-this.spawnTime)-200)+200);
-        System.out.println(this.lifeTime);
     }
 }

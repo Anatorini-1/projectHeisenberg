@@ -13,7 +13,8 @@ public abstract class Citizen extends Renderable implements SimAgent {
     public int age;
     public int budget;
     public int carryCapacity;
-    public Building currentLocation = null;
+    public int goJail;
+    public Building currentLocation;
     public Building home;
     public boolean randomMovement = true;
     public Citizen(){
@@ -23,6 +24,7 @@ public abstract class Citizen extends Renderable implements SimAgent {
         this.budget = (int) (Math.random() * (500-50)+50);
         this.carryCapacity = (int)Math.floor(Math.random()*100);
         this.home = null;
+        this.goJail = 0;
     }
 
 //    public static void goLeft(Citizen citizen, Map  map, int x, int y){
@@ -76,7 +78,6 @@ public abstract class Citizen extends Renderable implements SimAgent {
                 this.randomMovement(map);
             }
     }
-
     public void goToStreetLocation(Map map, Building street){
         if(this.currentLocation.x % 3 == 0 && this.currentLocation.y != street.y) {
             if (this.currentLocation.y > street.y) {
@@ -98,7 +99,6 @@ public abstract class Citizen extends Renderable implements SimAgent {
             this.randomMovement(map);
         }
     }
-
     protected void randomMovement(Map map){
         ArrayList<Building> moveOptions = new ArrayList<>();
 

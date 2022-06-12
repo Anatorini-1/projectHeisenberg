@@ -4,6 +4,7 @@ import org.labProject.Buildings.Building;
 import org.labProject.Buildings.MobHeadquarters;
 import org.labProject.Core.Map;
 import org.labProject.Core.Parameters;
+import org.labProject.Core.StatisticsAggregator;
 
 import java.awt.*;
 
@@ -54,12 +55,32 @@ public class Dealer extends Citizen{
         }
         return coords;
     }
-
+    private void goSell(Map map){
+        if(this.currentLocation.x % 3 == 0 && this.currentLocation.y != this.location[1]) {
+            if (this.currentLocation.y > this.location[1]) {
+                ((Building) map.toRender.get(this.currentLocation.x).get(this.currentLocation.y)).leave(this);
+                ((Building) map.toRender.get(this.currentLocation.x).get(this.currentLocation.y - 1)).enter(this);
+            } else{
+                ((Building) map.toRender.get(this.currentLocation.x).get(this.currentLocation.y)).leave(this);
+                ((Building) map.toRender.get(this.currentLocation.x).get(this.currentLocation.y + 1)).enter(this);
+            }
+        }else if(this.currentLocation.y % 3 == 0 && this.currentLocation.x != this.location[0]) {
+            if (this.currentLocation.x < this.location[0]) {
+                ((Building) map.toRender.get(this.currentLocation.x).get(this.currentLocation.y)).leave(this);
+                ((Building) map.toRender.get(this.currentLocation.x + 1).get(this.currentLocation.y)).enter(this);
+            } else{
+                ((Building) map.toRender.get(this.currentLocation.x).get(this.currentLocation.y)).leave(this);
+                ((Building) map.toRender.get(this.currentLocation.x - 1).get(this.currentLocation.y)).enter(this);
+            }
+        }else if(!this.currentLocation.getClass().getSimpleName().equals("Street")){
+            this.randomMovement(map);
+        }
+    }
     @Override
     public void action( Map map) {
         int time = Parameters.currentTime%1440; //Current time during day
         if(time<960) {
-            if(time%60==1){
+            if(time%60==0){
                 if((int) (Math.random() * 100) + 1 <= 50) {
                     this.location = streetLocation(map);
                 }else{
@@ -81,8 +102,8 @@ public class Dealer extends Citizen{
             goToStreetLocation(map, (Building) map.toRender.get(location[0]).get(location[1]));
             if(this.currentLocation.guests.size() > 1 && this.inventory.get(0).quantity > 0){
                 for (Citizen citizen : this.currentLocation.guests) {
-                   if(citizen.age < 21 && this.morale < 20){sellWeed(citizen);}
-                   else if(citizen.age > 20){sellWeed(citizen);}
+                   if(citizen.age < 21 && this.morale < 20 && (citizen.getClass().getSimpleName().equals("RegularCitizen") || citizen.getClass().getSimpleName().equals("TownVisitor"))){sellWeed(citizen);}
+                   else if(citizen.age > 20 && (citizen.getClass().getSimpleName().equals("RegularCitizen") || citizen.getClass().getSimpleName().equals("TownVisitor"))){sellWeed(citizen);}
                 }
             }
             if(this.inventory.get(0).quantity == 0){
@@ -96,16 +117,48 @@ public class Dealer extends Citizen{
 
     //function to sell weed to citizens
     private void sellWeed(Citizen citizen){
-        if(citizen.getClass().getSimpleName().equals("RegularCitizen") && citizen.budget > 5){
-            citizen.budget -= 5;
-            this.budget += 5;
-            this.inventory.get(0).quantity -= 5;
-            if(citizen.inventory.size() > 0){
-                citizen.inventory.get(0).quantity += 5;
+        //how much to sell?
+        int canBuy = (int)Math.floor(citizen.budget/Parameters.drugSellPrice);
+        int sellQuantity = 0;
+
+        if(citizen.getClass().getSimpleName().equals("RegularCitizen")){
+            RegularCitizen regularCitizen = (RegularCitizen) citizen;
+            if(regularCitizen.addictionLevel > 0 && regularCitizen.addictionLevel < 20)
+                sellQuantity = 1;
+            else if(regularCitizen.addictionLevel > 19 && regularCitizen.addictionLevel < 40)
+                sellQuantity = 2;
+            else if(regularCitizen.addictionLevel > 39 && regularCitizen.addictionLevel < 60)
+                sellQuantity = 3;
+            else if(regularCitizen.addictionLevel > 59 && regularCitizen.addictionLevel < 80)
+                sellQuantity = 4;
+            else if(regularCitizen.addictionLevel > 79 && regularCitizen.addictionLevel < 101)
+                sellQuantity = 5;
+        }
+        else if(citizen.getClass().getSimpleName().equals("TownVisitor")){
+            sellQuantity = 1;
+        }
+        if(sellQuantity > this.inventory.get(0).quantity)
+            sellQuantity = this.inventory.get(0).quantity;
+        if(sellQuantity > canBuy)
+            sellQuantity = canBuy;
+
+        int totalSellPrice = Parameters.drugSellPrice * sellQuantity;
+
+        if(sellQuantity > 0){
+            StatisticsAggregator.log("soldDrugs", sellQuantity, Parameters.currentTime);
+            if(citizen.getClass().getSimpleName().equals("RegularCitizen")){
+                RegularCitizen regularCitizen = (RegularCitizen) citizen;
+                regularCitizen.addictionLevel += regularCitizen.addictionLevel*0.1;
             }
-            else{
-                citizen.inventory.add(new Item(0,5,"Weed"));
-            }
+            citizen.budget -= totalSellPrice;
+            this.budget += totalSellPrice;
+                this.inventory.get(0).quantity -= sellQuantity;
+                if(citizen.inventory.size() > 0){
+                    citizen.inventory.get(0).quantity += sellQuantity;
+                }
+                else{
+                    citizen.inventory.add(new Item(0,sellQuantity,"Weed"));
+                }
         }
     }
     @Override

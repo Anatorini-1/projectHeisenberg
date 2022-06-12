@@ -30,8 +30,8 @@ public class SimInitializerFrame extends JPanel {
                 new Dimension(200,50),
                 () -> {return Parameters.numberOfPoliceStations;},
                 (e) -> {Parameters.numberOfPoliceStations = e;},
-                (int)(Parameters.mapSize / 6),
-                e -> {return e <= Parameters.mapSize/6;}
+                (int)(Math.ceil((float)Parameters.mapSize/6)),
+                e -> {return e <= Math.ceil((float)Parameters.mapSize/6);}
         );
         var patrolsPerDayPerStation = new InitializerParamContainer(
                 "Patrols per day per station: ",
@@ -102,6 +102,13 @@ public class SimInitializerFrame extends JPanel {
                 (e) -> {Parameters.mapSize = e;},
                 50, e -> {return e<=50 && e >= 4; }
         );
+        var dealerCount = new InitializerParamContainer(
+                "Number of dealers: ",
+                new Dimension(200,50),
+                () -> {return Parameters.dealerCount;},
+                (e) -> {Parameters.dealerCount = e;},
+                50, e -> {return e<=50 && e >= 4; }
+        );
         var initButton = new JButton();
         initButton.setText("Initialize");
         initButton.addActionListener(e -> {
@@ -111,6 +118,16 @@ public class SimInitializerFrame extends JPanel {
         });
         initButton.setAlignmentX(JButton.CENTER_ALIGNMENT);
 
+        var permaDeath = new JButton(){
+
+        };
+        permaDeath.setText(Parameters.permaDeath ? "Perma death ON" : "Perma death OFF");
+
+        permaDeath.addActionListener(e -> {
+            Parameters.permaDeath = !Parameters.permaDeath;
+            permaDeath.setText(Parameters.permaDeath ? "Perma death ON" : "Perma death OFF");
+        });
+        permaDeath.setAlignmentX(JButton.CENTER_ALIGNMENT);
         setLayout(new BoxLayout(this,BoxLayout.Y_AXIS));
         add(mapSize);
         add(numberOfPoliceStations);
@@ -123,7 +140,10 @@ public class SimInitializerFrame extends JPanel {
         add(bossProfitCut);
         add(visitorsPerDay);
         add(townPopulation);
+        add(dealerCount);
+        add(permaDeath);
         add(initButton);
+
         setBackground(Color.WHITE);
     }
 }

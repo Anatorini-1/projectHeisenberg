@@ -24,7 +24,7 @@ public class Police extends Citizen{
         int time = Parameters.currentTime%1440; //Current time during day
         if(time!=0) {
             int whenPatrol = (int) Math.floor(1440 / parentStation.patrolsPerDay);
-            if (time % whenPatrol < whenPatrol - 60) {
+            if (time % whenPatrol < Math.floor(whenPatrol/2)) {
                 this.randomMovement(map);
                 //Catching the weed addicted
                 int toSearch = (int) (Math.random() * 100);

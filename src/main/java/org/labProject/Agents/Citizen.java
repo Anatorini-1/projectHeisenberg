@@ -77,6 +77,28 @@ public abstract class Citizen extends Renderable implements SimAgent {
             }
     }
 
+    public void goToStreetLocation(Map map, Building street){
+        if(this.currentLocation.x % 3 == 0 && this.currentLocation.y != street.y) {
+            if (this.currentLocation.y > street.y) {
+                ((Building) map.toRender.get(this.currentLocation.x).get(this.currentLocation.y)).leave(this);
+                ((Building) map.toRender.get(this.currentLocation.x).get(this.currentLocation.y - 1)).enter(this);
+            } else{
+                ((Building) map.toRender.get(this.currentLocation.x).get(this.currentLocation.y)).leave(this);
+                ((Building) map.toRender.get(this.currentLocation.x).get(this.currentLocation.y + 1)).enter(this);
+            }
+        }else if(this.currentLocation.y % 3 == 0 && this.currentLocation.x != street.x) {
+            if (this.currentLocation.x < street.x) {
+                ((Building) map.toRender.get(this.currentLocation.x).get(this.currentLocation.y)).leave(this);
+                ((Building) map.toRender.get(this.currentLocation.x + 1).get(this.currentLocation.y)).enter(this);
+            } else{
+                ((Building) map.toRender.get(this.currentLocation.x).get(this.currentLocation.y)).leave(this);
+                ((Building) map.toRender.get(this.currentLocation.x - 1).get(this.currentLocation.y)).enter(this);
+            }
+        }else if(!this.currentLocation.getClass().getSimpleName().equals("Street")){
+            this.randomMovement(map);
+        }
+    }
+
     protected void randomMovement(Map map){
         ArrayList<Building> moveOptions = new ArrayList<>();
 

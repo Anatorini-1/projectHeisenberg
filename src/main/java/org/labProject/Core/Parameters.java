@@ -14,7 +14,7 @@ public class Parameters {
     //Gang Related Params
     public static int numberOfPlantations = 1;
     public static int drugSellPrice = 1;
-    public static int drugOperationRange = 4;
+    public static int drugOperationRange = 2;
     public static int bossProfitCut = 1;
     //Town related params
     public static int visitorsPerDay = 1;

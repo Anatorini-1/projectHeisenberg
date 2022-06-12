@@ -16,6 +16,7 @@ public class Map {
     public int gridSize;
     public List<Citizen> units;
     public MobHeadquarters mob;
+    public Jail jail;
     public List<List<Renderable>> toRender;
     //Method for printing the current map state to the console window
     public void dumpInfo(){
@@ -58,7 +59,7 @@ public class Map {
         this.gridSize = Parameters.mapSize*3 + 1;
         this.toRender = new ArrayList<>();
         this.units = new ArrayList<>();
-        int quantityOfBuildings = Parameters.numberOfPlantations+Parameters.numberOfPoliceStations+1; //number of special buildings
+        int quantityOfBuildings = Parameters.numberOfPlantations+Parameters.numberOfPoliceStations+2; //number of special buildings
         ArrayList<Integer[]>  specialBuildingsCoords = BuildingsRandomCoords(gridSize, quantityOfBuildings); //Getting coords for special buildings
         ArrayList<Integer[]>  citizenApartmentCoords = BuildingsRandomCoords(gridSize, Parameters.townPopulation); // Getting coords for citizens home
         int whichBuilding = 0;
@@ -84,10 +85,13 @@ public class Map {
                             dealer.currentLocation = mobHeadquarters;
                             units.add(dealer);
                             toRender.get(i).add(mobHeadquarters);
-                        }else if(whichBuilding < Parameters.numberOfPoliceStations+1){
+                        }else if(whichBuilding == 1){
+                            this.jail = new Jail(i, j);
+                            toRender.get(i).add(jail);
+                        }else if(whichBuilding < Parameters.numberOfPoliceStations+2){
                             PoliceStation policeStation = new PoliceStation(Parameters.patrolsPerDayPerStations, (int) (Math.random() * (100 - 1) + 1), i, j);
                             toRender.get(i).add(policeStation);
-                            for (int p = 0; p < 2; p++) { // number of policemen
+                            for (int p = 0; p < Parameters.policemanPerStation; p++) { // number of policemen
                                 Police newPolice = new Police(2, (int) (Math.random() * (100 - 1) + 1), (int) (Math.random() * (100 - 1) + 1), policeStation);
                                 newPolice.home = policeStation;
                                 newPolice.currentLocation = policeStation;
@@ -97,11 +101,18 @@ public class Map {
                         }else if(whichBuilding<quantityOfBuildings) {
                             Plantation plantation = new Plantation(i,j);
                             toRender.get(i).add(plantation);
+                            //Courier
                             Courier newCourier = new Courier(2, 2, this.mob);
                             newCourier.home = plantation;
                             newCourier.currentLocation = plantation;
                             plantation.guests.add(newCourier);
                             units.add(newCourier);
+                            //Producer
+                            Producer newProducer = new Producer();
+                            newProducer.c = Color.MAGENTA;
+                            newProducer.home = plantation;
+                            newProducer.currentLocation = plantation;
+                            units.add(newProducer);
                         }
                     whichBuilding++;
                 }

@@ -1,13 +1,21 @@
 package org.labProject.Agents;
 
+import org.labProject.Buildings.Plantation;
 import org.labProject.Core.Map;
+import org.labProject.Core.Parameters;
+
+import java.awt.*;
 
 public class Producer extends Citizen{
-    private float experience;
-    private int level;
-    @Override
-    public void action( Map map) {
+    public double experience;
 
+    @Override
+    public void action(Map map) {
+        int time = Parameters.currentTime%1440; //Current time during day
+        if(time%1400==0){
+            Plantation plantation = (Plantation) this.home;
+            plantation.harvest(this);
+        }
     }
 
     @Override
@@ -17,8 +25,6 @@ public class Producer extends Citizen{
     public void delete() {}
 
     public Producer(){
-        super();
-        this.experience=0;
-        this.level=0;
+        this.experience = Math.random();
     }
 }

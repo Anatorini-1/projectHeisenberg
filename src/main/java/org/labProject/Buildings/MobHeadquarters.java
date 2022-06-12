@@ -32,10 +32,10 @@ public class MobHeadquarters extends Building{
         }
         return 0;
     }
-    public boolean handingProduct(Courier courier){
+    public void handingProduct(Courier courier){
         this.productQuantity += courier.inventory.get(0).quantity;
         courier.inventory.get(0).quantity = 0;
-        return true;
+        System.out.println(this.productQuantity);
     }
     public void handingToDealer(Dealer dealer){
         if(dealer.inventory.get(0).quantity == 0 && this.productQuantity >= 50){

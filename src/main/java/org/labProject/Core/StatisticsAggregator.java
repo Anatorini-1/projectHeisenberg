@@ -16,17 +16,20 @@ public class StatisticsAggregator {
     public static int arrestedDealers;
     public static int caughtCouriers;
     public static int arrestedCouriers;
-    public static int drugProductionCost;
-    public static int losses;
+    public static List<LogEntry> drugProductionCost;
+    public static List<LogEntry> losses;
     static{
-        dummyStat1 = new LinkedList<>();
         soldDrugs = new LinkedList<>();
+        drugProductionCost = new LinkedList<>();
+        losses = new LinkedList<>();
     }
 
     public static void log(String stat, int value, int timeStamp){
         switch(stat){
             case "dummyStat1": dummyStat1.add(value);break;
-            case "soldDrugs": soldDrugs.add(new LogEntry(value,timeStamp));
+            case "soldDrugs": soldDrugs.add(new LogEntry(value,timeStamp)); break;
+            case "drugProductionCost": drugProductionCost.add(new LogEntry(value,timeStamp)); break;
+            case "losses": losses.add(new LogEntry(value,timeStamp)); break;
         }
     }
     public static void init(){

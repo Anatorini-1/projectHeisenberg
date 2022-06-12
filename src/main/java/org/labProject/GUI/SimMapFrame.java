@@ -8,12 +8,14 @@ import org.labProject.Core.Parameters;
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.util.List;
 
 public class SimMapFrame extends JPanel {
     Map mapAnchor;
     List<Citizen> unitsAnchor;
     int cellSize;
+
     public SimMapFrame(Map map, List<Citizen> units){
         this.mapAnchor = map;
         this.unitsAnchor = units;
@@ -61,6 +63,7 @@ public class SimMapFrame extends JPanel {
                         case "PoliceStation": label = "PS"; break;
                         case "Plantation" : label = "PL"; break;
                         case "MobHeadquarters": label = "MH"; break;
+                        case "Jail": label = "Jail"; break;
                         default: label = "???";break;
                     }
                     g2d.drawString(label,cell.x*cellSize,cell.y*cellSize+cellSize/2);

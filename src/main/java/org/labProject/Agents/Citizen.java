@@ -13,7 +13,7 @@ public abstract class Citizen extends Renderable implements SimAgent {
     public int age;
     public int budget;
     public int carryCapacity;
-    public Building currentLocation;
+    public Building currentLocation = null;
     public Building home;
     public boolean randomMovement = true;
     public Citizen(){

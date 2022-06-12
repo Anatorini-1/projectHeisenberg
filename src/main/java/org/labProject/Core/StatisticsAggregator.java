@@ -18,14 +18,9 @@ public class StatisticsAggregator {
     public static int arrestedCouriers;
     public static int drugProductionCost;
     public static int losses;
-    public static XYSeries series1;
-    public static int x;
     static{
         dummyStat1 = new LinkedList<>();
         soldDrugs = new LinkedList<>();
-        series1 = new XYSeries("Series 1");
-        series1.add(0,0);
-        x = 0;
     }
 
     public static void log(String stat, int value, int timeStamp){

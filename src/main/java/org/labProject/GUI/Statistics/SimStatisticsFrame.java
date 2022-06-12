@@ -15,7 +15,7 @@ public class SimStatisticsFrame extends JPanel {
         setBorder(BorderFactory.createLineBorder(Color.white,3,true));
         setLayout(new BoxLayout(this,BoxLayout.Y_AXIS));
         add(new SimClock());
-        simStatChart = new SimStatChart("dummyData1","time","value", StatisticsAggregator.dummyStat1,600,300);
+        simStatChart = new SimStatChart("dummyData1","time","value", StatisticsAggregator.soldDrugs,600,300);
 
         var btn = new JButton("123");
        add(simStatChart);

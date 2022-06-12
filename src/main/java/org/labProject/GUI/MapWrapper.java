@@ -33,7 +33,6 @@ public class MapWrapper extends JPanel {
                 File imgFile = new File("./src/main/resources/heisenberg.jpg");
                 if(imgFile.canRead()){
                     final BufferedImage img = ImageIO.read(imgFile);
-
                     g2d.drawImage(img,0,0,Parameters.mapWindowSize,Parameters.mapWindowSize,null);
                 }
                 else{

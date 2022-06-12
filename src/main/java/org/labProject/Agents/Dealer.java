@@ -80,7 +80,7 @@ public class Dealer extends Citizen{
     public void action( Map map) {
         int time = Parameters.currentTime%1440; //Current time during day
         if(time<960) {
-            if(time%60==0){
+            if(time%60==1){
                 if((int) (Math.random() * 100) + 1 <= 50) {
                     this.location = streetLocation(map);
                 }else{
@@ -145,7 +145,7 @@ public class Dealer extends Citizen{
         int totalSellPrice = Parameters.drugSellPrice * sellQuantity;
 
         if(sellQuantity > 0){
-            StatisticsAggregator.log("soldDrugs", sellQuantity, Parameters.currentTime);
+            StatisticsAggregator.log("soldDrugs", totalSellPrice, Parameters.currentTime);
             if(citizen.getClass().getSimpleName().equals("RegularCitizen")){
                 RegularCitizen regularCitizen = (RegularCitizen) citizen;
                 regularCitizen.addictionLevel += regularCitizen.addictionLevel*0.1;

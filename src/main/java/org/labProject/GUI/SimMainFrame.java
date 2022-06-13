@@ -4,6 +4,7 @@ import org.labProject.Agents.Citizen;
 import org.labProject.Core.Map;
 import org.labProject.GUI.Controls.SimControlFrame;
 import org.labProject.GUI.Initializer.SimInitializerFrame;
+import org.labProject.GUI.Map.MapWrapper;
 import org.labProject.GUI.Statistics.SimStatisticsFrame;
 
 import javax.swing.*;

@@ -3,6 +3,7 @@ package org.labProject.Buildings;
 import org.labProject.Agents.Courier;
 import org.labProject.Agents.Producer;
 import org.labProject.Core.Parameters;
+import org.labProject.Core.StatisticsAggregator;
 
 import java.awt.*;
 
@@ -19,13 +20,18 @@ public class Plantation extends Building{
     public int handingProduct(int quantity){
         if(readyProduct>=quantity){
             this.readyProduct = this.readyProduct - quantity;
+            StatisticsAggregator.log("drugProductionCost",quantity, Parameters.currentTime);
             return quantity;
+
         }
         quantity = this.readyProduct;
         this.readyProduct = 0;
+        StatisticsAggregator.log("drugProductionCost",quantity, Parameters.currentTime);
         return quantity;
+
     }
     public void harvest(Producer producer){
-        this.readyProduct += this.plantCount * Parameters.dealerCount + Math.floor(this.plantCount*producer.experience);
+        int tmp = (int)(this.plantCount + Math.floor(this.plantCount*producer.experience));
+        this.readyProduct += this.plantCount + tmp;
     }
 }

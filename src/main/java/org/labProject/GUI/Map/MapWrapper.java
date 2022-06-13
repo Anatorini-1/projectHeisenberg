@@ -1,14 +1,14 @@
-package org.labProject.GUI;
+package org.labProject.GUI.Map;
 
 import org.labProject.Agents.Citizen;
 import org.labProject.Core.Map;
 import org.labProject.Core.Parameters;
+import org.labProject.GUI.Map.SimMapFrame;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.awt.image.Raster;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;

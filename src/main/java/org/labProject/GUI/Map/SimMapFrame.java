@@ -1,4 +1,4 @@
-package org.labProject.GUI;
+package org.labProject.GUI.Map;
 
 import org.labProject.Agents.Citizen;
 import org.labProject.Buildings.Street;

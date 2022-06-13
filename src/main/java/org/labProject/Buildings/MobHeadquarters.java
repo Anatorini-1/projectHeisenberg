@@ -4,6 +4,7 @@ import org.labProject.Agents.Courier;
 import org.labProject.Agents.Dealer;
 import org.labProject.Agents.Kingpin;
 import org.labProject.Core.Parameters;
+import org.labProject.Core.StatisticsAggregator;
 
 import java.awt.*;
 import java.lang.reflect.Parameter;
@@ -36,7 +37,9 @@ public class MobHeadquarters extends Building{
     }
     public void handingProduct(Courier courier){
         this.productQuantity += courier.inventory.get(0).quantity;
+        StatisticsAggregator.log("delivery",courier.inventory.get(0).quantity,Parameters.currentTime);
         courier.inventory.get(0).quantity = 0;
+
     }
     public void handingToDealer(Dealer dealer){
         if(dealer.inventory.get(0).quantity == 0 && this.productQuantity >= 50){

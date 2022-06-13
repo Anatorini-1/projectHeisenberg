@@ -2,6 +2,7 @@ package org.labProject.Core;
 
 public class Parameters {
     public static boolean isPaused = false;
+    public static boolean isOver = false;
     public static int tickSpeed = 10;
     public static int currentTime = 1;
     public static int mapWindowSize = 900;
@@ -34,6 +35,7 @@ public class Parameters {
         tickSpeed =10;
         currentTime = 1;
         isInitialized = true;
+        isOver = false;
 
     };
     /*

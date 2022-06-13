@@ -7,6 +7,7 @@ import org.labProject.Core.Parameters;
 import org.labProject.Core.StatisticsAggregator;
 
 import java.awt.*;
+import java.util.Arrays;
 
 public class Dealer extends Citizen{
     private float profficiency;
@@ -53,6 +54,7 @@ public class Dealer extends Citizen{
                 coords[1] = Math.min(this.home.y + 1 + (((int) (Math.random() * (Parameters.drugOperationRange) + 1) - 1) * 3), map.toRender.size() - 1);
             }
         }
+        System.out.println(Arrays.toString(coords));
         return coords;
     }
     @Override

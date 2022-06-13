@@ -44,10 +44,10 @@ public class Simulation{
             }
             if(dealerExists == 0){
                 System.out.println("Dealer został złapany, koniec symulacji");
-                break;
+               Parameters.isOver = true;
             }
 
-            if(!Parameters.isPaused && Parameters.isInitialized){
+            if(!Parameters.isPaused && Parameters.isInitialized && !Parameters.isOver){
                 tick();
                 Parameters.currentTime++;
             }

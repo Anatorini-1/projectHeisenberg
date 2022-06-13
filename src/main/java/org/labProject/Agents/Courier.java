@@ -14,7 +14,7 @@ public class Courier extends Citizen{
     private MobHeadquarters mob;
     public Courier(int speed, int perception, MobHeadquarters mob){
         super();
-        this.c = Color.GREEN;
+        this.c = Color.CYAN;
         this.speed = speed;
         this.perception = perception;
         this.mob = mob;

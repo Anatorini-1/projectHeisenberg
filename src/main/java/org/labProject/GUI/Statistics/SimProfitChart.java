@@ -4,15 +4,11 @@ import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.PlotOrientation;
-import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
-import org.labProject.Core.LogEntry;
-import org.labProject.Core.Parameters;
 import org.labProject.Core.StatisticsAggregator;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.List;
 
 public class SimProfitChart extends JPanel {
     private JFreeChart chart;
@@ -25,7 +21,7 @@ public class SimProfitChart extends JPanel {
         x.addSeries(StatisticsAggregator.profit);
        x.addSeries(StatisticsAggregator.cost);
         x.addSeries(StatisticsAggregator.loss);
-
+        x.addSeries(StatisticsAggregator.deliveredWeed);
         var c = ChartFactory.createXYLineChart("123","123","123",x, PlotOrientation.VERTICAL,true,true,false);
         var z = new ChartPanel(c);
         c.setAntiAlias(true);

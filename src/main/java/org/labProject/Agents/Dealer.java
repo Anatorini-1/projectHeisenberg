@@ -134,7 +134,10 @@ public class Dealer extends Citizen{
             StatisticsAggregator.log("soldDrugs", totalSellPrice, Parameters.currentTime);
             if(citizen.getClass().getSimpleName().equals("RegularCitizen")){
                 RegularCitizen regularCitizen = (RegularCitizen) citizen;
-                regularCitizen.addictionLevel += regularCitizen.addictionLevel*0.1;
+                double addAddiciton = regularCitizen.addictionLevel*0.1;
+                double overflow = regularCitizen.addictionLevel + addAddiciton;
+                if(overflow < 100)
+                    regularCitizen.addictionLevel += addAddiciton;
             }
             citizen.budget -= totalSellPrice;
             this.budget += totalSellPrice;

@@ -39,9 +39,9 @@ public class MobHeadquarters extends Building{
         courier.inventory.get(0).quantity = 0;
     }
     public void handingToDealer(Dealer dealer){
-        totalMoney += dealer.budget;
-        dealer.budget = 0;
         if(dealer.inventory.get(0).quantity == 0 && this.productQuantity >= 50){
+            this.totalMoney += dealer.budget*Parameters.bossProfitCut;
+            dealer.budget -= dealer.budget*Parameters.bossProfitCut;
             this.productQuantity -= 50;
             dealer.inventory.get(0).quantity = 50;
         }

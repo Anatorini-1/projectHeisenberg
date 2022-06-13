@@ -33,9 +33,9 @@ public class Police extends Citizen{
                 if(this.currentLocation.guests.size() > 1 && toSearch < 11){
                     for (Citizen citizen : this.currentLocation.guests) {
                         if(Parameters.permaDeath == true){
-                            if(citizen.inventory.size() > 0 && Parameters.policeCorruptionLevel < morale && citizen.inventory.get(0).quantity > 0)
+                            if(citizen.inventory.size() > 0 && Parameters.policeCorruptionLevel < this.morale && citizen.inventory.get(0).quantity > 0)
                                PunishmentRemove(map, citizen);
-                            else if(citizen.inventory.size() > 0 && Parameters.policeCorruptionLevel > morale && citizen.inventory.get(0).quantity > 0){
+                            else if(citizen.inventory.size() > 0 && Parameters.policeCorruptionLevel > this.morale && citizen.inventory.get(0).quantity > 0){
                                 if(citizen.budget >= 100)
                                     getBribed(citizen);
                                 else
@@ -43,10 +43,10 @@ public class Police extends Citizen{
                             }
                         }
                         else{
-                            if(citizen.inventory.size() > 0 && Parameters.policeCorruptionLevel < morale && citizen.inventory.get(0).quantity > 0){
+                            if(citizen.inventory.size() > 0 && Parameters.policeCorruptionLevel < this.morale && citizen.inventory.get(0).quantity > 0){
                                 Punishment(map, citizen);
                             }
-                            else if(citizen.inventory.size() > 0 && Parameters.policeCorruptionLevel > morale && citizen.inventory.get(0).quantity > 0){
+                            else if(citizen.inventory.size() > 0 && Parameters.policeCorruptionLevel > this.morale && citizen.inventory.get(0).quantity > 0){
                                 if(citizen.budget >= 100)
                                     getBribed(citizen);
                                 else {

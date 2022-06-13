@@ -14,7 +14,7 @@ public class MobHeadquarters extends Building{
     private int stock;
     private int storageCapacity;
     public int operationRange;
-    private int productQuantity;
+    public int productQuantity;
     private static int totalMoney;
     private Kingpin boss;
 
@@ -30,8 +30,6 @@ public class MobHeadquarters extends Building{
     //Checking demand
     public int delivery(Courier courier){
         if(this.productQuantity<=this.storageCapacity && this.productQuantity < 200){
-            return Math.min(this.storageCapacity - this.productQuantity, courier.carryCapacity);
-        }else if(this.productQuantity<=this.storageCapacity){
             return Math.min(this.storageCapacity - this.productQuantity, courier.carryCapacity);
         }
         return 0;

@@ -58,39 +58,46 @@ public class Dealer extends Citizen{
     @Override
     public void action( Map map) {
         int time = Parameters.currentTime%1440; //Current time during day
-        if(time<960) {
-            if(time%60==1){
-                if((int) (Math.random() * 100) + 1 <= 50) {
-                    this.location = streetLocation(map);
-                }else{
+        if(this.inventory.get(0).quantity != 0 || map.mob.productQuantity >= 50) {
+            if (time < 960) {
+                if (time % 60 == 1) {
+                    if ((int) (Math.random() * 100) + 1 <= 50) {
+                        this.location = streetLocation(map);
+                    } else {
+                        this.location[0] = -1;
+                    }
+                }
+            } else {
+                if (time % 60 == 1) {
+                    if ((int) (Math.random() * 100) + 1 <= 75) {
+                        this.location = streetLocation(map);
+                    } else {
+                        this.location[0] = -1;
+                    }
+                }
+            }
+            if (this.location[0] == -1) {
+                this.goLocation(map, home);
+            } else {
+                goToStreetLocation(map, (Building) map.toRender.get(location[0]).get(location[1]));
+                if (this.currentLocation.guests.size() > 1 && this.inventory.get(0).quantity > 0) {
+                    for (Citizen citizen : this.currentLocation.guests) {
+                        if (citizen.age < 21 && this.morale < 20 && (citizen.getClass().getSimpleName().equals("RegularCitizen") || citizen.getClass().getSimpleName().equals("TownVisitor"))) {
+                            sellWeed(citizen);
+                        } else if (citizen.age > 20 && (citizen.getClass().getSimpleName().equals("RegularCitizen") || citizen.getClass().getSimpleName().equals("TownVisitor"))) {
+                            sellWeed(citizen);
+                        }
+                    }
+                }
+                if (this.inventory.get(0).quantity == 0) {
                     this.location[0] = -1;
                 }
             }
+            if (this.currentLocation == home) {
+                this.mob.handingToDealer(this);
+            }
         }else{
-            if(time%60==0){
-                if((int) (Math.random() * 100) + 1 <= 75) {
-                    this.location = streetLocation(map);
-                }else{
-                    this.location[0] = -1;
-                }
-            }
-        }
-        if(this.location[0] == -1){
-            this.goLocation(map, home);
-        }else{
-            goToStreetLocation(map, (Building) map.toRender.get(location[0]).get(location[1]));
-            if(this.currentLocation.guests.size() > 1 && this.inventory.get(0).quantity > 0){
-                for (Citizen citizen : this.currentLocation.guests) {
-                   if(citizen.age < 21 && this.morale < 20 && (citizen.getClass().getSimpleName().equals("RegularCitizen") || citizen.getClass().getSimpleName().equals("TownVisitor"))){sellWeed(citizen);}
-                   else if(citizen.age > 20 && (citizen.getClass().getSimpleName().equals("RegularCitizen") || citizen.getClass().getSimpleName().equals("TownVisitor"))){sellWeed(citizen);}
-                }
-            }
-            if(this.inventory.get(0).quantity == 0){
-                this.location[0] = -1;
-            }
-        }
-        if(this.currentLocation == home){
-            this.mob.handingToDealer(this);
+            this.goLocation(map, this.home);
         }
     }
 

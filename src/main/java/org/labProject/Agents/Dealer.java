@@ -4,25 +4,20 @@ import org.labProject.Buildings.Building;
 import org.labProject.Buildings.MobHeadquarters;
 import org.labProject.Core.Map;
 import org.labProject.Core.Parameters;
-import org.labProject.Core.StatisticsAggregator;
 
 import java.awt.*;
-import java.util.Arrays;
 
 public class Dealer extends Citizen{
     private float profficiency;
-    private int perception;
     private int morale;
-    private int randomMovement;
     private int[] location = new int[2];
     private MobHeadquarters mob;
-    public Dealer(float p,int pe, int m, MobHeadquarters mob){
+    public Dealer(int m, MobHeadquarters mob){
         super();
         this.c = Color.ORANGE;
-        this.perception = pe;
-        this.profficiency = p;
         this.morale = m;
         this.mob = mob;
+        this.profficiency = (int) (Math.random() * (100 - 1) + 1);
         this.inventory.add(new Item(0,20,"Weed"));
     }
 
@@ -104,57 +99,62 @@ public class Dealer extends Citizen{
 
     //function to sell weed to citizens
     private void sellWeed(Citizen citizen){
+        //do we sell?
+        float toSell = (float) ((Math.random() * 100) + this.profficiency);
+        if(citizen.getClass().getSimpleName().equals("RegularCitizen")){
+            RegularCitizen regularCitizen = (RegularCitizen) citizen;
+            if(regularCitizen.recklessness > toSell)
+                return;
+        }
         //how much to sell?
-        int canBuy = (int)Math.floor(citizen.budget/Parameters.drugSellPrice);
+        int canBuy = (int) Math.floor(citizen.budget / Parameters.drugSellPrice);
         int sellQuantity = 0;
         int canLift = 0;
-        if(citizen.inventory.size() > 0)
+        if (citizen.inventory.size() > 0)
             canLift = citizen.carryCapacity - citizen.inventory.get(0).quantity;
         else
             canLift = citizen.carryCapacity;
 
-        if(citizen.getClass().getSimpleName().equals("RegularCitizen")){
+        if (citizen.getClass().getSimpleName().equals("RegularCitizen")) {
             RegularCitizen regularCitizen = (RegularCitizen) citizen;
-            if(regularCitizen.addictionLevel > 0 && regularCitizen.addictionLevel < 20)
+            if (regularCitizen.addictionLevel > 0 && regularCitizen.addictionLevel < 20)
                 sellQuantity = 1;
-            else if(regularCitizen.addictionLevel > 19 && regularCitizen.addictionLevel < 40)
+            else if (regularCitizen.addictionLevel > 19 && regularCitizen.addictionLevel < 40)
                 sellQuantity = 2;
-            else if(regularCitizen.addictionLevel > 39 && regularCitizen.addictionLevel < 60)
+            else if (regularCitizen.addictionLevel > 39 && regularCitizen.addictionLevel < 60)
                 sellQuantity = 3;
-            else if(regularCitizen.addictionLevel > 59 && regularCitizen.addictionLevel < 80)
+            else if (regularCitizen.addictionLevel > 59 && regularCitizen.addictionLevel < 80)
                 sellQuantity = 4;
-            else if(regularCitizen.addictionLevel > 79 && regularCitizen.addictionLevel < 101)
+            else if (regularCitizen.addictionLevel > 79 && regularCitizen.addictionLevel < 101)
                 sellQuantity = 5;
-        }
-        else if(citizen.getClass().getSimpleName().equals("TownVisitor")){
+        } else if (citizen.getClass().getSimpleName().equals("TownVisitor")) {
             sellQuantity = 1;
         }
-        if(sellQuantity > this.inventory.get(0).quantity)
+        if (sellQuantity > this.inventory.get(0).quantity)
             sellQuantity = this.inventory.get(0).quantity;
-        if(sellQuantity > canBuy)
+        if (sellQuantity > canBuy)
             sellQuantity = canBuy;
-        if(sellQuantity > canLift)
+        if (sellQuantity > canLift)
             sellQuantity = canLift;
 
         int totalSellPrice = Parameters.drugSellPrice * sellQuantity;
-        if(sellQuantity > 0){
-
-            if(citizen.getClass().getSimpleName().equals("RegularCitizen")){
+        if (sellQuantity > 0) {
+            this.profficiency += 0.1;
+            if (citizen.getClass().getSimpleName().equals("RegularCitizen")) {
                 RegularCitizen regularCitizen = (RegularCitizen) citizen;
-                double addAddiciton = regularCitizen.addictionLevel*0.1;
+                double addAddiciton = regularCitizen.addictionLevel * 0.1;
                 double overflow = regularCitizen.addictionLevel + addAddiciton;
-                if(overflow < 100)
+                if (overflow < 100)
                     regularCitizen.addictionLevel += addAddiciton;
             }
             citizen.budget -= totalSellPrice;
             this.budget += totalSellPrice;
-                this.inventory.get(0).quantity -= sellQuantity;
-                if(citizen.inventory.size() > 0){
-                    citizen.inventory.get(0).quantity += sellQuantity;
-                }
-                else{
-                    citizen.inventory.add(new Item(0,sellQuantity,"Weed"));
-                }
+            this.inventory.get(0).quantity -= sellQuantity;
+            if (citizen.inventory.size() > 0) {
+                citizen.inventory.get(0).quantity += sellQuantity;
+            } else {
+                citizen.inventory.add(new Item(0, sellQuantity, "Weed"));
+            }
         }
     }
     @Override

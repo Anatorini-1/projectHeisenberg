@@ -9,8 +9,6 @@ import org.labProject.Core.StatisticsAggregator;
 import java.awt.*;
 
 public class Police extends Citizen{
-    private int perception;
-    private int stubbornes;
     private int morale;
     private PoliceStation parentStation;
 
@@ -24,7 +22,7 @@ public class Police extends Citizen{
     public void action(Map map) {
         int time = Parameters.currentTime%1440; //Current time during day
         if(time!=0) {
-            int whenPatrol = (int) Math.floor(1440 / parentStation.patrolsPerDay);
+            int whenPatrol = 1440 / parentStation.patrolsPerDay;
             if (time % whenPatrol < whenPatrol - 60) {
                 this.randomMovement(map);
 
@@ -32,7 +30,7 @@ public class Police extends Citizen{
                 int toSearch = (int) (Math.random() * 100);
                 if(this.currentLocation.guests.size() > 1 && toSearch < 11){
                     for (Citizen citizen : this.currentLocation.guests) {
-                        if(Parameters.permaDeath == true){
+                        if(Parameters.permaDeath){
                             if(citizen.inventory.size() > 0 && Parameters.policeCorruptionLevel < this.morale && citizen.inventory.get(0).quantity > 0)
                                PunishmentRemove(map, citizen);
                             else if(citizen.inventory.size() > 0 && Parameters.policeCorruptionLevel > this.morale && citizen.inventory.get(0).quantity > 0){
@@ -43,15 +41,13 @@ public class Police extends Citizen{
                             }
                         }
                         else{
-                            if(citizen.inventory.size() > 0 && Parameters.policeCorruptionLevel < this.morale && citizen.inventory.get(0).quantity > 0){
+                            if(citizen.inventory.size() > 0 && Parameters.policeCorruptionLevel < this.morale && citizen.inventory.get(0).quantity > 0)
                                 Punishment(map, citizen);
-                            }
                             else if(citizen.inventory.size() > 0 && Parameters.policeCorruptionLevel > this.morale && citizen.inventory.get(0).quantity > 0){
                                 if(citizen.budget >= 100)
                                     getBribed(citizen);
-                                else {
+                                else
                                     Punishment(map, citizen);
-                                }
                             }
                         }
                     }
@@ -137,11 +133,9 @@ public class Police extends Citizen{
         }
     }
 
-    public Police(int p,int s,int m, PoliceStation ps){
+    public Police(int m, PoliceStation ps){
         this.c = Color.BLUE;
         this.parentStation = ps;
         this.morale = m;
-        this.stubbornes = s;
-        this.perception = p;
     }
 }

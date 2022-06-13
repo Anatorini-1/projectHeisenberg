@@ -80,7 +80,7 @@ public class Map {
                             MobHeadquarters mobHeadquarters = new MobHeadquarters(i, j);
                             this.mob = mobHeadquarters;
                             for(int d = 0; d < Parameters.dealerCount; ++d) {
-                                Dealer dealer = new Dealer(2, (int) (Math.random() * (100 - 1) + 1), (int) (Math.random() * (100 - 1) + 1), this.mob);
+                                Dealer dealer = new Dealer((int) (Math.random() * (100 - 1) + 1), this.mob);
                                 mobHeadquarters.guests.add(dealer);
                                 dealer.home = mobHeadquarters;
                                 dealer.currentLocation = mobHeadquarters;
@@ -94,7 +94,7 @@ public class Map {
                             PoliceStation policeStation = new PoliceStation(Parameters.patrolsPerDayPerStations, (int) (Math.random() * (100 - 1) + 1), i, j);
                             toRender.get(i).add(policeStation);
                             for (int p = 0; p < Parameters.policemanPerStation; p++) { // number of policemen
-                                Police newPolice = new Police(2, (int) (Math.random() * (100 - 1) + 1), (int) (Math.random() * (100 - 1) + 1), policeStation);
+                                Police newPolice = new Police((int) (Math.random() * (100 - 1) + 1), policeStation);
                                 newPolice.home = policeStation;
                                 newPolice.currentLocation = policeStation;
                                 policeStation.guests.add(newPolice);
@@ -104,7 +104,7 @@ public class Map {
                             Plantation plantation = new Plantation(i,j);
                             toRender.get(i).add(plantation);
                             //Courier
-                            Courier newCourier = new Courier(2, 2, this.mob);
+                            Courier newCourier = new Courier(this.mob);
                             newCourier.home = plantation;
                             newCourier.currentLocation = plantation;
                             plantation.guests.add(newCourier);

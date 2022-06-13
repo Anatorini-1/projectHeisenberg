@@ -37,7 +37,6 @@ public class MobHeadquarters extends Building{
     }
     public void handingProduct(Courier courier){
         this.productQuantity += courier.inventory.get(0).quantity;
-        StatisticsAggregator.log("delivery",courier.inventory.get(0).quantity,Parameters.currentTime);
         courier.inventory.get(0).quantity = 0;
 
     }

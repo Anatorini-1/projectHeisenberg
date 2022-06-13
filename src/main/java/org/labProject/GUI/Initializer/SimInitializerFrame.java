@@ -79,13 +79,7 @@ public class SimInitializerFrame extends JPanel {
                 () -> {return Parameters.drugOperationRange;},
                 (e) -> {Parameters.drugOperationRange = e;}
         );
-        var bossProfitCut = new InitializerParamContainer(
-                "Boss profit cut[%]: ",
-                new Dimension(200,50),
-                () -> {return Parameters.bossProfitCut;},
-                (e) -> {Parameters.bossProfitCut = e;},
-                100, (e) -> {return e<=100;}
-        );
+
         var visitorsPerDay = new InitializerParamContainer(
                 "Town visitors per day: ",
                 new Dimension(200,50),
@@ -113,7 +107,7 @@ public class SimInitializerFrame extends JPanel {
                 new Dimension(200,50),
                 () -> {return Parameters.dealerCount;},
                 (e) -> {Parameters.dealerCount = e;},
-                50, e -> {return e<=50 && e >= 4; }
+                50, e -> {return e<=50 && e >= 2; }
         );
         var initButton = new JButton();
         initButton.setText("Initialize");
@@ -144,7 +138,6 @@ public class SimInitializerFrame extends JPanel {
         add(numberOfPlantations);
         add(drugSellPrice);
         add(drugOperationRange);
-        add(bossProfitCut);
         add(visitorsPerDay);
         add(townPopulation);
         add(dealerCount);

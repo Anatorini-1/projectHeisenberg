@@ -100,7 +100,7 @@ public class Dealer extends Citizen{
     //function to sell weed to citizens
     private void sellWeed(Citizen citizen){
         //do we sell?
-        float toSell = (float) ((Math.random() * 100) + this.profficiency);
+        float toSell = (float) ((Math.random() * 100)) + this.profficiency;
         if(citizen.getClass().getSimpleName().equals("RegularCitizen")){
             RegularCitizen regularCitizen = (RegularCitizen) citizen;
             if(regularCitizen.recklessness > toSell)

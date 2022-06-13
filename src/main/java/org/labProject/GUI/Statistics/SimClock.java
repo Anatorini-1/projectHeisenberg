@@ -1,6 +1,7 @@
 package org.labProject.GUI.Statistics;
 
 import org.labProject.Core.Parameters;
+import org.labProject.Core.StatisticsAggregator;
 
 import javax.swing.*;
 import java.awt.*;
@@ -8,7 +9,7 @@ import java.awt.*;
 public class SimClock extends JPanel {
     public SimClock(){
         setBackground(Color.white);
-        setPreferredSize(new Dimension(150,250));
+        setPreferredSize(new Dimension(350,200));
         setAlignmentX(JPanel.CENTER_ALIGNMENT);
     }
 
@@ -31,13 +32,19 @@ public class SimClock extends JPanel {
         g2d.drawLine(75,75,(int)(75 + (int)(50*Math.cos((float)(Parameters.currentTime+360)%720/720*Math.PI*2-Math.PI/2))),(int)(75 + (int)(50*(-1)* Math.sin((float)Parameters.currentTime%720/720*Math.PI*2-Math.PI/2))));
         //g2d.drawLine(75,75,(int)(72 - (20*(Math.cos(Math.PI/2+Math.PI/180*(360 * ((float)(Parameters.currentTime%720)/720)))))),(int)(72 - (20*(Math.sin(Math.PI/2+Math.PI/180*(360 * ((float)(Parameters.currentTime%720)/720)))))));
         int time = Parameters.currentTime;
-        StringBuilder dateTimeString = new StringBuilder();
-        dateTimeString.append((time/60+6)%24);
-        dateTimeString.append(":");
-        dateTimeString.append(time%60);
-        dateTimeString.append(" Day ");
-        dateTimeString.append((time/60/24));
+        String dateTimeString = (time / 60 + 6) % 24 +
+                ":" +
+                time % 60;
+
         g2d.setFont(g2d.getFont().deriveFont(20.0f));
-        g2d.drawString(dateTimeString.toString(),30,200);
+        g2d.drawString(dateTimeString,30,200);
+        g2d.drawString("Day " +
+                (time / 60 / 24),30,230);
+        g2d.setFont(g2d.getFont().deriveFont(20.0f));
+        g2d.setColor(Color.black);
+        g2d.drawString("Police statistics (caught/arrested):\n",330,100);
+        g2d.drawString("\n|Dealers "+String.valueOf(StatisticsAggregator.caughtDealers)+"/"+String.valueOf(StatisticsAggregator.arrestedDealers),330,130);
+        g2d.drawString("\n|Citizens "+String.valueOf(StatisticsAggregator.caughtCitizens)+"/"+String.valueOf(StatisticsAggregator.arrestedCitizens),330,160);
+        g2d.drawString( "\n|Couriers "+String.valueOf(StatisticsAggregator.caughtCouriers)+"/"+String.valueOf(StatisticsAggregator.arrestedCouriers),330,190);
     }
 }

@@ -11,7 +11,6 @@ import java.util.List;
 public class TownVisitor extends Citizen{
     private int spawnTime;
     private int lifeTime;
-    private float lawfulLevel;
     public static List<TownVisitor> listOfTownVisitors = new ArrayList<>();
 
     private Building edgeStreet(Map map){
@@ -31,6 +30,7 @@ public class TownVisitor extends Citizen{
             for(int i = 0; Parameters.visitorsPerDay > i; ++i){
                 listOfTownVisitors.add(new TownVisitor());
                 map.units.add(listOfTownVisitors.get(i));
+                System.out.println("Miecio has arrived"+String.valueOf(Parameters.currentTime/(24*60)));
             }
         }
     }
@@ -61,7 +61,6 @@ public class TownVisitor extends Citizen{
     public TownVisitor(){
         super();
         this.c = Color.red;
-        this.lawfulLevel =  (float)Math.floor(Math.random()*100);
         this.spawnTime = (int) (Math.random() * (1200-1)+1);
         this.lifeTime = (int) (Math.random() * ((1440-this.spawnTime)-200)+200);
     }

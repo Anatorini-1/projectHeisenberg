@@ -14,7 +14,6 @@ public class StatisticsAggregator {
     public static int caughtCouriers;
     public static int arrestedCouriers;
 
-    public static XYSeries deliveredWeed = new XYSeries("WEeed");;
     public static XYSeries profit =new XYSeries("Profit");
     public static XYSeries income =new XYSeries("Income");
     public static XYSeries cost = new XYSeries("Cost");
@@ -26,7 +25,7 @@ public class StatisticsAggregator {
         cost.add(0,0);
         loss.add(0,0);
         income.add(0,0);
-        deliveredWeed.add(0,0);
+
     }
 
     public static void log(String stat, int value, int timeStamp){
@@ -43,22 +42,23 @@ public class StatisticsAggregator {
                 StatisticsAggregator.profit.add(timeStamp,(double)StatisticsAggregator.profit.getY(StatisticsAggregator.profit.getItemCount()-1) - value);
                 StatisticsAggregator.loss.add(timeStamp,(double)StatisticsAggregator.loss.getY(StatisticsAggregator.loss.getItemCount()-1) + value);
             break;
-            case "delivery":
-                StatisticsAggregator.deliveredWeed.add(timeStamp,(double)StatisticsAggregator.deliveredWeed.getY(StatisticsAggregator.deliveredWeed.getItemCount()-1) + value);
-                break;
         }
     }
     public static void init(){
         profit.clear();
         income.clear();
         cost.clear();
-        deliveredWeed.clear();
         loss.clear();
         profit.add(0,0);
         cost.add(0,0);
         loss.add(0,0);
         income.add(0,0);
-        deliveredWeed.add(0,0);
+        caughtCitizens = 0;
+        arrestedCitizens = 0;
+        caughtDealers = 0;
+        arrestedDealers = 0;
+        caughtCouriers = 0;
+        arrestedCouriers = 0;
     }
 
 

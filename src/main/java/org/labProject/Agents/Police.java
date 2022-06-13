@@ -71,9 +71,10 @@ public class Police extends Citizen{
                 citizen.budget = 0;
                 break;
             case "TownVisitor":
-                StatisticsAggregator.arrestedCitizens += 1;
-                StatisticsAggregator.caughtCitizens += 1;
+                /*StatisticsAggregator.arrestedCitizens += 1;
+                StatisticsAggregator.caughtCitizens += 1;*/
                 map.units.remove(citizen);
+
                 break;
             case "Dealer":
                 StatisticsAggregator.arrestedDealers += 1;
@@ -98,8 +99,8 @@ public class Police extends Citizen{
                 StatisticsAggregator.arrestedCitizens += 1;
                 map.units.remove(citizen);
             case "TownVisitor":
-                StatisticsAggregator.caughtCitizens += 1;
-                StatisticsAggregator.arrestedCitizens += 1;
+                /*StatisticsAggregator.caughtCitizens += 1;
+                StatisticsAggregator.arrestedCitizens += 1;*/
                 map.units.remove(citizen);
             case "Dealer":
                 StatisticsAggregator.log("losses", citizen.budget, Parameters.currentTime );
@@ -120,7 +121,7 @@ public class Police extends Citizen{
                 StatisticsAggregator.caughtCitizens += 1;
                 citizen.budget = citizen.budget - 100;
             case "TownVisitor":
-                StatisticsAggregator.caughtCitizens += 1;
+               /* StatisticsAggregator.caughtCitizens += 1;*/
                 citizen.budget = citizen.budget - 100;
             case "Dealer":
                 StatisticsAggregator.log("losses", 100, Parameters.currentTime );

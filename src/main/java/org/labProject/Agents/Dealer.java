@@ -23,7 +23,7 @@ public class Dealer extends Citizen{
         this.profficiency = p;
         this.morale = m;
         this.mob = mob;
-        this.inventory.add(new Item(0,50,"Weed"));
+        this.inventory.add(new Item(0,20,"Weed"));
     }
 
     private int[] streetLocation(Map map){
@@ -54,7 +54,6 @@ public class Dealer extends Citizen{
                 coords[1] = Math.min(this.home.y + 1 + (((int) (Math.random() * (Parameters.drugOperationRange) + 1) - 1) * 3), map.toRender.size() - 1);
             }
         }
-        System.out.println(Arrays.toString(coords));
         return coords;
     }
     @Override
@@ -139,7 +138,7 @@ public class Dealer extends Citizen{
 
         int totalSellPrice = Parameters.drugSellPrice * sellQuantity;
         if(sellQuantity > 0){
-            StatisticsAggregator.log("soldDrugs", totalSellPrice, Parameters.currentTime);
+
             if(citizen.getClass().getSimpleName().equals("RegularCitizen")){
                 RegularCitizen regularCitizen = (RegularCitizen) citizen;
                 double addAddiciton = regularCitizen.addictionLevel*0.1;

@@ -42,11 +42,12 @@ public class MobHeadquarters extends Building{
 
     }
     public void handingToDealer(Dealer dealer){
-        if(dealer.inventory.get(0).quantity == 0 && this.productQuantity >= 50){
-            this.totalMoney += dealer.budget*Parameters.bossProfitCut;
-            dealer.budget -= dealer.budget*Parameters.bossProfitCut;
-            this.productQuantity -= 50;
-            dealer.inventory.get(0).quantity = 50;
+        if(dealer.inventory.get(0).quantity == 0 && this.productQuantity >= 20){
+            this.totalMoney += dealer.budget;
+            StatisticsAggregator.log("soldDrugs", dealer.budget, Parameters.currentTime);
+            dealer.budget = 0;
+            this.productQuantity -= 20;
+            dealer.inventory.get(0).quantity = 20;
         }
     }
 }

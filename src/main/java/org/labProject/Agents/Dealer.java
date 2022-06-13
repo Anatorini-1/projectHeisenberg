@@ -99,6 +99,11 @@ public class Dealer extends Citizen{
         //how much to sell?
         int canBuy = (int)Math.floor(citizen.budget/Parameters.drugSellPrice);
         int sellQuantity = 0;
+        int canLift = 0;
+        if(citizen.inventory.size() > 0)
+            canLift = citizen.carryCapacity - citizen.inventory.get(0).quantity;
+        else
+            canLift = citizen.carryCapacity;
 
         if(citizen.getClass().getSimpleName().equals("RegularCitizen")){
             RegularCitizen regularCitizen = (RegularCitizen) citizen;
@@ -120,9 +125,10 @@ public class Dealer extends Citizen{
             sellQuantity = this.inventory.get(0).quantity;
         if(sellQuantity > canBuy)
             sellQuantity = canBuy;
+        if(sellQuantity > canLift)
+            sellQuantity = canLift;
 
         int totalSellPrice = Parameters.drugSellPrice * sellQuantity;
-
         if(sellQuantity > 0){
             StatisticsAggregator.log("soldDrugs", totalSellPrice, Parameters.currentTime);
             if(citizen.getClass().getSimpleName().equals("RegularCitizen")){

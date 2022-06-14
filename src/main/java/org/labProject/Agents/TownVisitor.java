@@ -23,6 +23,7 @@ public class TownVisitor extends Citizen{
         if(time==1){
             if(!listOfTownVisitors.isEmpty()) {
                 for (TownVisitor x : listOfTownVisitors) {
+                    if(x.currentLocation != null) x.currentLocation.leave(x);
                     map.units.remove(x);
                 }
                 listOfTownVisitors.clear();

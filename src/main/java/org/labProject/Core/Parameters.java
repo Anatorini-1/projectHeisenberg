@@ -3,6 +3,7 @@ package org.labProject.Core;
 public class Parameters {
     public static boolean isPaused = false;
     public static boolean isOver = false;
+    public static boolean showGui = true;
     public static int tickSpeed = 10;
     public static int currentTime = 1;
     public static int mapWindowSize = 900;

@@ -36,25 +36,28 @@ public class Simulation{
     public static void main(String[] args) throws InterruptedException {
         init();
         while(true){
-            //Checking if dealer exists or ending simulation
-            int dealerExists = 0;
-            for (Citizen unit : units) {
-                if(unit.getClass().getSimpleName().equals("Dealer")){dealerExists += 1;}
-            }
-            if(dealerExists == 0){
-                //System.out.println("Dealer został złapany, koniec symulacji");
-               Parameters.isOver = true;
-            }
+            try{ //Yes, I know
+                //Checking if dealer exists or ending simulation
+                int dealerExists = 0;
+                for (Citizen unit : units) {
+                    if(unit.getClass().getSimpleName().equals("Dealer")){dealerExists += 1;}
+                }
+                if(dealerExists == 0){
+                    //System.out.println("Dealer został złapany, koniec symulacji");
+                    Parameters.isOver = true;
+                }
 
-            if(!Parameters.isPaused && Parameters.isInitialized && !Parameters.isOver){
-                tick();
-                Parameters.currentTime++;
-            }
-            Thread.sleep(1000 / Parameters.tickSpeed);
+                if(!Parameters.isPaused && Parameters.isInitialized && !Parameters.isOver){
+                    tick();
+                    Parameters.currentTime++;
+                }
+                Thread.sleep(1000 / Parameters.tickSpeed);
 
-            if(showGUI){
-                gui.refresh();
+                if(showGUI){
+                    gui.refresh();
+                }
             }
+            catch(Exception e){}
         }
     }
 }

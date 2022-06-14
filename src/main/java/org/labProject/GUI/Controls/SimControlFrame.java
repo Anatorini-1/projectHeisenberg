@@ -11,6 +11,7 @@ public class SimControlFrame extends JPanel {
         setPreferredSize(new Dimension(Parameters.mapWindowSize,60));
         setBackground(Color.WHITE);
         add(new PausePlayButton());
+        add(new GuiToggle());
         add(new TickSpeedControler());
 
     }

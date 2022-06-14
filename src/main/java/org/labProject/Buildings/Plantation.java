@@ -15,7 +15,7 @@ public class Plantation extends Building{
         super(x,y,Color.MAGENTA); //Was gonna be yellow, but Michał is a daltonist :/
         this.plantCount = (int) (Math.random() * (25 - 20) + 20);
         this.readyProduct = (int) (Math.random() * (250 - 50) + 50);
-        this.operatingCost =  (int) (Math.random() * (6 - 2) + 2); //Cost of 1 gram production
+        this.operatingCost =  6; //Cost of 1 gram production
     }
     public int handingProduct(int quantity){
         if(readyProduct>=quantity){

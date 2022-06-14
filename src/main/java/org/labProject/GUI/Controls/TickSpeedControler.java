@@ -42,7 +42,7 @@ public class TickSpeedControler extends JPanel {
                 }
             }
         });
-        add(new TickSpeedSlider());
+        add(new TickSpeedSlider(box));
         add(box);
     }
 }

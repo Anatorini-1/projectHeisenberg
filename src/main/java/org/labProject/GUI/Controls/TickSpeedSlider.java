@@ -5,18 +5,20 @@ import org.labProject.Core.Parameters;
 import javax.swing.*;
 import javax.swing.plaf.metal.MetalSliderUI;
 import java.awt.*;
+import java.io.File;
 
 public class TickSpeedSlider extends JSlider {
-    public TickSpeedSlider(){
+    public TickSpeedSlider(JTextField box){
         setMinimum(1);
-        setMaximum(20);
+        setMaximum(1000);
         setValue(Parameters.tickSpeed);
         setPaintLabels(true);
-        setLabelTable(this.createStandardLabels(5));
+        setLabelTable(this.createStandardLabels(100));
         setBackground(Color.white);
         setPreferredSize(new Dimension(300,50));
         addChangeListener(e -> {
             Parameters.tickSpeed = getValue() > 0 ? getValue() : 1;
+            box.setText(String.valueOf(Parameters.tickSpeed));
 
         });
         setUI(new MetalSliderUI(){

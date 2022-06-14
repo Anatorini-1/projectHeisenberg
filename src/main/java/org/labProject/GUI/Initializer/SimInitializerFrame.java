@@ -102,6 +102,13 @@ public class SimInitializerFrame extends JPanel {
                 (e) -> {Parameters.mapSize = e;},
                 50, e -> {return e<=50 && e >= 4; }
         );
+        var mobPoliceDistance = new InitializerParamContainer(
+                "Minimal mob to police distance: ",
+                new Dimension(200,50),
+                () -> {return Parameters.mobToPoliceDistance;},
+                (e) -> {Parameters.mobToPoliceDistance = e;},
+                Parameters.mapSize/2, e -> {return e<=(Parameters.mapSize/2) && e >= 1; }
+        );
         var dealerCount = new InitializerParamContainer(
                 "Number of dealers: ",
                 new Dimension(200,50),
@@ -130,6 +137,7 @@ public class SimInitializerFrame extends JPanel {
         permaDeath.setAlignmentX(JButton.CENTER_ALIGNMENT);
         setLayout(new BoxLayout(this,BoxLayout.Y_AXIS));
         add(mapSize);
+        add(mobPoliceDistance);
         add(numberOfPoliceStations);
         add(plantsPerPlantation);
         add(policemanPerStation);

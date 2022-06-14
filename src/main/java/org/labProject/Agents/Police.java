@@ -7,6 +7,7 @@ import org.labProject.Core.StatisticsAggregator;
 
 
 import java.awt.*;
+import java.util.ConcurrentModificationException;
 
 public class Police extends Citizen{
     private int morale;
@@ -28,31 +29,35 @@ public class Police extends Citizen{
 
                 //Catching the weed addicted
                 int toSearch = (int) (Math.random() * 100);
-                if(this.currentLocation.guests.size() > 1 && toSearch < 11){
-                    for (Citizen citizen : this.currentLocation.guests) {
-                        if(Parameters.permaDeath){
-                            if(citizen.inventory.size() > 0 && Parameters.policeCorruptionLevel < this.morale && citizen.inventory.get(0).quantity > 0)
-                               PunishmentRemove(map, citizen);
-                            else if(citizen.inventory.size() > 0 && Parameters.policeCorruptionLevel > this.morale && citizen.inventory.get(0).quantity > 0){
-                                if(citizen.budget >= 100)
-                                    getBribed(citizen);
-                                else
+                try {
+                    if (this.currentLocation.guests.size() > 1 && toSearch < 11) {
+                        for (Citizen citizen : this.currentLocation.guests) {
+                            if (Parameters.permaDeath) {
+                                if (citizen.inventory.size() > 0 && Parameters.policeCorruptionLevel < this.morale && citizen.inventory.get(0).quantity > 0)
                                     PunishmentRemove(map, citizen);
-                            }
-                        }
-                        else{
-                            if(citizen.inventory.size() > 0 && Parameters.policeCorruptionLevel < this.morale && citizen.inventory.get(0).quantity > 0)
-                                Punishment(map, citizen);
-                            else if(citizen.inventory.size() > 0 && Parameters.policeCorruptionLevel > this.morale && citizen.inventory.get(0).quantity > 0){
-                                if(citizen.budget >= 100)
-                                    getBribed(citizen);
-                                else
+                                else if (citizen.inventory.size() > 0 && Parameters.policeCorruptionLevel > this.morale && citizen.inventory.get(0).quantity > 0) {
+                                    if (citizen.budget >= 100)
+                                        getBribed(citizen);
+                                    else
+                                        PunishmentRemove(map, citizen);
+                                }
+                            } else {
+                                if (citizen.inventory.size() > 0 && Parameters.policeCorruptionLevel < this.morale && citizen.inventory.get(0).quantity > 0)
                                     Punishment(map, citizen);
+                                else if (citizen.inventory.size() > 0 && Parameters.policeCorruptionLevel > this.morale && citizen.inventory.get(0).quantity > 0) {
+                                    if (citizen.budget >= 100)
+                                        getBribed(citizen);
+                                    else
+                                        Punishment(map, citizen);
+                                }
                             }
                         }
                     }
                 }
-
+                catch(Exception e){
+                    //Oh no :O
+                    //Anyway
+                }
             } else{
                 this.goLocation(map, this.parentStation);
             }
@@ -71,10 +76,7 @@ public class Police extends Citizen{
                 citizen.budget = 0;
                 break;
             case "TownVisitor":
-                /*StatisticsAggregator.arrestedCitizens += 1;
-                StatisticsAggregator.caughtCitizens += 1;*/
                 map.units.remove(citizen);
-
                 break;
             case "Dealer":
                 StatisticsAggregator.arrestedDealers += 1;
@@ -95,23 +97,26 @@ public class Police extends Citizen{
     private void PunishmentRemove(Map map, Citizen citizen){
         switch (citizen.getClass().getSimpleName()){
             case "RegularCitizen":
+            case "TownVisitor":
                 StatisticsAggregator.caughtCitizens += 1;
                 StatisticsAggregator.arrestedCitizens += 1;
+                citizen.currentLocation.leave(citizen);
                 map.units.remove(citizen);
-            case "TownVisitor":
-                /*StatisticsAggregator.caughtCitizens += 1;
-                StatisticsAggregator.arrestedCitizens += 1;*/
-                map.units.remove(citizen);
+                break;
             case "Dealer":
                 StatisticsAggregator.log("losses", citizen.budget, Parameters.currentTime );
                 StatisticsAggregator.caughtDealers += 1;
                 StatisticsAggregator.arrestedDealers += 1;
+                citizen.currentLocation.leave(citizen);
                 map.units.remove(citizen);
+                break;
             case "Courier":
                 StatisticsAggregator.log("losses", citizen.budget, Parameters.currentTime );
                 StatisticsAggregator.caughtCouriers += 1;
                 StatisticsAggregator.arrestedCouriers += 1;
+                citizen.currentLocation.leave(citizen);
                 map.units.remove(citizen);
+                break;
         }
     }
 
@@ -120,17 +125,21 @@ public class Police extends Citizen{
             case "RegularCitizen":
                 StatisticsAggregator.caughtCitizens += 1;
                 citizen.budget = citizen.budget - 100;
+                break;
             case "TownVisitor":
                /* StatisticsAggregator.caughtCitizens += 1;*/
                 citizen.budget = citizen.budget - 100;
+                break;
             case "Dealer":
                 StatisticsAggregator.log("losses", 100, Parameters.currentTime );
                 StatisticsAggregator.caughtDealers += 1;
                 citizen.budget = citizen.budget - 100;
+                break;
             case "Courier":
                 StatisticsAggregator.log("losses", 100, Parameters.currentTime );
                 StatisticsAggregator.caughtCouriers += 1;
                 citizen.budget = citizen.budget - 100;
+                break;
         }
     }
 

@@ -43,7 +43,7 @@ public class Simulation{
                 if(unit.getClass().getSimpleName().equals("Dealer")){dealerExists += 1;}
             }
             if(dealerExists == 0){
-                System.out.println("Dealer został złapany, koniec symulacji");
+                //System.out.println("Dealer został złapany, koniec symulacji");
                Parameters.isOver = true;
             }
 
@@ -55,21 +55,6 @@ public class Simulation{
 
             if(showGUI){
                 gui.refresh();
-            }
-            //code showing map on console
-            if(showConsole){
-                for(int i = 0; i < map.gridSize; i++){
-                    String[] line = new String[map.gridSize];
-                    for(int j = 0; j < map.gridSize; j++) {
-                        String buildingName = String.valueOf(map.toRender.get(i).get(j));
-                        if (buildingName.contains("Street")) {
-                            line[j] = "S";
-                        } else {
-                            line[j] = "A";
-                        }
-                    }
-                    System.out.println(Arrays.toString(line));
-                }
             }
         }
     }

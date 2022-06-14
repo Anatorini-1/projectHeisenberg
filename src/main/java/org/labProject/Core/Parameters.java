@@ -23,7 +23,7 @@ public class Parameters {
     //Town related params
     public static int visitorsPerDay = 1;
     public static int townPopulation = 10;
-
+    public static int mobToPoliceDistance = 1;
     public static boolean isInitialized = false;
 
     public static int mapSize = 10;

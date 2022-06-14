@@ -17,6 +17,8 @@ public class SimClock extends JPanel {
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         var g2d = (Graphics2D)g;
+
+
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,RenderingHints.VALUE_ANTIALIAS_ON);
         g2d.setStroke(new BasicStroke(4));
         g2d.setColor(Color.black);
@@ -32,6 +34,7 @@ public class SimClock extends JPanel {
         g2d.drawLine(75,75,(int)(75 + (int)(50*Math.cos((float)(Parameters.currentTime+360)%720/720*Math.PI*2-Math.PI/2))),(int)(75 + (int)(50*(-1)* Math.sin((float)Parameters.currentTime%720/720*Math.PI*2-Math.PI/2))));
         //g2d.drawLine(75,75,(int)(72 - (20*(Math.cos(Math.PI/2+Math.PI/180*(360 * ((float)(Parameters.currentTime%720)/720)))))),(int)(72 - (20*(Math.sin(Math.PI/2+Math.PI/180*(360 * ((float)(Parameters.currentTime%720)/720)))))));
         int time = Parameters.currentTime;
+
         String dateTimeString = (time / 60 + 6) % 24 +
                 ":" +
                 time % 60;

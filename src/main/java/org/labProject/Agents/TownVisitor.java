@@ -30,7 +30,7 @@ public class TownVisitor extends Citizen{
             for(int i = 0; Parameters.visitorsPerDay > i; ++i){
                 listOfTownVisitors.add(new TownVisitor());
                 map.units.add(listOfTownVisitors.get(i));
-                System.out.println("Miecio has arrived"+String.valueOf(Parameters.currentTime/(24*60)));
+
             }
         }
     }

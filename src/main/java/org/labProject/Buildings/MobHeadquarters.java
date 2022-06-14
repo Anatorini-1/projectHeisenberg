@@ -16,7 +16,7 @@ public class MobHeadquarters extends Building{
     private int storageCapacity;
     public int operationRange;
     public int productQuantity;
-    private static int totalMoney;
+    private int totalMoney;
     private Kingpin boss;
 
     public MobHeadquarters(int x, int y){

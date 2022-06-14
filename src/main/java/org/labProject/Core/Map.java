@@ -37,8 +37,11 @@ public class Map {
         return coords;
     }
     private ArrayList<Integer[]> BuildingsRandomCoords(int size, int quantity){
-        ArrayList<Integer[]> coordsList = new ArrayList<>(new ArrayList<>());
+        ArrayList<Integer[]> coordsList = new ArrayList<>();
+        int police = quantity - 2;
+        int numberOfPolice = quantity - Parameters.numberOfPoliceStations - 2;
             while(quantity>0){
+                boolean mobPoliceDistance = true;
                 Integer[] coordsR = GetCoords(size);
                 boolean isInArray = false;
                 for(Integer[] coordsCheck : coordsList){
@@ -46,14 +49,45 @@ public class Map {
                     isInArray = true;
                 }
                 }
-                if(!isInArray){
-                    coordsList.add(coordsR);
-                    quantity--;
+                if(!isInArray && quantity==police && police>numberOfPolice){
+                int distance =  Math.abs(coordsList.get(0)[0] - coordsR[0]) + Math.abs(coordsList.get(0)[1] - coordsR[1]);
+                if(distance != Parameters.mobToPoliceDistance*3){
+                    mobPoliceDistance = false;
+                }else{
+                    police--;
+                }
+                }
+                if(mobPoliceDistance){
+                    if(!isInArray){
+                        coordsList.add(coordsR);
+                        quantity--;
+                    }
                 }
             }
             return coordsList;
     }
-
+    private ArrayList<Integer[]> ApartmentBuildingsRandomCoords(int size, int quantity, ArrayList<Integer[]> specialBuildings){
+        ArrayList<Integer[]> coordsList = new ArrayList<>(new ArrayList<>());
+        while(quantity>0){
+            Integer[] coordsR = GetCoords(size);
+            boolean isInArray = false;
+            for(Integer[] coordsCheck : coordsList){
+                if(Arrays.equals(coordsCheck, coordsR)) {
+                    isInArray = true;
+                }
+            }
+            for(Integer[] coordsCheck :specialBuildings){
+                if(Arrays.equals(coordsCheck, coordsR)) {
+                    isInArray = true;
+                }
+            }
+            if(!isInArray){
+                coordsList.add(coordsR);
+                quantity--;
+            }
+        }
+        return coordsList;
+    }
 
     public Map(){
         this.gridSize = Parameters.mapSize*3 + 1;
@@ -61,22 +95,22 @@ public class Map {
         this.units = new ArrayList<>();
         int quantityOfBuildings = Parameters.numberOfPlantations+Parameters.numberOfPoliceStations+2; //number of special buildings
         ArrayList<Integer[]>  specialBuildingsCoords = BuildingsRandomCoords(gridSize, quantityOfBuildings); //Getting coords for special buildings
-        ArrayList<Integer[]>  citizenApartmentCoords = BuildingsRandomCoords(gridSize, Parameters.townPopulation); // Getting coords for citizens home
-        int whichBuilding = 0;
+        ArrayList<Integer[]>  citizenApartmentCoords = ApartmentBuildingsRandomCoords(gridSize, Parameters.townPopulation, specialBuildingsCoords); // Getting coords for citizens home
         for(var i=0;i<gridSize;i++){
             toRender.add(new ArrayList<>());
             for(var j=0;j<gridSize;j++){
                 //checking if current coords are on list of specialBuildingCoords
                 boolean checkCoords = false;
+                int coordsOfSpecialVuiling = 0;
                 for(int x = 0;x<quantityOfBuildings;++x){
                     if(specialBuildingsCoords.get(x)[0].equals(i) && specialBuildingsCoords.get(x)[1].equals(j)) checkCoords = true;
+                    if(checkCoords){coordsOfSpecialVuiling = x; break;}
                 }
                 if(i%3 == 0 || j%3 == 0){
                     toRender.get(i).add(new Street(i,j));
                 }
                 else if(checkCoords){
-
-                        if(whichBuilding==0){ //There is just one Headquarter
+                        if(coordsOfSpecialVuiling==0){ //There is just one Headquarter
                             MobHeadquarters mobHeadquarters = new MobHeadquarters(i, j);
                             this.mob = mobHeadquarters;
                             for(int d = 0; d < Parameters.dealerCount; ++d) {
@@ -87,10 +121,10 @@ public class Map {
                                 units.add(dealer);
                                 toRender.get(i).add(mobHeadquarters);
                             }
-                        }else if(whichBuilding == 1){
+                        }else if(coordsOfSpecialVuiling == 1){
                             this.jail = new Jail(i, j);
                             toRender.get(i).add(jail);
-                        }else if(whichBuilding < Parameters.numberOfPoliceStations+2){
+                        }else if(coordsOfSpecialVuiling < Parameters.numberOfPoliceStations+2){
                             PoliceStation policeStation = new PoliceStation(Parameters.patrolsPerDayPerStations, (int) (Math.random() * (100 - 1) + 1), i, j);
                             toRender.get(i).add(policeStation);
                             for (int p = 0; p < Parameters.policemanPerStation; p++) { // number of policemen
@@ -100,7 +134,7 @@ public class Map {
                                 policeStation.guests.add(newPolice);
                                 units.add(newPolice);
                             }
-                        }else if(whichBuilding<quantityOfBuildings) {
+                        }else if(coordsOfSpecialVuiling<quantityOfBuildings) {
                             Plantation plantation = new Plantation(i,j);
                             toRender.get(i).add(plantation);
                             //Courier
@@ -116,7 +150,6 @@ public class Map {
                             newProducer.currentLocation = plantation;
                             units.add(newProducer);
                         }
-                    whichBuilding++;
                 }
                 else{
                     ApartmentBuilding apartmentBuilding = new ApartmentBuilding(i,j);
@@ -136,15 +169,6 @@ public class Map {
     }
 }
 
-//    public static void main(String[] args) {
-//        Map map = new Map(10);
-//        for(int x = 0;x<10;x++){
-//            for(int y = 0;y<10;y++){
-//                System.out.println(map.toRender.get(x).get(y).getClass());
-//            }
-//        }
-//        System.out.println(map.units.get(0).home.x);
-//        }
 
 
 

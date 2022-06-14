@@ -103,11 +103,11 @@ public class SimInitializerFrame extends JPanel {
                 50, e -> {return e<=50 && e >= 4; }
         );
         var mobPoliceDistance = new InitializerParamContainer(
-                "Minimal mob to police distance: ",
+                "Mob to police distance: ",
                 new Dimension(200,50),
                 () -> {return Parameters.mobToPoliceDistance;},
                 (e) -> {Parameters.mobToPoliceDistance = e;},
-                Parameters.mapSize/2, e -> {return e<=(Parameters.mapSize/2) && e >= 1; }
+                Parameters.mapSize, e -> {return e<=(Parameters.mapSize) && e >= 1; }
         );
         var dealerCount = new InitializerParamContainer(
                 "Number of dealers: ",

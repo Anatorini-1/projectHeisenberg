@@ -20,7 +20,9 @@ public class Plantation extends Building{
     public int handingProduct(int quantity){
         if(readyProduct>=quantity){
             this.readyProduct = this.readyProduct - quantity;
-            StatisticsAggregator.log("drugProductionCost",quantity*this.operatingCost, Parameters.currentTime);
+            try {
+                StatisticsAggregator.log("drugProductionCost", quantity * this.operatingCost, Parameters.currentTime);
+            }catch (Exception e){}
             return quantity;
 
         }

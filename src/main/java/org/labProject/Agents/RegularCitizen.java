@@ -13,7 +13,6 @@ public class RegularCitizen extends Citizen{
     @Override
     public void action(Map map){
         int time = Parameters.currentTime%1440; //Current time during day
-
         if(this.goJail == Parameters.currentTime){
             this.goJail = 0;
         }

@@ -26,7 +26,6 @@ public class Simulation{
         for (int i = 0; i < units.size(); i++) {
             units.get(i).action(map);
 
-
         }
     }
     private static void goBackTick(){

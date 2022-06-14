@@ -98,9 +98,11 @@ public class Police extends Citizen{
     private void PunishmentRemove(Map map, Citizen citizen){
         switch (citizen.getClass().getSimpleName()){
             case "RegularCitizen":
-            case "TownVisitor":
                 StatisticsAggregator.caughtCitizens += 1;
                 StatisticsAggregator.arrestedCitizens += 1;
+                citizen.currentLocation.leave(citizen);
+                map.units.remove(citizen);
+            case "TownVisitor":
                 citizen.currentLocation.leave(citizen);
                 map.units.remove(citizen);
                 break;

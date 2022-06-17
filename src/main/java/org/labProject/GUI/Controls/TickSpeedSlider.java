@@ -5,9 +5,16 @@ import org.labProject.Core.Parameters;
 import javax.swing.*;
 import javax.swing.plaf.metal.MetalSliderUI;
 import java.awt.*;
-import java.io.File;
 
+/**
+ * A slider, working together with a text-field to control the tickspeed of the simulation.
+ * By default, the range is 1-1000, for more detail, check {@link TickSpeedController}
+ */
 public class TickSpeedSlider extends JSlider {
+    /**
+     * @param box a {@link JTextField} with witch this slider works in pair, passed as an argument to ensure
+     *            consistency between values presented on the slider and in the text-field
+     */
     public TickSpeedSlider(JTextField box){
         setMinimum(1);
         setMaximum(1000);

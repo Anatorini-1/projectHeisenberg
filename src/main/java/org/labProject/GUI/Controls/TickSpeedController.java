@@ -7,10 +7,25 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
-public class TickSpeedControler extends JPanel {
+/**
+ * A component controlling the tickspeed of the simulation. Contains a slider and an input field, both of witch can be used independently
+ * and changing one of them automatically adjusts the other  one so that the both accurately represent the current tickspeed
+ */
+public class TickSpeedController extends JPanel {
+    /**
+     * Used to check whether the newly provided value is a valid tickspeed (an integer)
+     */
     private boolean isValid = true;
+
+    /**
+     *
+     */
     private void refresh(){this.repaint();}
-    public TickSpeedControler(){
+
+    /**
+     *
+     */
+    public TickSpeedController(){
         setLayout(new FlowLayout());
 
         var box = new JTextField();

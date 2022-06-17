@@ -4,13 +4,7 @@ import org.labProject.Core.Map;
 import org.labProject.Core.Parameters;
 
 public class RegularCitizen extends Citizen{
-    public float addictionLevel,recklessness,lawfullLevel;
-    @Override
-    public void create() {}
-    @Override
-    public void delete() {}
-
-    @Override
+    public float addictionLevel,recklessness, lawfulLevel;
     public void action(Map map){
         int time = Parameters.currentTime%1440; //Current time during day
         if(this.goJail == Parameters.currentTime){
@@ -26,7 +20,7 @@ public class RegularCitizen extends Citizen{
                 }
             } else {
                 if (time % (this.age + (int) Math.floor((float) this.age / 2)) == 0) {
-                    this.randomMovement = (int) Math.floor(Math.random() * 100) + 1 < (int) Math.floor(this.addictionLevel / ((time - 960) / 60));
+                    this.randomMovement = (int) Math.floor(Math.random() * 100) + 1 < (int) Math.floor(this.addictionLevel / (((float)time - 960) / 60));
                 }
             }
             if (this.randomMovement) {
@@ -42,7 +36,7 @@ public class RegularCitizen extends Citizen{
             if (time % 1440 == 0) {
                 if (age < 21) {
                     this.budget += (int) Math.floor(Math.random() * 20) + 10;
-                } else if (age >= 21 && age < 50) {
+                } else if (age < 50) {
                     this.budget += (int) Math.floor(Math.random() * 50) + 20;
                 } else {
                     this.budget += (int) Math.floor(Math.random() * 70) + 50;
@@ -54,7 +48,7 @@ public class RegularCitizen extends Citizen{
         super();
         this.addictionLevel = (int)Math.floor(Math.random()*100)+1;
         this.recklessness = (int)Math.floor(Math.random()*100)+1;
-        this.lawfullLevel = (int)Math.floor(Math.random()*100)+1;
+        this.lawfulLevel = (int)Math.floor(Math.random()*100)+1;
     }
 
 }

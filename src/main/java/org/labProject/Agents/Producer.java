@@ -4,8 +4,6 @@ import org.labProject.Buildings.Plantation;
 import org.labProject.Core.Map;
 import org.labProject.Core.Parameters;
 
-import java.awt.*;
-
 public class Producer extends Citizen{
     public double experience;
 
@@ -17,13 +15,6 @@ public class Producer extends Citizen{
             plantation.harvest(this);
         }
     }
-
-    @Override
-    public void create() {}
-
-    @Override
-    public void delete() {}
-
     public Producer(){
         this.experience = Math.random();
     }

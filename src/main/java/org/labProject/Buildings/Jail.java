@@ -1,11 +1,6 @@
 package org.labProject.Buildings;
 
-import org.labProject.Agents.Police;
-import org.labProject.Buildings.Building;
-
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.List;
 
 public class Jail extends Building {
 

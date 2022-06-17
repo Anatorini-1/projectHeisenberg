@@ -6,13 +6,10 @@ import java.awt.*;
 
 public class Street extends Building{
     public Citizen[][] pedestrians;
-    private int innerX,innerY;
     public Street(int x, int y){
         super(x,y,Color.black);
         this.pedestrians = new Citizen[2][3];
-        this.innerX=0;
-        this.innerY=0;
-    };
+    }
 
 
 }

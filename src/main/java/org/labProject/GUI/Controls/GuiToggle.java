@@ -7,8 +7,22 @@ import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
+/**
+ * A class representing the button used to toggle whether the
+ * visual representation of the simulation map is to be shown.
+ * Created mainly for development/debugging purposes
+ * @see Parameters#showGui
+ * */
 public class GuiToggle extends JPanel {
+    /**
+     * Used for the mouse hover effect
+     */
     private boolean isHovered = false;
+
+    /**
+     * Default constructor. This is a single use, non-parametrized class,
+     * therefore no arguments are required
+     */
     public GuiToggle(){
         this.addMouseListener(new MouseListener() {
             @Override
@@ -43,6 +57,10 @@ public class GuiToggle extends JPanel {
         setPreferredSize(new Dimension(55,55));
         setAlignmentX(JPanel.LEFT_ALIGNMENT);
     }
+
+    /**
+     * @param g the <code>Graphics</code> context in which to paint
+     */
     @Override
     public void paint(Graphics g) {
         super.paint(g);

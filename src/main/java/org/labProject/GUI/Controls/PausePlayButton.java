@@ -7,8 +7,20 @@ import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
+/**
+ * Class extending a {@link JPanel}, tweaked to represent a Pause/Play button,used to
+ * control the simulation.
+ * @see Parameters#isPaused
+ */
 public class PausePlayButton extends JPanel {
+    /**
+     * Used for the mouse hover effect
+     */
     private boolean isHovered = false;
+    /**
+     * Default constructor. This is a single use, non-parametrized class,
+     * therefore no arguments are required
+     */
     public PausePlayButton(){
         this.addMouseListener(new MouseListener() {
             @Override
@@ -43,6 +55,10 @@ public class PausePlayButton extends JPanel {
         setPreferredSize(new Dimension(55,55));
         setAlignmentX(JPanel.LEFT_ALIGNMENT);
     }
+
+    /**
+     * @param g the <code>Graphics</code> context in which to paint
+     */
     @Override
     public void paint(Graphics g) {
         super.paint(g);

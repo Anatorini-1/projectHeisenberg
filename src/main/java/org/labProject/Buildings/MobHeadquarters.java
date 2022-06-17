@@ -7,17 +7,14 @@ import org.labProject.Core.Parameters;
 import org.labProject.Core.StatisticsAggregator;
 
 import java.awt.*;
-import java.lang.reflect.Parameter;
-import java.util.ArrayList;
-import java.util.List;
 
 public class MobHeadquarters extends Building{
-    private int stock;
-    private int storageCapacity;
+    private final int stock;
+    private final int storageCapacity;
     public int operationRange;
     public int productQuantity;
     private int totalMoney;
-    private Kingpin boss;
+    private final Kingpin boss;
 
     public MobHeadquarters(int x, int y){
         super(x,y, Color.GREEN);

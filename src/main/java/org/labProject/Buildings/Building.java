@@ -12,10 +12,10 @@ public abstract class Building extends Renderable {
     public void enter(Citizen c){
         guests.add(c);
         c.currentLocation = this;
-    };
+    }
     public void leave(Citizen c){
         guests.remove(c);
-    };
+    }
     public Building(int x, int y, Color c){
         super(x,y,c);
         this.guests = new ArrayList<>();

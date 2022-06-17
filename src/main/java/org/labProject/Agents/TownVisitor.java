@@ -9,8 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TownVisitor extends Citizen{
-    private int spawnTime;
-    private int lifeTime;
+    private final int spawnTime;
+    private final int lifeTime;
     public static List<TownVisitor> listOfTownVisitors = new ArrayList<>();
 
     private Building edgeStreet(Map map){
@@ -52,13 +52,6 @@ public class TownVisitor extends Citizen{
                 }
             }
     }
-
-    @Override
-    public void create() {}
-
-    @Override
-    public void delete() {}
-
     public TownVisitor(){
         super();
         this.c = Color.red;

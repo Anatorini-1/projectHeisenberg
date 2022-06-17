@@ -4,7 +4,7 @@ package org.labProject.Core;
 import org.labProject.Agents.*;
 import org.labProject.GUI.SimMainFrame;
 
-import java.util.Arrays;
+
 import java.util.List;
 
 public class Simulation{
@@ -12,7 +12,6 @@ public class Simulation{
     private static List<Citizen> units;
     private static SimMainFrame gui = null;
     private static boolean showGUI = true;
-    private static boolean showConsole = false;
     public static void init(){
         //Static values for presentation purposes
         map = new Map();
@@ -24,40 +23,18 @@ public class Simulation{
     private static void tick(){
         TownVisitor.newTownVisitors(map);
         for (int i = 0; i < units.size(); i++) {
-            units.get(i).action(map);
-
+            if(units.get(i).markedForDeath) {units.get(i).delete();units.remove(i);}
+            else units.get(i).action(map);
         }
-    }
-    private static void goBackTick(){
-        for (int i = 0; i < units.size(); i++) {
-            units.get(i).goLocation(map, units.get(i).home);
-        }
+        Parameters.currentTime++;
     }
     public static void main(String[] args) throws InterruptedException {
         init();
         while(true){
-            try{ //Yes, I know
-                //Checking if dealer exists or ending simulation
-                int dealerExists = 0;
-                for (Citizen unit : units) {
-                    if(unit.getClass().getSimpleName().equals("Dealer")){dealerExists += 1;}
-                }
-                if(dealerExists == 0){
-                    //System.out.println("Dealer został złapany, koniec symulacji");
-                    Parameters.isOver = true;
-                }
-
-                if(!Parameters.isPaused && Parameters.isInitialized && !Parameters.isOver){
-                    tick();
-                    Parameters.currentTime++;
-                }
+                if(units.stream().filter(e -> {return e.getClass().getSimpleName().equals("Dealer");}).toArray().length < 1) Parameters.isOver = true;
+                if(!Parameters.isPaused && Parameters.isInitialized && !Parameters.isOver) tick();
                 Thread.sleep(1000 / Parameters.tickSpeed);
-
-                if(showGUI){
-                    gui.refresh();
-                }
-            }
-            catch(Exception e){}
+                if(showGUI) gui.refresh();
         }
     }
 }

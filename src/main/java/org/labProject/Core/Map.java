@@ -8,25 +8,15 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 public class Map {
 
-    //grid size made public for test reasons
+    //grid size made public for test reasons (and stayed that way :\)
     public int gridSize;
     public List<Citizen> units;
     public MobHeadquarters mob;
     public Jail jail;
     public List<List<Renderable>> toRender;
-    //Method for printing the current map state to the console window
-    public void dumpInfo(){
-        toRender.forEach(row -> {
-            row.forEach(cell -> {
-                System.out.print(cell.x+" "+cell.y+" "+cell.c.getRGB()+" | ");
-            });
-            System.out.println("");
-        });
-    }
     private Integer[] GetCoords(int size){
         Integer[] coords = new Integer[2];
         coords[0] = (int) (Math.random() * (size-1)+1);
@@ -45,9 +35,10 @@ public class Map {
                 Integer[] coordsR = GetCoords(size);
                 boolean isInArray = false;
                 for(Integer[] coordsCheck : coordsList){
-                if(Arrays.equals(coordsCheck, coordsR)) {
-                    isInArray = true;
-                }
+                    if (Arrays.equals(coordsCheck, coordsR)) {
+                        isInArray = true;
+                        break;
+                    }
                 }
                 if(!isInArray && quantity==police && police>numberOfPolice){
                 int distance =  Math.abs(coordsList.get(0)[0] - coordsR[0]) + Math.abs(coordsList.get(0)[1] - coordsR[1]);
@@ -72,13 +63,15 @@ public class Map {
             Integer[] coordsR = GetCoords(size);
             boolean isInArray = false;
             for(Integer[] coordsCheck : coordsList){
-                if(Arrays.equals(coordsCheck, coordsR)) {
+                if (Arrays.equals(coordsCheck, coordsR)) {
                     isInArray = true;
+                    break;
                 }
             }
             for(Integer[] coordsCheck :specialBuildings){
-                if(Arrays.equals(coordsCheck, coordsR)) {
+                if (Arrays.equals(coordsCheck, coordsR)) {
                     isInArray = true;
+                    break;
                 }
             }
             if(!isInArray){

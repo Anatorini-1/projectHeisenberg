@@ -8,16 +8,16 @@ import org.labProject.Core.Parameters;
 import java.awt.*;
 
 public class Dealer extends Citizen{
-    private float profficiency;
-    private int morale;
+    private float proficiency;
+    private final int morale;
     private int[] location = new int[2];
-    private MobHeadquarters mob;
+    private final MobHeadquarters mob;
     public Dealer(int m, MobHeadquarters mob){
         super();
         this.c = Color.ORANGE;
         this.morale = m;
         this.mob = mob;
-        this.profficiency = (int) (Math.random() * (100 - 1) + 1);
+        this.proficiency = (int) (Math.random() * (100 - 1) + 1);
         this.inventory.add(new Item(0,20,"Weed"));
     }
 
@@ -100,16 +100,16 @@ public class Dealer extends Citizen{
     //function to sell weed to citizens
     private void sellWeed(Citizen citizen){
         //do we sell?
-        float toSell = (float) ((Math.random() * 100)) + this.profficiency;
+        float toSell = (float) ((Math.random() * 100)) + this.proficiency;
         if(citizen.getClass().getSimpleName().equals("RegularCitizen")){
             RegularCitizen regularCitizen = (RegularCitizen) citizen;
             if(regularCitizen.recklessness > toSell)
                 return;
         }
         //how much to sell?
-        int canBuy = (int) Math.floor(citizen.budget / Parameters.drugSellPrice);
+        int canBuy = (int) Math.floor((float)citizen.budget / Parameters.drugSellPrice);
         int sellQuantity = 0;
-        int canLift = 0;
+        int canLift;
         if (citizen.inventory.size() > 0)
             canLift = citizen.carryCapacity - citizen.inventory.get(0).quantity;
         else
@@ -139,13 +139,13 @@ public class Dealer extends Citizen{
 
         int totalSellPrice = Parameters.drugSellPrice * sellQuantity;
         if (sellQuantity > 0) {
-            this.profficiency += 0.1;
+            this.proficiency += 0.1;
             if (citizen.getClass().getSimpleName().equals("RegularCitizen")) {
                 RegularCitizen regularCitizen = (RegularCitizen) citizen;
-                double addAddiciton = regularCitizen.addictionLevel * 0.1;
-                double overflow = regularCitizen.addictionLevel + addAddiciton;
+                double addAddiction = regularCitizen.addictionLevel * 0.1;
+                double overflow = regularCitizen.addictionLevel + addAddiction;
                 if (overflow < 100)
-                    regularCitizen.addictionLevel += addAddiciton;
+                    regularCitizen.addictionLevel += addAddiction;
             }
             citizen.budget -= totalSellPrice;
             this.budget += totalSellPrice;
@@ -157,10 +157,5 @@ public class Dealer extends Citizen{
             }
         }
     }
-    @Override
-    public void create() {}
-
-    @Override
-    public void delete() {}
 
 }

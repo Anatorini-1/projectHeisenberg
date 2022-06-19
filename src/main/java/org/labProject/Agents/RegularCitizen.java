@@ -3,8 +3,22 @@ package org.labProject.Agents;
 import org.labProject.Core.Map;
 import org.labProject.Core.Parameters;
 
+/**
+ * This implementation of the {@link Citizen} superclass represents an agent tasked
+ * with random movement. It only moves around and buys drugs for simulation purposes.
+ */
 public class RegularCitizen extends Citizen{
+    /**
+     * The addiction level, recklessness and lawfulLevel of the {@link RegularCitizen}.
+     */
     public float addictionLevel,recklessness, lawfulLevel;
+
+    /**
+     * Depending on the age, time of day and addiction level {@link RegularCitizen} goes out for a walk
+     * or stays at home. At the end of the day the {@link RegularCitizen} gets a cash injection depending
+     * on his age.
+     * @param map An anchor to the {@link Map} object
+     */
     public void action(Map map){
         int time = Parameters.currentTime%1440; //Current time during day
         if(this.goJail == Parameters.currentTime){

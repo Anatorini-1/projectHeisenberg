@@ -83,6 +83,12 @@ public abstract class Citizen extends Renderable implements SimAgent {
         this.markedForDeath = false;
     }
 
+    /**
+     * A function which makes an agent go to a given location which is a Building (not a Street)
+     * @param map      An anchor to the {@link Map} object.
+     * @param building the {@link Building} an agent should go to.
+     *
+     */
     @Override
     public void goLocation(Map map, Building building){
             int y = (building.y % 3 == 1) ? building.y - 1 : building.y + 1;

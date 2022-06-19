@@ -2,15 +2,35 @@ package org.labProject.Agents;
 
 import org.labProject.Buildings.Building;
 import org.labProject.Buildings.MobHeadquarters;
+import org.labProject.Buildings.Plantation;
 import org.labProject.Core.Map;
 import org.labProject.Core.Parameters;
 
 import java.awt.*;
 
+/**
+ * This implementation of the {@link Citizen} superclass represents an agent tasked
+ * with selling the product to {@link RegularCitizen} or {@link TownVisitor}. He stocks up on drugs
+ * at the {@link MobHeadquarters} and sells them at the {@link org.labProject.Buildings.Street}.
+ */
 public class Dealer extends Citizen{
+
+    /**
+     * Each product sell makes the {@link Dealer} more proficient, which increases his
+     * selling skills.
+     */
     private float proficiency;
+    /**
+     * Determines whether the {@link Dealer} sells drugs to a underage {@link RegularCitizen} or {@link TownVisitor}.
+     */
     private final int morale;
+    /**
+     * Keeps coords of {@link org.labProject.Buildings.Street} where {@link Dealer} goes selling drugs.
+     */
     private int[] location = new int[2];
+    /**
+     * A {@link MobHeadquarters}  this  {@link Dealer} is assigned to.
+     */
     private final MobHeadquarters mob;
     public Dealer(int m, MobHeadquarters mob){
         super();
@@ -21,6 +41,12 @@ public class Dealer extends Citizen{
         this.inventory.add(new Item(0,20,"Weed"));
     }
 
+    /**
+     * Similar to {@link Citizen#goLocation(Map, Building)}, but the {@link Dealer} goes to random {@link org.labProject.Buildings.Street}
+     * coords and not to a specified {@link Building}.
+     * @param map
+     * @return
+     */
     private int[] streetLocation(Map map){
         int[] coords = new int[2];
         if(this.home.x%3==1){
@@ -51,6 +77,19 @@ public class Dealer extends Citizen{
         }
         return coords;
     }
+    /**
+     * The behavior of this agent goes as follows:<br />
+     * <ul>
+     *     <li>If the time is right {@link Dealer} goes out selling drugs.</li>
+     *     <li>If the {@link Dealer} has no drugs in his inventory, he goes to {@link MobHeadquarters}
+     *          <ul>
+     *              <li> If there is enough drugs in the {@link MobHeadquarters} he stocks up on them and goes selling.</li>
+     *              <li> If there is not enough drugs, {@link Dealer} waits until there is, and resumes his actions</li>
+     *          </ul>
+     *      </li>
+     * </ul>
+     * @param map An anchor to the {@link Map} object
+     */
     @Override
     public void action( Map map) {
         int time = Parameters.currentTime%1440; //Current time during day
@@ -97,6 +136,24 @@ public class Dealer extends Citizen{
         }
     }
 
+    /**
+     * A function to sell weed to {@link RegularCitizen} or {@link TownVisitor}.
+     * <ul>
+     *         <li>If the time is right {@link Dealer} goes out selling drugs.</li>
+     *         <li>The process occurs as follows:
+     *                <ol>
+     *                    <li> The function determines how much the client can buy.</li>
+     *                    <li> It determines the total sell price.</li>
+     *                    <li> The proficiency of the {@link Dealer} is risen.</li>
+     *                    <li> If it is a {@link RegularCitizen}, his addiction level is risen.</li>
+     *                    <li> The money is transferred from the customer to the {@link Dealer}</li>
+     *                    <li> The drugs are transferred from the {@link Dealer} to the customer</li>
+     *                </ol>
+     *          </li>
+     *       </ul>
+     *
+     * @param citizen
+     */
     //function to sell weed to citizens
     private void sellWeed(Citizen citizen){
         //do we sell?

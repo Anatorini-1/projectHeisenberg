@@ -1,5 +1,6 @@
 package org.labProject.Agents;
 
+import org.labProject.Buildings.MobHeadquarters;
 import org.labProject.Buildings.PoliceStation;
 import org.labProject.Core.Map;
 import org.labProject.Core.Parameters;
@@ -8,9 +9,34 @@ import org.labProject.Core.StatisticsAggregator;
 
 import java.awt.*;
 
+/**
+ * This implementation of the {@link Citizen} superclass represents an agent tasked
+ * with catching the {@link Dealer} and punishing {@link RegularCitizen} or {@link TownVisitor}
+ * for drug possession. At the end of his watch he returns to his {@link PoliceStation}.
+ */
 public class Police extends Citizen{
+    /**
+     * Determines whether the {@link Police} punishes or takes a brobe from {@link RegularCitizen} or {@link TownVisitor}.
+     */
     private final int morale;
+    /**
+     * A {@link PoliceStation}  this  {@link Police} is assigned to.
+     */
     private final PoliceStation parentStation;
+
+    /**
+     * The behavior of this agent goes as follows:<br />
+     * <ul>
+     *     <li>If the time is right {@link Police} goes out for a patrol.</li>
+     *     <li>If the {@link Police} catches a {@link Citizen} with a funny substation:
+     *          <ul>
+     *              <li> If the morale of the {@link Police} is bigger than the current corruption he punishes the {@link Citizen}</li>
+     *              <li> Else he can get bribed.</li>
+     *          </ul>
+     *      </li>
+     * </ul>
+     * @param map An anchor to the {@link Map} object
+     */
     @Override
     public void action(Map map) {
         int time = Parameters.currentTime%1440; //Current time during day
@@ -51,6 +77,12 @@ public class Police extends Citizen{
         }
     }
 
+    /**
+     * A function which determines the {@link Citizen} subclass and punishes it accordingly. <br>
+     * It also aggregates the given statistic.
+     * @param map
+     * @param citizen
+     */
     private void Punishment(Map map, Citizen citizen){
         switch (citizen.getClass().getSimpleName()){
             case "RegularCitizen":
@@ -61,7 +93,7 @@ public class Police extends Citizen{
                 citizen.budget = 0;
                 break;
             case "TownVisitor":
-                citizen.currentLocation.leave(citizen);
+                citizen.markedForDeath = true;
                 map.units.remove(citizen);
                 break;
             case "Dealer":
@@ -80,6 +112,13 @@ public class Police extends Citizen{
                 break;
         }
     }
+
+    /**
+     * A function which determines the {@link Citizen} subclass and removes it from the simulation. <br>
+     * (PermaDeath ON UwU)<br>
+     * It also aggregates the given statistic.
+     * @param citizen
+     */
     private void PunishmentRemove( Citizen citizen){
         citizen.markedForDeath = true;
         switch (citizen.getClass().getSimpleName()){
@@ -99,6 +138,11 @@ public class Police extends Citizen{
         }
     }
 
+    /**
+     * A function which determines the {@link Citizen} subclass and hands a static budged from it to the {@link Police}. <br>
+     *  It also aggregates the given statistic.
+     * @param citizen
+     */
     private void getBribed(Citizen citizen){
         switch (citizen.getClass().getSimpleName()){
             case "RegularCitizen":

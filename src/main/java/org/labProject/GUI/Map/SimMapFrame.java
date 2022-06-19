@@ -12,11 +12,18 @@ import java.awt.image.BufferedImage;
 import java.util.ConcurrentModificationException;
 import java.util.List;
 
+/**
+ * A class responsible for all things related to rendering the simulation map to the GUI
+ */
 public class SimMapFrame extends JPanel {
     Map mapAnchor;
     List<Citizen> unitsAnchor;
     int cellSize;
 
+    /**
+     * @param map A <code>Map</code> class object, the visual representation of witch this extension to {@link JPanel} is supposed to be
+     * @param units A <code>List</code> of agents to render on the map
+     */
     public SimMapFrame(Map map, List<Citizen> units){
         this.mapAnchor = map;
         this.unitsAnchor = units;
@@ -25,6 +32,12 @@ public class SimMapFrame extends JPanel {
         setAlignmentX(JPanel.LEFT_ALIGNMENT);
         setAlignmentY(JPanel.TOP_ALIGNMENT);
     }
+
+    /**
+     * If you are looking for the actual method that renders the map, good for you, you have just found it :)
+     * @param g the <code>Graphics</code> object to protect
+     *
+     */
     @Override public void paintComponent(Graphics g)
     {
         super.paintComponent(g);

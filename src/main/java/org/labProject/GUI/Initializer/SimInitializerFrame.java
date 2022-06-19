@@ -8,7 +8,14 @@ import org.labProject.GUI.Initializer.InitializerParamContainer;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * {@link JPanel} extension grouping all panels of {@link InitializerParamContainer} into one component for easier alignment and code readability.
+ */
 public class SimInitializerFrame extends JPanel {
+
+    /**
+     *
+     */
     public SimInitializerFrame(){
         /*
         *   //Police Related Params

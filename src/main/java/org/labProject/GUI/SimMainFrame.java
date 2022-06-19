@@ -11,7 +11,18 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.List;
 
+/**
+ * The main GUI class, wrapping all other components into a (semi?) organised window
+ * <br />
+ * Please, for the love of God, don't use a display smaller than 1920x1080 with a 100% scale,or it will break.
+ * <br />
+ * You have been warned
+ */
 public class SimMainFrame extends JFrame {
+    /**
+     * @param mainMap <code>Map</code> of the simulation, to be displayed in the GUI
+     * @param units A <code>List</code> of agents to be displayed in the GUi
+     */
     public SimMainFrame(Map mainMap, List<Citizen> units){
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setSize(Toolkit.getDefaultToolkit().getScreenSize());
@@ -51,6 +62,10 @@ public class SimMainFrame extends JFrame {
         pack();
         setVisible(true);
     }
+
+    /**
+     * A wrapper for the {@link JFrame#repaint()} method
+     */
     public void refresh(){
         repaint();
     };

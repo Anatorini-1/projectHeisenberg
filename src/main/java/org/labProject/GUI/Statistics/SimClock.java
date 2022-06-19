@@ -6,13 +6,23 @@ import org.labProject.Core.StatisticsAggregator;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * A class designed to provide a UI component showing the current time and date in the simulation
+ * <br /><sub>If the tick speed is very high, it gets funny</sub>
+ */
 public class SimClock extends JPanel {
+    /**
+     *
+     */
     public SimClock(){
         setBackground(Color.white);
         setPreferredSize(new Dimension(350,200));
         setAlignmentX(JPanel.CENTER_ALIGNMENT);
     }
 
+    /**
+     * @param g the <code>Graphics</code> object to protect
+     */
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);

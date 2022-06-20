@@ -6,6 +6,9 @@ import org.jfree.data.xy.XYSeriesCollection;
 import java.util.LinkedList;
 import java.util.List;
 
+/**
+ * Class of statistics for the simulation. All variable names explain themselves. :)
+ */
 public class StatisticsAggregator {
     public static int caughtCitizens;
     public static int arrestedCitizens;
@@ -28,6 +31,12 @@ public class StatisticsAggregator {
 
     }
 
+    /**
+     * Method for graph visualization. It shows how many drugs were sold, the losses, production cost and total profit.
+     * @param stat
+     * @param value
+     * @param timeStamp
+     */
     public static void log(String stat, int value, int timeStamp){
         switch(stat){
             case "soldDrugs":
@@ -44,6 +53,10 @@ public class StatisticsAggregator {
             break;
         }
     }
+
+    /**
+     * Method initializing at start of graph visualization. It clears all data for a new start.
+     */
     public static void init(){
         profit.clear();
         income.clear();

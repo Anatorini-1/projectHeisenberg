@@ -1,0 +1,1 @@
+packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"org.labProject.Agents"},{"l":"org.labProject.Buildings"},{"l":"org.labProject.Core"},{"l":"org.labProject.GUI"},{"l":"org.labProject.GUI.Controls"},{"l":"org.labProject.GUI.Initializer"},{"l":"org.labProject.GUI.Map"},{"l":"org.labProject.GUI.Statistics"}];updateSearchResults();

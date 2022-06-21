@@ -1,5 +1,8 @@
 package org.labProject.Core;
 
+/**
+ * Class of parameters for the simulation. All variable names explain themselves. :)
+ */
 public class Parameters {
     public static boolean isPaused = false;
     public static boolean isOver = false;
@@ -31,6 +34,9 @@ public class Parameters {
 
     public static boolean permaDeath = false;
 
+    /**
+     * Method for initializing the GUI.
+     */
     public static void init(){
         isPaused = false;
         tickSpeed =10;

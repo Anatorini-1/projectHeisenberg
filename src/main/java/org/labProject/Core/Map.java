@@ -9,14 +9,37 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * Class generating the whole map, where the simulation takes place.
+ */
 public class Map {
 
-    //grid size made public for test reasons (and stayed that way :\)
+    /**
+     *   //Grid size of the {@link Map} (made public for test reasons (and stayed that way :\)).
+     */
     public int gridSize;
+    /**
+     * List of all agents.
+     */
     public List<Citizen> units;
+    /**
+     * The mob headquarters of the mafia (there is only one).
+     */
     public MobHeadquarters mob;
+    /**
+     * The Jail of the {@link Police} (there is only one).
+     */
     public Jail jail;
+    /**
+     * List of objects to render in GUI.
+     */
     public List<List<Renderable>> toRender;
+
+    /**
+     * Table generating random coords for {@link Building} on {@link Map}. (Not {@link Street}).
+     * @param size
+     * @return Array of coords (integers).
+     */
     private Integer[] GetCoords(int size){
         Integer[] coords = new Integer[2];
         coords[0] = (int) (Math.random() * (size-1)+1);
@@ -26,6 +49,14 @@ public class Map {
         }
         return coords;
     }
+
+    /**
+     * Table generating random coords for {@link PoliceStation}, {@link MobHeadquarters},
+     * {@link Jail}, {@link Plantation} on {@link Map}.
+     * @param size
+     * @param quantity
+     * @return Array of coords (integers).
+     */
     private ArrayList<Integer[]> BuildingsRandomCoords(int size, int quantity){
         ArrayList<Integer[]> coordsList = new ArrayList<>();
         int police = quantity - 2;
@@ -57,6 +88,14 @@ public class Map {
             }
             return coordsList;
     }
+
+    /**
+     * Table generating random coords for {@link ApartmentBuilding} on {@link Map}.
+     * @param size
+     * @param quantity
+     * @param specialBuildings
+     * @return Array of coords (integers).
+     */
     private ArrayList<Integer[]> ApartmentBuildingsRandomCoords(int size, int quantity, ArrayList<Integer[]> specialBuildings){
         ArrayList<Integer[]> coordsList = new ArrayList<>(new ArrayList<>());
         while(quantity>0){
@@ -82,6 +121,10 @@ public class Map {
         return coordsList;
     }
 
+    /**
+     * This method creates an ArrayList[][] of {@link Building}, which is our map the simulation plays on.
+     * During creation of buildings it also creates agents. (Depending on set parameters.)
+     */
     public Map(){
         this.gridSize = Parameters.mapSize*3 + 1;
         this.toRender = new ArrayList<>();
